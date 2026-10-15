@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Query 响应式布局</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            background: #f4f7ff;
+            color: #233047;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        }
+
+        .container {
+            width: min(100%, 1100px);
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin: 0 0 0.75rem;
+            color: #1d4fb8;
+            text-align: center;
+        }
+
+        .description {
+            margin: 0 auto 1.75rem;
+            color: #5d6b82;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .box-list {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+        }
+
+        .box {
+            display: grid;
+            min-height: 120px;
+            place-items: center;
+            border-radius: 14px;
+            background: #4c8dff;
+            box-shadow: 0 8px 20px rgba(47, 111, 237, 0.18);
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        @media (min-width: 600px) {
+            .box-list {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .box {
+                background: #19a98f;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .box-list {
+                grid-template-columns: repeat(8, minmax(0, 1fr));
+            }
+
+            .box {
+                min-height: 180px;
+                background: #ef6a58;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            body {
+                padding: 3rem;
+            }
+
+            .box-list {
+                gap: 1.25rem;
+            }
+
+            .box {
+                min-height: 220px;
+                background: #7a63c7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>管忠煜的响应式盒子布局</h1>
+        <p class="description">调整浏览器视口宽度，盒子会通过三个媒体查询断点改变每行显示数量：窄屏每行 1 个，中屏每行 4 个，宽屏每行 8 个。</p>
+        <section class="box-list" aria-label="八个响应式盒子">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">7</div>
+            <div class="box">8</div>
+        </section>
+    </main>
+</body>
+</html>

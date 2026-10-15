@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CSS3 渐变</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    background: #0d1117;
+    padding: 30px;
+    color: #eee;
+    min-height: 100vh;
+}
+h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+    font-size: 2em;
+    background: linear-gradient(90deg, #e94560, #f39c12, #2ecc71, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.guan-nav {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.guan-nav a {
+    color: #e94560;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 8px 20px;
+    border: 1px solid #e94560;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+.guan-nav a:hover {
+    background: #e94560;
+    color: #fff;
+}
+.guan-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.guan-card {
+    background: #161b22;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid #30363d;
+    text-align: center;
+}
+.guan-card h3 {
+    color: #e94560;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+.guan-card p {
+    color: #8b949e;
+    font-size: 0.85em;
+    margin-top: 15px;
+}
+.guan-stage {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.guan-linear-1 { background: linear-gradient(to right, #e94560, #f39c12); }
+.guan-linear-2 { background: linear-gradient(to bottom, #2ecc71, #3498db); }
+.guan-linear-3 { background: linear-gradient(45deg, #9b59b6, #e94560); }
+.guan-linear-4 { background: linear-gradient(135deg, #f39c12, #e74c3c, #9b59b6); }
+.guan-linear-5 { background: linear-gradient(to right, #e94560 0%, #f39c12 25%, #2ecc71 50%, #3498db 75%, #9b59b6 100%); }
+.guan-linear-6 { background: repeating-linear-gradient(45deg, #e94560, #e94560 10px, #f39c12 10px, #f39c12 20px); }
+
+.guan-radial-1 { background: radial-gradient(circle, #e94560, #c0392b); }
+.guan-radial-2 { background: radial-gradient(circle at top left, #f39c12, #e74c3c); }
+.guan-radial-3 { background: radial-gradient(ellipse, #2ecc71, #27ae60, #1e8449); }
+.guan-radial-4 { background: radial-gradient(circle, #3498db 0%, #2980b9 50%, #1a5276 100%); }
+.guan-radial-5 { background: repeating-radial-gradient(circle, #9b59b6, #9b59b6 10px, #8e44ad 10px, #8e44ad 20px); }
+.guan-radial-6 { background: radial-gradient(circle at 30% 30%, #e94560, transparent), radial-gradient(circle at 70% 70%, #3498db, transparent); }
+
+.guan-conic-1 { background: conic-gradient(#e94560, #f39c12, #2ecc71, #3498db, #e94560); }
+.guan-conic-2 { background: conic-gradient(from 45deg, #9b59b6, #e94560, #9b59b6); }
+.guan-conic-3 { background: conic-gradient(#e94560 0deg, #f39c12 90deg, #2ecc71 180deg, #3498db 270deg, #e94560 360deg); }
+.guan-conic-4 { background: repeating-conic-gradient(#e94560 0deg 30deg, #f39c12 30deg 60deg); }
+.guan-conic-5 { background: conic-gradient(from 0deg at 50% 50%, #e94560, #f39c12, #2ecc71, #3498db, #9b59b6, #e94560); }
+.guan-conic-6 { background: conic-gradient(#e94560 0% 25%, #f39c12 25% 50%, #2ecc71 50% 75%, #3498db 75% 100%); }
+
+.guan-anim-gradient {
+    background: linear-gradient(270deg, #e94560, #f39c12, #2ecc71, #3498db, #9b59b6);
+    background-size: 400% 400%;
+    animation: guan-gradientMove 4s ease infinite;
+}
+@keyframes guan-gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.guan-anim-gradient2 {
+    background: linear-gradient(45deg, #e94560, #f39c12, #2ecc71, #3498db);
+    background-size: 300% 300%;
+    animation: guan-gradientMove2 3s ease infinite;
+}
+@keyframes guan-gradientMove2 {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+.guan-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 25px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.guan-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.guan-btn-1 { background: linear-gradient(135deg, #e94560, #c0392b); }
+.guan-btn-2 { background: linear-gradient(135deg, #f39c12, #e67e22); }
+.guan-btn-3 { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+.guan-btn-4 { background: linear-gradient(135deg, #3498db, #2980b9); }
+.guan-btn-5 { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+.guan-btn-6 { background: linear-gradient(135deg, #e94560, #f39c12, #2ecc71); }
+
+.guan-info-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+    font-family: "Consolas", monospace;
+    font-size: 0.75em;
+    color: #2ecc71;
+    text-align: left;
+    white-space: pre-wrap;
+}
+.guan-title {
+    color: #e94560;
+    font-size: 1.2em;
+    margin: 30px 0 15px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.guan-table {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 0.9em;
+}
+.guan-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.guan-table th {
+    background: #30363d;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+}
+.guan-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #30363d;
+    color: #8b949e;
+}
+.guan-table tr:hover td { background: #1c2128; }
+</style>
+</head>
+<body>
+
+<h1>CSS3 渐变效果</h1>
+
+<div class="guan-nav">
+    <a href="index.html">返回首页</a>
+</div>
+
+<p class="guan-title">线性渐变 linear-gradient</p>
+<div class="guan-section">
+    <div class="guan-card">
+        <h3>水平渐变</h3>
+        <div class="guan-stage guan-linear-1">to right</div>
+        <p>从左到右</p>
+        <div class="guan-info-box">background: linear-gradient(
+  to right, #e94560, #f39c12
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>垂直渐变</h3>
+        <div class="guan-stage guan-linear-2">to bottom</div>
+        <p>从上到下</p>
+        <div class="guan-info-box">background: linear-gradient(
+  to bottom, #2ecc71, #3498db
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>对角渐变</h3>
+        <div class="guan-stage guan-linear-3">45deg</div>
+        <p>45度角</p>
+        <div class="guan-info-box">background: linear-gradient(
+  45deg, #9b59b6, #e94560
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>多色渐变</h3>
+        <div class="guan-stage guan-linear-4">三色</div>
+        <p>三种颜色</p>
+        <div class="guan-info-box">background: linear-gradient(
+  135deg, #f39c12, #e74c3c, #9b59b6
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>色标位置</h3>
+        <div class="guan-stage guan-linear-5">五色</div>
+        <p>精确控制位置</p>
+        <div class="guan-info-box">background: linear-gradient(
+  to right,
+  #e94560 0%, #f39c12 25%,
+  #2ecc71 50%, #3498db 75%,
+  #9b59b6 100%
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>重复线性</h3>
+        <div class="guan-stage guan-linear-6">条纹</div>
+        <p>repeating</p>
+        <div class="guan-info-box">background: repeating-linear-gradient(
+  45deg, #e94560, #e94560 10px,
+  #f39c12 10px, #f39c12 20px
+);</div>
+    </div>
+</div>
+
+<p class="guan-title">径向渐变 radial-gradient</p>
+<div class="guan-section">
+    <div class="guan-card">
+        <h3>中心径向</h3>
+        <div class="guan-stage guan-radial-1">circle</div>
+        <p>从中心向外</p>
+        <div class="guan-info-box">background: radial-gradient(
+  circle, #e94560, #c0392b
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>定位径向</h3>
+        <div class="guan-stage guan-radial-2">top left</div>
+        <p>从左上角</p>
+        <div class="guan-info-box">background: radial-gradient(
+  circle at top left, #f39c12, #e74c3c
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>椭圆径向</h3>
+        <div class="guan-stage guan-radial-3">ellipse</div>
+        <p>椭圆形</p>
+        <div class="guan-info-box">background: radial-gradient(
+  ellipse, #2ecc71, #27ae60, #1e8449
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>三色径向</h3>
+        <div class="guan-stage guan-radial-4">三色</div>
+        <p>精确色标</p>
+        <div class="guan-info-box">background: radial-gradient(
+  circle, #3498db 0%, #2980b9 50%, #1a5276 100%
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>重复径向</h3>
+        <div class="guan-stage guan-radial-5">同心圆</div>
+        <p>repeating</p>
+        <div class="guan-info-box">background: repeating-radial-gradient(
+  circle, #9b59b6, #9b59b6 10px,
+  #8e44ad 10px, #8e44ad 20px
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>多径向叠加</h3>
+        <div class="guan-stage guan-radial-6">叠加</div>
+        <p>多个渐变</p>
+        <div class="guan-info-box">background:
+  radial-gradient(circle at 30% 30%, #e94560, transparent),
+  radial-gradient(circle at 70% 70%, #3498db, transparent);</div>
+    </div>
+</div>
+
+<p class="guan-title">锥形渐变 conic-gradient</p>
+<div class="guan-section">
+    <div class="guan-card">
+        <h3>基础锥形</h3>
+        <div class="guan-stage guan-conic-1">conic</div>
+        <p>360度环绕</p>
+        <div class="guan-info-box">background: conic-gradient(
+  #e94560, #f39c12, #2ecc71, #3498db, #e94560
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>指定角度</h3>
+        <div class="guan-stage guan-conic-2">45deg</div>
+        <p>起始角度</p>
+        <div class="guan-info-box">background: conic-gradient(
+  from 45deg, #9b59b6, #e94560, #9b59b6
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>分段锥形</h3>
+        <div class="guan-stage guan-conic-3">四段</div>
+        <p>90度分段</p>
+        <div class="guan-info-box">background: conic-gradient(
+  #e94560 0deg, #f39c12 90deg,
+  #2ecc71 180deg, #3498db 270deg, #e94560 360deg
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>重复锥形</h3>
+        <div class="guan-stage guan-conic-4">扇形</div>
+        <p>repeating</p>
+        <div class="guan-info-box">background: repeating-conic-gradient(
+  #e94560 0deg 30deg, #f39c12 30deg 60deg
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>中心定位</h3>
+        <div class="guan-stage guan-conic-5">中心</div>
+        <p>50% 50%</p>
+        <div class="guan-info-box">background: conic-gradient(
+  from 0deg at 50% 50%,
+  #e94560, #f39c12, #2ecc71, #3498db, #9b59b6, #e94560
+);</div>
+    </div>
+    <div class="guan-card">
+        <h3>百分比分段</h3>
+        <div class="guan-stage guan-conic-6">百分比</div>
+        <p>25% 分段</p>
+        <div class="guan-info-box">background: conic-gradient(
+  #e94560 0% 25%, #f39c12 25% 50%,
+  #2ecc71 50% 75%, #3498db 75% 100%
+);</div>
+    </div>
+</div>
+
+<p class="guan-title">动画渐变</p>
+<div class="guan-section">
+    <div class="guan-card">
+        <h3>流动渐变</h3>
+        <div class="guan-stage guan-anim-gradient">流动</div>
+        <p>背景位置动画</p>
+        <div class="guan-info-box">background-size: 400% 400%;
+animation: guan-gradientMove 4s ease infinite;</div>
+    </div>
+    <div class="guan-card">
+        <h3>对角流动</h3>
+        <div class="guan-stage guan-anim-gradient2">对角</div>
+        <p>斜向流动</p>
+        <div class="guan-info-box">background-size: 300% 300%;
+animation: guan-gradientMove2 3s ease infinite;</div>
+    </div>
+</div>
+
+<p class="guan-title">渐变按钮</p>
+<div style="text-align: center; margin: 20px 0;">
+    <a href="#" class="guan-btn guan-btn-1">红色按钮</a>
+    <a href="#" class="guan-btn guan-btn-2">橙色按钮</a>
+    <a href="#" class="guan-btn guan-btn-3">绿色按钮</a>
+    <a href="#" class="guan-btn guan-btn-4">蓝色按钮</a>
+    <a href="#" class="guan-btn guan-btn-5">紫色按钮</a>
+    <a href="#" class="guan-btn guan-btn-6">彩虹按钮</a>
+</div>
+
+<p class="guan-title">渐变类型对比</p>
+<div class="guan-table">
+    <table>
+        <tr>
+            <th>类型</th>
+            <th>语法</th>
+            <th>特点</th>
+            <th>用途</th>
+        </tr>
+        <tr><td>linear-gradient</td><td>linear-gradient(direction, color1, color2)</td><td>沿直线过渡</td><td>背景、按钮</td></tr>
+        <tr><td>radial-gradient</td><td>radial-gradient(shape at position, color1, color2)</td><td>从中心向外圆形过渡</td><td>光晕、圆形背景</td></tr>
+        <tr><td>conic-gradient</td><td>conic-gradient(from angle, color1, color2)</td><td>绕中心点旋转过渡</td><td>饼图、色轮</td></tr>
+        <tr><td>repeating-linear-gradient</td><td>repeating-linear-gradient(...)</td><td>重复平铺</td><td>条纹、纹理</td></tr>
+        <tr><td>repeating-radial-gradient</td><td>repeating-radial-gradient(...)</td><td>重复同心圆</td><td>波纹、靶心</td></tr>
+        <tr><td>repeating-conic-gradient</td><td>repeating-conic-gradient(...)</td><td>重复扇形</td><td>放射状图案</td></tr>
+    </table>
+</div>
+
+</body>
+</html>

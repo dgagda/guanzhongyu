@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媒体查询与视口变化</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            min-width: 280px;
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        }
+
+        .viewport-box {
+            display: grid;
+            min-height: 100vh;
+            padding: 2rem;
+            place-items: center;
+            background-color: #247ba0;
+            color: #fff;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .caption {
+            width: min(42rem, 100%);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 1.25rem;
+            background: rgba(0, 0, 0, 0.18);
+            box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            margin: 0 0 1rem;
+            font-size: 2rem;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        @media (min-width: 600px) {
+            html {
+                font-size: 18px;
+            }
+
+            .viewport-box {
+                background-color: #70c1b3;
+            }
+        }
+
+        @media (min-width: 900px) {
+            html {
+                font-size: 20px;
+            }
+
+            .viewport-box {
+                background-color: #f25f5c;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            html {
+                font-size: 22px;
+            }
+
+            .viewport-box {
+                background-color: #5b5f97;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .viewport-box {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="viewport-box">
+        <section class="caption">
+            <h1>管忠煜的响应式全屏盒子</h1>
+            <p>调整浏览器视口宽度，背景颜色会通过媒体查询切换</p>
+        </section>
+    </main>
+</body>
+</html>

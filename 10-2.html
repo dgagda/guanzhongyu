@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation 幻灯片</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+            place-items: center;
+            background: #f4f7ff;
+            color: #233047;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        }
+
+        .slideshow {
+            width: min(720px, 100%);
+            overflow: hidden;
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 18px 40px rgba(35, 48, 71, 0.18);
+        }
+
+        .slides {
+            display: flex;
+            width: 400%;
+            animation: slide-move 15s ease-in-out infinite;
+        }
+
+        .slide {
+            flex: 0 0 25%;
+            min-width: 0;
+        }
+
+        .slide img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .caption {
+            min-height: 96px;
+            padding: 16px 20px;
+            text-align: center;
+        }
+
+        .caption h2 {
+            margin: 0 0 8px;
+            font-size: 1.25rem;
+        }
+
+        .caption p {
+            margin: 0;
+            color: #5d6b82;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @keyframes slide-move {
+            0%, 24% {
+                transform: translateX(0);
+            }
+            30%, 49% {
+                transform: translateX(-25%);
+            }
+            55%, 74% {
+                transform: translateX(-50%);
+            }
+            80%, 100% {
+                transform: translateX(-75%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .slides {
+                animation-duration: 30s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="slideshow" aria-label="自动播放的图片幻灯片">
+        <div class="slides">
+            <article class="slide">
+                <img src="./img/1.jpg" alt="幻灯片一">
+                <div class="caption">
+                    <h2>管忠煜的幻灯片一</h2>
+                    <p>第一张图片：欣赏眼前的美丽风景。</p>
+                </div>
+            </article>
+            <article class="slide">
+                <img src="./img/2.jpg" alt="幻灯片二">
+                <div class="caption">
+                    <h2>管忠煜的幻灯片二</h2>
+                    <p>第二张图片：感受自然带来的宁静。</p>
+                </div>
+            </article>
+            <article class="slide">
+                <img src="./img/3.jpg" alt="幻灯片三">
+                <div class="caption">
+                    <h2>管忠煜的幻灯片三</h2>
+                    <p>第三张图片：记录生活中的精彩瞬间。</p>
+                </div>
+            </article>
+            <article class="slide" aria-hidden="true">
+                <img src="./img/1.jpg" alt="">
+                <div class="caption">
+                    <h2>管忠煜的幻灯片一</h2>
+                    <p>第一张图片：欣赏眼前的美丽风景。</p>
+                </div>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

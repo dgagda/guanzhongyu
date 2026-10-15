@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CSS 长度单位</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    background: #f0f2f5;
+    padding: 30px;
+    color: #333;
+}
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+p.subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+.unit-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 5px solid #3498db;
+}
+.unit-card h2 {
+    color: #2980b9;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+.unit-card .desc {
+    color: #555;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+.unit-card .demo {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.unit-card .demo div {
+    margin: 4px 0;
+}
+.unit-card code {
+    background: #2c3e50;
+    color: #2ecc71;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+.px-demo { width: 200px; height: 30px; background: #e74c3c; }
+.em-demo { font-size: 20px; width: 10em; height: 2em; background: #2ecc71; }
+.rem-demo { width: 12.5rem; height: 2rem; background: #9b59b6; }
+.pt-demo { width: 100pt; height: 20pt; background: #f39c12; }
+.pc-demo { width: 6pc; height: 1.5pc; background: #1abc9c; }
+.in-demo { width: 1.5in; height: 0.5in; background: #e67e22; }
+.cm-demo { width: 4cm; height: 1.2cm; background: #34495e; }
+.mm-demo { width: 40mm; height: 12mm; background: #16a085; }
+.vw-demo { width: 30vw; height: 30px; background: #c0392b; }
+.vh-demo { width: 200px; height: 15vh; background: #8e44ad; }
+.vmin-demo { width: 20vmin; height: 20vmin; background: #d35400; }
+.vmax-demo { width: 15vmax; height: 10vmax; background: #27ae60; }
+.pct-demo { width: 50%; height: 30px; background: #2c3e50; }
+.ch-demo { font-family: monospace; width: 20ch; background: #f1c40f; padding: 5px; }
+.ex-demo { font-size: 16px; height: 3ex; background: #e91e63; width: 150px; }
+</style>
+</head>
+<body>
+
+<h1>CSS 长度单位</h1>
+<p class="subtitle">了解 Web 前端开发中常用的长度单位</p>
+
+<div class="unit-card">
+    <h2>px — 像素 (绝对单位)</h2>
+    <p class="desc">屏幕上最小的显示点，是最常用的单位。</p>
+    <div class="demo"><div class="px-demo"></div></div>
+    <code>width: 200px;</code>
+</div>
+
+<div class="unit-card">
+    <h2>em — 相对于父元素字体大小 (相对单位)</h2>
+    <p class="desc">1em = 父元素的 font-size。此处父级字体为 20px。</p>
+    <div class="demo"><div class="em-demo"></div></div>
+    <code>width: 10em; height: 2em;</code>
+</div>
+
+<div class="unit-card">
+    <h2>rem — 相对于根元素字体大小 (相对单位)</h2>
+    <p class="desc">1rem = 根元素 (html) 的 font-size，默认 16px。</p>
+    <div class="demo"><div class="rem-demo"></div></div>
+    <code>width: 12.5rem; height: 2rem;</code>
+</div>
+
+<div class="unit-card">
+    <h2>% — 百分比 (相对单位)</h2>
+    <p class="desc">相对于父元素对应属性的百分比。</p>
+    <div class="demo" style="width: 400px;"><div class="pct-demo"></div></div>
+    <code>width: 50%;</code>
+</div>
+
+<div class="unit-card">
+    <h2>vw — 视口宽度 (相对单位)</h2>
+    <p class="desc">1vw = 视口宽度的 1%。</p>
+    <div class="demo"><div class="vw-demo"></div></div>
+    <code>width: 30vw;</code>
+</div>
+
+<div class="unit-card">
+    <h2>vh — 视口高度 (相对单位)</h2>
+    <p class="desc">1vh = 视口高度的 1%。</p>
+    <div class="demo"><div class="vh-demo"></div></div>
+    <code>height: 15vh;</code>
+</div>
+
+<div class="unit-card">
+    <h2>vmin / vmax — 视口最小/最大值 (相对单位)</h2>
+    <p class="desc">vmin: 取宽高中较小的 1%；vmax: 取宽高中较大的 1%。</p>
+    <div class="demo">
+        <div class="vmin-demo" style="display:inline-block;"></div>
+        <div class="vmax-demo" style="display:inline-block;"></div>
+    </div>
+    <code>width: 20vmin; width: 15vmax;</code>
+</div>
+
+<div class="unit-card">
+    <h2>pt — 点 (绝对单位)</h2>
+    <p class="desc">1pt = 1/72 英寸，常用于打印。</p>
+    <div class="demo"><div class="pt-demo"></div></div>
+    <code>width: 100pt; height: 20pt;</code>
+</div>
+
+<div class="unit-card">
+    <h2>pc — 派卡 (绝对单位)</h2>
+    <p class="desc">1pc = 12pt = 1/6 英寸。</p>
+    <div class="demo"><div class="pc-demo"></div></div>
+    <code>width: 6pc; height: 1.5pc;</code>
+</div>
+
+<div class="unit-card">
+    <h2>in / cm / mm — 物理单位 (绝对单位)</h2>
+    <p class="desc">in: 英寸 (1in = 96px = 2.54cm)；cm: 厘米；mm: 毫米。</p>
+    <div class="demo">
+        <div class="in-demo" style="display:inline-block;"></div>
+        <div class="cm-demo" style="display:inline-block;"></div>
+        <div class="mm-demo" style="display:inline-block;"></div>
+    </div>
+    <code>1in = 2.54cm = 25.4mm = 96px</code>
+</div>
+
+<div class="unit-card">
+    <h2>ch — 字符宽度 (相对单位)</h2>
+    <p class="desc">等于字体中 "0" 字符的宽度。</p>
+    <div class="demo"><div class="ch-demo">20ch 宽度</div></div>
+    <code>width: 20ch;</code>
+</div>
+
+<div class="unit-card">
+    <h2>ex — x 高度 (相对单位)</h2>
+    <p class="desc">等于字体中 "x" 字符的高度。</p>
+    <div class="demo"><div class="ex-demo">3ex 高度</div></div>
+    <code>height: 3ex;</code>
+</div>
+
+<div class="unit-card">
+    <h2>绝对单位对比表</h2>
+    <p class="desc">以 96dpi 为基准的换算关系：</p>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse:collapse; text-align:center;">
+        <tr style="background:#3498db; color:#fff;">
+            <th>单位</th><th>名称</th><th>换算</th><th>类型</th>
+        </tr>
+        <tr><td>px</td><td>像素</td><td>1px = 1/96 in</td><td>绝对</td></tr>
+        <tr><td>pt</td><td>点</td><td>1pt = 1/72 in</td><td>绝对</td></tr>
+        <tr><td>pc</td><td>派卡</td><td>1pc = 12pt</td><td>绝对</td></tr>
+        <tr><td>in</td><td>英寸</td><td>1in = 96px = 2.54cm</td><td>绝对</td></tr>
+        <tr><td>cm</td><td>厘米</td><td>1cm = 37.8px</td><td>绝对</td></tr>
+        <tr><td>mm</td><td>毫米</td><td>1mm = 3.78px</td><td>绝对</td></tr>
+    </table>
+</div>
+
+<div class="unit-card">
+    <h2>相对单位对比表</h2>
+    <p class="desc">相对于其他属性的单位：</p>
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse:collapse; text-align:center;">
+        <tr style="background:#2ecc71; color:#fff;">
+            <th>单位</th><th>名称</th><th>参考基准</th><th>用途</th>
+        </tr>
+        <tr><td>em</td><td>字体相对</td><td>父元素 font-size</td><td>字体、间距</td></tr>
+        <tr><td>rem</td><td>根字体相对</td><td>根元素 font-size</td><td>全局尺寸</td></tr>
+        <tr><td>%</td><td>百分比</td><td>父元素对应属性</td><td>宽度、高度</td></tr>
+        <tr><td>vw</td><td>视口宽</td><td>视口宽度</td><td>响应式布局</td></tr>
+        <tr><td>vh</td><td>视口高</td><td>视口高度</td><td>全屏布局</td></tr>
+        <tr><td>vmin</td><td>视口最小</td><td>vw/vh 中较小者</td><td>响应式正方形</td></tr>
+        <tr><td>vmax</td><td>视口最大</td><td>vw/vh 中较大者</td><td>大屏适配</td></tr>
+        <tr><td>ch</td><td>字符宽</td><td>"0" 字符宽度</td><td>文本宽度控制</td></tr>
+        <tr><td>ex</td><td>x 高度</td><td>"x" 字符高度</td><td>垂直对齐</td></tr>
+    </table>
+</div>
+
+<div class="unit-card" style="border-left-color: #e74c3c;">
+    <h2>使用建议</h2>
+    <p class="desc">
+        • 响应式布局推荐使用 <strong>rem</strong>、<strong>vw/vh</strong>、<strong>%</strong><br>
+        • 字体大小推荐使用 <strong>rem</strong>（便于全局缩放）<br>
+        • 间距推荐使用 <strong>em</strong> 或 <strong>rem</strong><br>
+        • 边框等细节可使用 <strong>px</strong><br>
+        • 全屏元素使用 <strong>100vh / 100vw</strong><br>
+        • 打印样式使用 <strong>pt、cm、mm、in</strong>
+    </p>
+</div>
+
+</body>
+</html>

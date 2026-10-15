@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation 动画</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            background: #f4f7ff;
+        }
+
+        .color-box {
+            display: grid;
+            width: min(280px, 75vw);
+            aspect-ratio: 1;
+            place-items: center;
+            border: 8px solid rgba(255, 255, 255, 0.75);
+            border-radius: 28px;
+            box-shadow: 0 18px 40px rgba(35, 48, 71, 0.2);
+            animation: color-change 8s ease-in-out infinite;
+        }
+
+        @keyframes color-change {
+            0%, 100% {
+                background-color: #ef476f;
+            }
+            25% {
+                background-color: #ffd166;
+            }
+            50% {
+                background-color: #06d6a0;
+            }
+            75% {
+                background-color: #118ab2;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .color-box {
+                animation-duration: 20s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="color-box"></main>
+</body>
+</html>

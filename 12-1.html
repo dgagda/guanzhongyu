@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CSS 变量</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Microsoft YaHei", Arial, sans-serif;
+    background: #f0f2f5;
+    padding: 30px;
+    color: #333;
+}
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+p.subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+.var-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 5px solid #3498db;
+}
+.var-card h2 {
+    color: #2980b9;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+.var-card .desc {
+    color: #555;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+.var-card .demo {
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.var-card code {
+    background: #2c3e50;
+    color: #2ecc71;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+.var-card pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin-top: 8px;
+}
+.var-card pre .kw { color: #e74c3c; }
+.var-card pre .val { color: #f1c40f; }
+.var-card pre .cm { color: #95a5a6; }
+
+:root {
+    --guan-primary: #3498db;
+    --guan-success: #2ecc71;
+    --guan-danger: #e74c3c;
+    --guan-warning: #f39c12;
+    --guan-radius: 8px;
+    --guan-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.demo-box {
+    width: 200px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #fff;
+    background: var(--guan-primary);
+    border-radius: var(--guan-radius);
+    box-shadow: var(--guan-shadow);
+    margin: 10px;
+    display: inline-block;
+}
+.demo-box.success { background: var(--guan-success); }
+.demo-box.danger { background: var(--guan-danger); }
+.demo-box.warning { background: var(--guan-warning); }
+
+.scope-demo {
+    --guan-local-color: #9b59b6;
+    padding: 15px;
+    border-radius: var(--guan-radius);
+    background: var(--guan-local-color);
+    color: #fff;
+    margin: 10px 0;
+}
+.scope-demo .child {
+    background: var(--guan-local-color);
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+    filter: brightness(1.2);
+}
+
+.fallback-demo {
+    background: var(--guan-not-exist, #1abc9c);
+    color: #fff;
+    padding: 15px;
+    border-radius: var(--guan-radius);
+    margin: 10px 0;
+}
+
+.js-demo {
+    padding: 15px;
+    border-radius: var(--guan-radius);
+    background: var(--guan-js-color, #34495e);
+    color: #fff;
+    margin: 10px 0;
+    transition: background 0.3s;
+}
+.btn-group {
+    margin: 15px 0;
+}
+.btn-group button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #fff;
+}
+.btn-blue { background: #3498db; }
+.btn-green { background: #2ecc71; }
+.btn-red { background: #e74c3c; }
+.btn-orange { background: #f39c12; }
+
+table.var-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 10px;
+}
+table.var-table th {
+    background: #3498db;
+    color: #fff;
+    padding: 8px;
+}
+table.var-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ecf0f1;
+}
+</style>
+</head>
+<body>
+
+<h1>CSS 变量（自定义属性）</h1>
+<p class="subtitle">使用 var() 定义和引用可复用的 CSS 值</p>
+
+<div class="var-card">
+    <h2>什么是 CSS 变量</h2>
+    <p class="desc">CSS 变量（Custom Properties）允许在 CSS 中定义可复用的值，通过 var() 函数引用。变量名以 <code>--</code> 开头。</p>
+    <pre><span class="kw">:root</span> {
+    <span class="kw">--guan-primary</span>: <span class="val">#3498db</span>;
+    <span class="kw">--guan-radius</span>: <span class="val">8px</span>;
+}
+
+<span class="kw">.box</span> {
+    <span class="kw">background</span>: <span class="val">var(--guan-primary)</span>;
+    <span class="kw">border-radius</span>: <span class="val">var(--guan-radius)</span>;
+}</pre>
+</div>
+
+<div class="var-card">
+    <h2>全局变量（:root）</h2>
+    <p class="desc">在 :root 中定义的变量为全局变量，整个页面都可以使用。</p>
+    <div class="demo">
+        <div class="demo-box">primary</div>
+        <div class="demo-box success">success</div>
+        <div class="demo-box danger">danger</div>
+        <div class="demo-box warning">warning</div>
+    </div>
+    <pre><span class="kw">:root</span> {
+    <span class="kw">--guan-primary</span>: <span class="val">#3498db</span>;
+    <span class="kw">--guan-success</span>: <span class="val">#2ecc71</span>;
+    <span class="kw">--guan-danger</span>: <span class="val">#e74c3c</span>;
+    <span class="kw">--guan-warning</span>: <span class="val">#f39c12</span>;
+    <span class="kw">--guan-radius</span>: <span class="val">8px</span>;
+    <span class="kw">--guan-shadow</span>: <span class="val">0 2px 8px rgba(0,0,0,0.15)</span>;
+}</pre>
+</div>
+
+<div class="var-card">
+    <h2>局部作用域变量</h2>
+    <p class="desc">变量可以在任何选择器中定义，只在当前元素及其子元素中生效。</p>
+    <div class="scope-demo">
+        父元素定义了 --guan-local-color
+        <div class="child">子元素继承父元素的变量</div>
+    </div>
+    <pre><span class="kw">.scope-demo</span> {
+    <span class="kw">--guan-local-color</span>: <span class="val">#9b59b6</span>;
+    <span class="kw">background</span>: <span class="val">var(--guan-local-color)</span>;
+}
+<span class="kw">.scope-demo .child</span> {
+    <span class="kw">background</span>: <span class="val">var(--guan-local-color)</span>; <span class="cm">/* 继承父级变量 */</span>
+}</pre>
+</div>
+
+<div class="var-card">
+    <h2>回退值（Fallback）</h2>
+    <p class="desc">当变量不存在时，可以使用 var() 的第二个参数作为默认值。</p>
+    <div class="fallback-demo">变量 --guan-not-exist 不存在，使用回退值 #1abc9c</div>
+    <pre><span class="kw">.fallback-demo</span> {
+    <span class="kw">background</span>: <span class="val">var(--guan-not-exist, #1abc9c)</span>;
+}</pre>
+</div>
+
+<div class="var-card">
+    <h2>JavaScript 动态修改变量</h2>
+    <p class="desc">通过 JS 可以动态获取和设置 CSS 变量，实现主题切换等交互效果。</p>
+    <div class="js-demo" id="guan_jsDemo">
+        点击下方按钮，通过 JS 改变 --guan-js-color 变量
+    </div>
+    <div class="btn-group">
+        <button class="btn-blue" onclick="guan_setColor('#3498db')">蓝色</button>
+        <button class="btn-green" onclick="guan_setColor('#2ecc71')">绿色</button>
+        <button class="btn-red" onclick="guan_setColor('#e74c3c')">红色</button>
+        <button class="btn-orange" onclick="guan_setColor('#f39c12')">橙色</button>
+    </div>
+    <pre><span class="cm">// 设置变量</span>
+document.getElementById(<span class="val">'guan_jsDemo'</span>).style.setProperty(<span class="val">'--guan-js-color'</span>, <span class="val">'#3498db'</span>);
+
+<span class="cm">// 获取变量</span>
+getComputedStyle(element).getPropertyValue(<span class="val">'--guan-js-color'</span>);</pre>
+</div>
+
+<div class="var-card">
+    <h2>CSS 变量 vs Sass/Less 变量</h2>
+    <table class="var-table">
+        <tr>
+            <th>特性</th>
+            <th>CSS 变量</th>
+            <th>Sass/Less 变量</th>
+        </tr>
+        <tr>
+            <td>运行时修改</td>
+            <td>支持（JS 可操作）</td>
+            <td>不支持（编译后固定）</td>
+        </tr>
+        <tr>
+            <td>作用域</td>
+            <td>支持（继承机制）</td>
+            <td>支持（词法作用域）</td>
+        </tr>
+        <tr>
+            <td>浏览器支持</td>
+            <td>现代浏览器</td>
+            <td>需编译</td>
+        </tr>
+        <tr>
+            <td>动态主题</td>
+            <td>非常适合</td>
+            <td>不适合</td>
+        </tr>
+        <tr>
+            <td>语法</td>
+            <td>--name: value;</td>
+            <td>$name: value;</td>
+        </tr>
+    </table>
+</div>
+
+<div class="var-card" style="border-left-color: #e74c3c;">
+    <h2>使用建议</h2>
+    <p class="desc">
+        • 主题色、字体、间距等设计令牌推荐使用 CSS 变量<br>
+        • 需要动态切换主题时，只需修改变量值即可<br>
+        • 变量命名建议使用语义化名称，如 --guan-primary-color<br>
+        • 合理使用回退值，增强代码健壮性<br>
+        • 避免在循环中频繁读取变量（性能考虑）
+    </p>
+</div>
+
+<script>
+function guan_setColor(guan_color) {
+    document.getElementById('guan_jsDemo').style.setProperty('--guan-js-color', guan_color);
+}
+</script>
+
+</body>
+</html>

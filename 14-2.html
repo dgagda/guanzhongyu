@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-22，功能名称：JavaScript六种基本数据类型演示 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 六种基本数据类型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .gzy_back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .gzy_back-link:hover {
+            text-decoration: underline;
+        }
+        .gzy_container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .gzy_container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .gzy_subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .gzy_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .gzy_card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 5px solid #999;
+        }
+        .gzy_card h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .gzy_card .gzy_code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .gzy_card .gzy_typeof {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .gzy_card .gzy_typeof b {
+            color: #e74c3c;
+            font-family: Consolas, monospace;
+        }
+        .gzy_card .gzy_desc {
+            font-size: 13px;
+            color: #666;
+        }
+        .gzy_num { border-left-color: #3498db; }
+        .gzy_num h2 { color: #3498db; }
+        .gzy_str { border-left-color: #2ecc71; }
+        .gzy_str h2 { color: #2ecc71; }
+        .gzy_bool { border-left-color: #f39c12; }
+        .gzy_bool h2 { color: #f39c12; }
+        .gzy_undef { border-left-color: #9b59b6; }
+        .gzy_undef h2 { color: #9b59b6; }
+        .gzy_null { border-left-color: #e74c3c; }
+        .gzy_null h2 { color: #e74c3c; }
+        .gzy_obj { border-left-color: #1abc9c; }
+        .gzy_obj h2 { color: #1abc9c; }
+        .gzy_note {
+            margin-top: 25px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 14px;
+            color: #7d6608;
+            line-height: 1.8;
+        }
+        .gzy_note code {
+            background: #2c3e50;
+            color: #f1c40f;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+        }
+        .gzy_console {
+            margin-top: 25px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.9;
+            min-height: 80px;
+        }
+        .gzy_console .gzy_console-title {
+            color: #6a9955;
+        }
+        .gzy_console .gzy_console-line {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .gzy_console .gzy_console-key {
+            color: #569cd6;
+        }
+        .gzy_console .gzy_console-val {
+            color: #ce9178;
+        }
+        .gzy_console .gzy_console-res {
+            color: #dcdcaa;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>JavaScript 六种基本数据类型</h1>
+        <p class="gzy_subtitle">定义并演示 Number、String、Boolean、Undefined、Null、Object，使用 typeof 检测类型</p>
+
+        <div class="gzy_grid" id="gzy_typeGrid"></div>
+
+        <div class="gzy_note">
+            <b>注意：</b><code>typeof null</code> 返回 <code>"object"</code>，这是 JavaScript 早期设计留下的历史缺陷（null 是空对象指针），
+            但 null 并不属于引用类型，判断 null 应使用 <code>gzy_null === null</code>。
+        </div>
+
+        <div class="gzy_console" id="gzy_console"></div>
+    </div>
+
+    <script>
+        // ========== 1. Number 数字型：整数或浮点数 ==========
+        var gzy_num = 402;
+
+        // ========== 2. String 字符串型：由引号包裹的文本 ==========
+        var gzy_str = "管忠煜";
+
+        // ========== 3. Boolean 布尔型：只有 true 和 false ==========
+        var gzy_bool = true;
+
+        // ========== 4. Undefined 未定义型：声明后未赋值 ==========
+        var gzy_undef;
+
+        // ========== 5. Null 空型：表示"空值"，可手动赋值 ==========
+        var gzy_null = null;
+
+        // ========== 6. Object 对象型：键值对集合（引用类型） ==========
+        var gzy_obj = { gzy_name: "管忠煜", gzy_id: 402 };
+
+        // 六种类型信息，用于页面演示
+        var gzy_types = [
+            { gzy_title: "Number（数字型）", gzy_cls: "gzy_num", gzy_code: "var gzy_num = 402;", gzy_value: gzy_num, gzy_desc: "表示整数或浮点数，如 402、3.14，还包括 NaN、Infinity 等特殊值。" },
+            { gzy_title: "String（字符串型）", gzy_cls: "gzy_str", gzy_code: 'var gzy_str = "管忠煜";', gzy_value: gzy_str, gzy_desc: "由单引号或双引号包裹的文本，用于表示一串字符。" },
+            { gzy_title: "Boolean（布尔型）", gzy_cls: "gzy_bool", gzy_code: "var gzy_bool = true;", gzy_value: gzy_bool, gzy_desc: "只有 true（真）和 false（假）两个值，常用于条件判断。" },
+            { gzy_title: "Undefined（未定义型）", gzy_cls: "gzy_undef", gzy_code: "var gzy_undef;", gzy_value: gzy_undef, gzy_desc: "变量声明后未赋值时，默认值就是 undefined。" },
+            { gzy_title: "Null（空型）", gzy_cls: "gzy_null", gzy_code: "var gzy_null = null;", gzy_value: gzy_null, gzy_desc: "表示\"空值\"，通常用于手动清空变量、占位。" },
+            { gzy_title: "Object（对象型）", gzy_cls: "gzy_obj", gzy_code: 'var gzy_obj = { gzy_name: "管忠煜", gzy_id: 402 };', gzy_value: gzy_obj, gzy_desc: "由键值对组成的集合，属于引用类型，此外 Array、Function 也属于对象。" }
+        ];
+
+        // 渲染类型卡片
+        var gzy_html = "";
+        var gzy_logLines = "";
+        for (var gzy_i = 0; gzy_i < gzy_types.length; gzy_i++) {
+            var gzy_t = gzy_types[gzy_i];
+            var gzy_typeofResult = typeof gzy_t.gzy_value;
+            // 对象使用 JSON 格式化显示，其他类型直接转字符串
+            var gzy_show = gzy_typeofResult === "object" && gzy_t.gzy_value !== null
+                ? JSON.stringify(gzy_t.gzy_value)
+                : String(gzy_t.gzy_value);
+
+            gzy_html += '<div class="gzy_card ' + gzy_t.gzy_cls + '">'
+                + '<h2>' + gzy_t.gzy_title + '</h2>'
+                + '<p class="gzy_code">' + gzy_t.gzy_code + '</p>'
+                + '<p class="gzy_typeof">typeof 检测结果：<b>"' + gzy_typeofResult + '"</b></p>'
+                + '<p class="gzy_desc">' + gzy_t.gzy_desc + '</p>'
+                + '</div>';
+
+            // 同时输出到浏览器控制台
+            console.log(gzy_t.gzy_code, "→ typeof 结果:", gzy_typeofResult, "，值:", gzy_t.gzy_value);
+
+            gzy_logLines += '<p class="gzy_console-line"><span class="gzy_console-key">' + gzy_t.gzy_code + '</span>'
+                + '  →  typeof 结果: <span class="gzy_console-res">"' + gzy_typeofResult + '"</span>'
+                + '  值: <span class="gzy_console-val">' + gzy_show.replace(/</g, "&lt;") + '</span></p>';
+        }
+
+        document.getElementById("gzy_typeGrid").innerHTML = gzy_html;
+        document.getElementById("gzy_console").innerHTML =
+            '<p class="gzy_console-title">// 控制台演示输出（等价于 console.log）</p>' + gzy_logLines;
+    </script>
+</body>
+</html>

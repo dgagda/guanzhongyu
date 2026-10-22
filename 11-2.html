@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-12，功能名称：CSS3 3D动画 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -21,31 +22,31 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.guan_section {
+.gzy_section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
     max-width: 1200px;
     margin: 0 auto;
 }
-.guan_card {
+.gzy_card {
     background: #161b22;
     border-radius: 12px;
     padding: 25px;
     border: 1px solid #30363d;
     text-align: center;
 }
-.guan_card h3 {
+.gzy_card h3 {
     color: #e94560;
     margin-bottom: 15px;
     font-size: 1.1em;
 }
-.guan_card p {
+.gzy_card p {
     color: #8b949e;
     font-size: 0.85em;
     margin-top: 15px;
 }
-.guan_stage {
+.gzy_stage {
     width: 100%;
     height: 150px;
     display: flex;
@@ -59,7 +60,7 @@ h1 {
     position: relative;
 }
 
-.guan_box3d {
+.gzy_box3d {
     width: 60px;
     height: 60px;
     border-radius: 8px;
@@ -71,49 +72,49 @@ h1 {
     font-size: 12px;
 }
 
-.guan_anim_rotY { background: #e94560; animation: guan_rotY 3s linear infinite; }
-@keyframes guan_rotY {
+.gzy_anim_rotY { background: #e94560; animation: gzy_rotY 3s linear infinite; }
+@keyframes gzy_rotY {
     from { transform: rotateY(0deg); }
     to { transform: rotateY(360deg); }
 }
-.guan_anim_rotX { background: #f39c12; animation: guan_rotX 3s linear infinite; }
-@keyframes guan_rotX {
+.gzy_anim_rotX { background: #f39c12; animation: gzy_rotX 3s linear infinite; }
+@keyframes gzy_rotX {
     from { transform: rotateX(0deg); }
     to { transform: rotateX(360deg); }
 }
-.guan_anim_rotZ { background: #2ecc71; animation: guan_rotZ 3s linear infinite; }
-@keyframes guan_rotZ {
+.gzy_anim_rotZ { background: #2ecc71; animation: gzy_rotZ 3s linear infinite; }
+@keyframes gzy_rotZ {
     from { transform: rotateZ(0deg); }
     to { transform: rotateZ(360deg); }
 }
-.guan_anim_rotXY { background: #9b59b6; animation: guan_rotXY 4s linear infinite; }
-@keyframes guan_rotXY {
+.gzy_anim_rotXY { background: #9b59b6; animation: gzy_rotXY 4s linear infinite; }
+@keyframes gzy_rotXY {
     0% { transform: rotateX(0deg) rotateY(0deg); }
     100% { transform: rotateX(360deg) rotateY(360deg); }
 }
-.guan_anim_rot3d { background: #e74c3c; animation: guan_rot3d 4s linear infinite; }
-@keyframes guan_rot3d {
+.gzy_anim_rot3d { background: #e74c3c; animation: gzy_rot3d 4s linear infinite; }
+@keyframes gzy_rot3d {
     0% { transform: rotate3d(1, 1, 0, 0deg); }
     100% { transform: rotate3d(1, 1, 0, 360deg); }
 }
 
-.guan_cube-scene {
+.gzy_cube-scene {
     width: 80px;
     height: 80px;
     perspective: 600px;
 }
-.guan_cube {
+.gzy_cube {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    animation: guan_cubeSpin 6s linear infinite;
+    animation: gzy_cubeSpin 6s linear infinite;
 }
-@keyframes guan_cubeSpin {
+@keyframes gzy_cubeSpin {
     0% { transform: rotateX(-20deg) rotateY(0deg); }
     100% { transform: rotateX(-20deg) rotateY(360deg); }
 }
-.guan_cube-face {
+.gzy_cube-face {
     position: absolute;
     width: 80px;
     height: 80px;
@@ -126,31 +127,31 @@ h1 {
     color: #fff;
     backface-visibility: visible;
 }
-.guan_cube-front { background: rgba(233, 69, 96, 0.8); transform: translateZ(40px); }
-.guan_cube-back { background: rgba(243, 156, 18, 0.8); transform: rotateY(180deg) translateZ(40px); }
-.guan_cube-right { background: rgba(46, 204, 113, 0.8); transform: rotateY(90deg) translateZ(40px); }
-.guan_cube-left { background: rgba(155, 89, 182, 0.8); transform: rotateY(-90deg) translateZ(40px); }
-.guan_cube-top { background: rgba(52, 152, 219, 0.8); transform: rotateX(90deg) translateZ(40px); }
-.guan_cube-bottom { background: rgba(231, 76, 60, 0.8); transform: rotateX(-90deg) translateZ(40px); }
+.gzy_cube-front { background: rgba(233, 69, 96, 0.8); transform: translateZ(40px); }
+.gzy_cube-back { background: rgba(243, 156, 18, 0.8); transform: rotateY(180deg) translateZ(40px); }
+.gzy_cube-right { background: rgba(46, 204, 113, 0.8); transform: rotateY(90deg) translateZ(40px); }
+.gzy_cube-left { background: rgba(155, 89, 182, 0.8); transform: rotateY(-90deg) translateZ(40px); }
+.gzy_cube-top { background: rgba(52, 152, 219, 0.8); transform: rotateX(90deg) translateZ(40px); }
+.gzy_cube-bottom { background: rgba(231, 76, 60, 0.8); transform: rotateX(-90deg) translateZ(40px); }
 
-.guan_flip-card {
+.gzy_flip-card {
     width: 100px;
     height: 120px;
     perspective: 600px;
     cursor: pointer;
 }
-.guan_flip-inner {
+.gzy_flip-inner {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    animation: guan_flipY 3s ease-in-out infinite;
+    animation: gzy_flipY 3s ease-in-out infinite;
 }
-@keyframes guan_flipY {
+@keyframes gzy_flipY {
     0%, 100% { transform: rotateY(0deg); }
     50% { transform: rotateY(180deg); }
 }
-.guan_flip-face {
+.gzy_flip-face {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -162,42 +163,42 @@ h1 {
     border-radius: 8px;
     font-size: 14px;
 }
-.guan_flip-front { background: #e94560; color: #fff; }
-.guan_flip-back { background: #2ecc71; color: #fff; transform: rotateY(180deg); }
+.gzy_flip-front { background: #e94560; color: #fff; }
+.gzy_flip-back { background: #2ecc71; color: #fff; transform: rotateY(180deg); }
 
-.guan_card3d {
+.gzy_card3d {
     width: 80px;
     height: 80px;
     background: #3498db;
     border-radius: 12px;
-    animation: guan_cardWave 3s ease-in-out infinite;
+    animation: gzy_cardWave 3s ease-in-out infinite;
     transform-style: preserve-3d;
     box-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
 }
-@keyframes guan_cardWave {
+@keyframes gzy_cardWave {
     0%, 100% { transform: rotateX(0deg) rotateY(0deg); }
     25% { transform: rotateX(20deg) rotateY(20deg); }
     50% { transform: rotateX(0deg) rotateY(180deg); }
     75% { transform: rotateX(-20deg) rotateY(340deg); }
 }
 
-.guan_pyramid-scene {
+.gzy_pyramid-scene {
     width: 100px;
     height: 100px;
     perspective: 600px;
 }
-.guan_pyramid {
+.gzy_pyramid {
     width: 0;
     height: 0;
     position: relative;
     transform-style: preserve-3d;
-    animation: guan_pyramidSpin 8s linear infinite;
+    animation: gzy_pyramidSpin 8s linear infinite;
 }
-@keyframes guan_pyramidSpin {
+@keyframes gzy_pyramidSpin {
     0% { transform: rotateX(-20deg) rotateY(0deg); }
     100% { transform: rotateX(-20deg) rotateY(360deg); }
 }
-.guan_pyramid-face {
+.gzy_pyramid-face {
     position: absolute;
     width: 0;
     height: 0;
@@ -206,42 +207,42 @@ h1 {
     border-bottom: 87px solid;
     transform-origin: bottom center;
 }
-.guan_pyr-1 { border-bottom-color: rgba(233, 69, 96, 0.8); transform: rotateY(0deg) translateZ(28px) rotateX(30deg); }
-.guan_pyr-2 { border-bottom-color: rgba(243, 156, 18, 0.8); transform: rotateY(90deg) translateZ(28px) rotateX(30deg); }
-.guan_pyr-3 { border-bottom-color: rgba(46, 204, 113, 0.8); transform: rotateY(180deg) translateZ(28px) rotateX(30deg); }
-.guan_pyr-4 { border-bottom-color: rgba(155, 89, 182, 0.8); transform: rotateY(270deg) translateZ(28px) rotateX(30deg); }
+.gzy_pyr-1 { border-bottom-color: rgba(233, 69, 96, 0.8); transform: rotateY(0deg) translateZ(28px) rotateX(30deg); }
+.gzy_pyr-2 { border-bottom-color: rgba(243, 156, 18, 0.8); transform: rotateY(90deg) translateZ(28px) rotateX(30deg); }
+.gzy_pyr-3 { border-bottom-color: rgba(46, 204, 113, 0.8); transform: rotateY(180deg) translateZ(28px) rotateX(30deg); }
+.gzy_pyr-4 { border-bottom-color: rgba(155, 89, 182, 0.8); transform: rotateY(270deg) translateZ(28px) rotateX(30deg); }
 
-.guan_ring3d {
+.gzy_ring3d {
     width: 70px;
     height: 70px;
     border: 5px solid transparent;
     border-top-color: #e94560;
     border-bottom-color: #f39c12;
     border-radius: 50%;
-    animation: guan_ringSpin 2s linear infinite;
+    animation: gzy_ringSpin 2s linear infinite;
 }
-@keyframes guan_ringSpin {
+@keyframes gzy_ringSpin {
     0% { transform: rotateX(70deg) rotateZ(0deg); }
     100% { transform: rotateX(70deg) rotateZ(360deg); }
 }
 
-.guan_book-scene {
+.gzy_book-scene {
     width: 100px;
     height: 120px;
     perspective: 800px;
 }
-.guan_book {
+.gzy_book {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    animation: guan_bookOpen 4s ease-in-out infinite;
+    animation: gzy_bookOpen 4s ease-in-out infinite;
 }
-@keyframes guan_bookOpen {
+@keyframes gzy_bookOpen {
     0%, 100% { transform: rotateY(-30deg); }
     50% { transform: rotateY(30deg); }
 }
-.guan_book-cover {
+.gzy_book-cover {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -252,17 +253,17 @@ h1 {
     font-size: 12px;
     font-weight: bold;
 }
-.guan_book-front {
+.gzy_book-front {
     background: linear-gradient(135deg, #e94560, #c0392b);
     color: #fff;
     transform: translateZ(15px);
 }
-.guan_book-back {
+.gzy_book-back {
     background: linear-gradient(135deg, #2ecc71, #27ae60);
     color: #fff;
     transform: rotateY(180deg) translateZ(15px);
 }
-.guan_book-spine {
+.gzy_book-spine {
     position: absolute;
     width: 30px;
     height: 100%;
@@ -271,19 +272,19 @@ h1 {
     transform: rotateY(-90deg) translateZ(0px);
 }
 
-.guan_text3d {
+.gzy_text3d {
     font-size: 28px;
     font-weight: bold;
     color: #fff;
-    animation: guan_text3dFloat 3s ease-in-out infinite;
+    animation: gzy_text3dFloat 3s ease-in-out infinite;
     transform-style: preserve-3d;
 }
-@keyframes guan_text3dFloat {
+@keyframes gzy_text3dFloat {
     0%, 100% { transform: rotateX(10deg) rotateY(-10deg) translateZ(0); text-shadow: 2px 2px 0 #e94560, 4px 4px 0 #c0392b, 6px 6px 0 #922b21; }
     50% { transform: rotateX(-10deg) rotateY(10deg) translateZ(20px); text-shadow: 2px 2px 0 #f39c12, 4px 4px 0 #d68910, 6px 6px 0 #b9770e; }
 }
 
-.guan_info-box {
+.gzy_info-box {
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 8px;
@@ -303,7 +304,7 @@ h1 {
     font-weight: bold;
 }
 
-.guan_table {
+.gzy_table {
     max-width: 900px;
     margin: 30px auto;
     background: #161b22;
@@ -312,22 +313,22 @@ h1 {
     padding: 20px;
     font-size: 0.9em;
 }
-.guan_table table {
+.gzy_table table {
     width: 100%;
     border-collapse: collapse;
 }
-.guan_table th {
+.gzy_table th {
     background: #30363d;
     padding: 10px;
     text-align: left;
     color: #fff;
 }
-.guan_table td {
+.gzy_table td {
     padding: 8px 10px;
     border-bottom: 1px solid #30363d;
     color: #8b949e;
 }
-.guan_table tr:hover td { background: #1c2128; }
+.gzy_table tr:hover td { background: #1c2128; }
 </style>
 </head>
 <body>
@@ -335,20 +336,20 @@ h1 {
 <h1>CSS3 3D 动画效果</h1>
 
 <p class="guan-title">基础 3D 旋转</p>
-<div class="guan_section">
-    <div class="guan_card">
+<div class="gzy_section">
+    <div class="gzy_card">
         <h3>rotateY 旋转</h3>
-        <div class="guan_stage"><div class="guan_box3d guan_anim_rotY">rotateY</div></div>
+        <div class="gzy_stage"><div class="gzy_box3d gzy_anim_rotY">rotateY</div></div>
         <p>绕 Y 轴旋转</p>
-        <div class="guan-info-box">@keyframes guan_rotY {
+        <div class="guan-info-box">@keyframes gzy_rotY {
   to { transform: rotateY(360deg); }
 }</div>
     </div>
-    <div class="guan_card">
+    <div class="gzy_card">
         <h3>rotateX 旋转</h3>
-        <div class="guan_stage"><div class="guan_box3d guan_anim_rotX">rotateX</div></div>
+        <div class="gzy_stage"><div class="gzy_box3d gzy_anim_rotX">rotateX</div></div>
         <p>绕 X 轴旋转</p>
-        <div class="guan-info-box">@keyframes guan_rotX {
+        <div class="guan-info-box">@keyframes gzy_rotX {
   to { transform: rotateX(360deg); }
 }</div>
     </div>
@@ -356,7 +357,7 @@ h1 {
         <h3>rotateZ 旋转</h3>
         <div class="guan-stage"><div class="guan-box3d guan-anim-rotZ">rotateZ</div></div>
         <p>绕 Z 轴旋转</p>
-        <div class="guan-info-box">@keyframes guan_rotZ {
+        <div class="guan-info-box">@keyframes gzy_rotZ {
   to { transform: rotateZ(360deg); }
 }</div>
     </div>
@@ -364,14 +365,14 @@ h1 {
         <h3>rotateXY 复合</h3>
         <div class="guan-stage"><div class="guan-box3d guan-anim-rotXY">XY</div></div>
         <p>同时绕 X、Y 轴</p>
-        <div class="guan-info-box">@keyframes guan_rotXY {
+        <div class="guan-info-box">@keyframes gzy_rotXY {
   to { transform: rotateX(360deg) rotateY(360deg); }
 }</div>
     </div>
 </div>
 
 <p class="guan-title">经典 3D 物体</p>
-<div class="guan_section">
+<div class="gzy_section">
     <div class="guan-card">
         <h3>3D 立方体</h3>
         <div class="guan-stage">
@@ -388,7 +389,7 @@ h1 {
         </div>
         <p>六个面组成立方体</p>
         <div class="guan-info-box">transform-style: preserve-3d;
-animation: guan_cubeSpin 6s linear infinite;</div>
+animation: gzy_cubeSpin 6s linear infinite;</div>
     </div>
     <div class="guan-card">
         <h3>卡片翻转</h3>
@@ -402,7 +403,7 @@ animation: guan_cubeSpin 6s linear infinite;</div>
         </div>
         <p>正反面切换</p>
         <div class="guan-info-box">backface-visibility: hidden;
-animation: guan_flipY 3s ease-in-out infinite;</div>
+animation: gzy_flipY 3s ease-in-out infinite;</div>
     </div>
     <div class="guan-card">
         <h3>3D 书本</h3>
@@ -417,14 +418,14 @@ animation: guan_flipY 3s ease-in-out infinite;</div>
         </div>
         <p>开书效果</p>
         <div class="guan-info-box">transform-style: preserve-3d;
-animation: guan_bookOpen 4s ease-in-out infinite;</div>
+animation: gzy_bookOpen 4s ease-in-out infinite;</div>
     </div>
     <div class="guan-card">
         <h3>3D 圆环</h3>
         <div class="guan-stage"><div class="guan-ring3d"></div></div>
         <p>倾斜圆环</p>
         <div class="guan-info-box">transform: rotateX(70deg) rotateZ(...);
-animation: guan_ringSpin 2s linear infinite;</div>
+animation: gzy_ringSpin 2s linear infinite;</div>
     </div>
 </div>
 

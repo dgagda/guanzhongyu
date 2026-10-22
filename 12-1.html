@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-15，功能名称：CSS变量 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -20,6 +21,16 @@ p.subtitle {
     text-align: center;
     color: #7f8c8d;
     margin-bottom: 30px;
+}
+.gzy_back-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #4299e1;
+    text-decoration: none;
+    font-size: 14px;
+}
+.gzy_back-link:hover {
+    text-decoration: underline;
 }
 .var-card {
     background: #fff;
@@ -158,6 +169,7 @@ table.var-table td {
 </style>
 </head>
 <body>
+<a class="gzy_back-link" href="index.html">← 返回首页</a>
 
 <h1>CSS 变量（自定义属性）</h1>
 <p class="subtitle">使用 var() 定义和引用可复用的 CSS 值</p>
@@ -223,17 +235,17 @@ table.var-table td {
 <div class="var-card">
     <h2>JavaScript 动态修改变量</h2>
     <p class="desc">通过 JS 可以动态获取和设置 CSS 变量，实现主题切换等交互效果。</p>
-    <div class="js-demo" id="guan_jsDemo">
+    <div class="js-demo" id="gzy_jsDemo">
         点击下方按钮，通过 JS 改变 --guan-js-color 变量
     </div>
     <div class="btn-group">
-        <button class="btn-blue" onclick="guan_setColor('#3498db')">蓝色</button>
-        <button class="btn-green" onclick="guan_setColor('#2ecc71')">绿色</button>
-        <button class="btn-red" onclick="guan_setColor('#e74c3c')">红色</button>
-        <button class="btn-orange" onclick="guan_setColor('#f39c12')">橙色</button>
+        <button class="btn-blue" onclick="gzy_setColor('#3498db')">蓝色</button>
+        <button class="btn-green" onclick="gzy_setColor('#2ecc71')">绿色</button>
+        <button class="btn-red" onclick="gzy_setColor('#e74c3c')">红色</button>
+        <button class="btn-orange" onclick="gzy_setColor('#f39c12')">橙色</button>
     </div>
     <pre><span class="cm">// 设置变量</span>
-document.getElementById(<span class="val">'guan_jsDemo'</span>).style.setProperty(<span class="val">'--guan-js-color'</span>, <span class="val">'#3498db'</span>);
+document.getElementById(<span class="val">'gzy_jsDemo'</span>).style.setProperty(<span class="val">'--guan-js-color'</span>, <span class="val">'#3498db'</span>);
 
 <span class="cm">// 获取变量</span>
 getComputedStyle(element).getPropertyValue(<span class="val">'--guan-js-color'</span>);</pre>
@@ -287,8 +299,8 @@ getComputedStyle(element).getPropertyValue(<span class="val">'--guan-js-color'</
 </div>
 
 <script>
-function guan_setColor(guan_color) {
-    document.getElementById('guan_jsDemo').style.setProperty('--guan-js-color', guan_color);
+function gzy_setColor(gzy_color) {
+    document.getElementById('gzy_jsDemo').style.setProperty('--guan-js-color', gzy_color);
 }
 </script>
 

@@ -1,46 +1,46 @@
 <!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-19，功能名称：iconfont SVG图标展示 -->
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucide SVG 图标</title>
-    <script src="cdn/lucide.min.js"></script>
+    <title>iconfont SVG 图标</title>
     <style>
-        .guan_body {
+        .gzy_body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f4f8;
             margin: 0;
             padding: 40px;
             min-height: 100vh;
         }
-        .guan_container {
+        .gzy_container {
             max-width: 1000px;
             margin: 0 auto;
         }
-        .guan_header {
+        .gzy_header {
             text-align: center;
             margin-bottom: 40px;
         }
-        .guan_header h1 {
+        .gzy_header h1 {
             color: #2d3748;
             font-size: 2.2em;
             margin-bottom: 10px;
         }
-        .guan_header p {
+        .gzy_header p {
             color: #718096;
             font-size: 1.1em;
         }
-        .guan_back-link {
+        .gzy_back-link {
             display: inline-block;
             margin-bottom: 20px;
             color: #4299e1;
             text-decoration: none;
             font-size: 1em;
         }
-        .guan_back-link:hover {
+        .gzy_back-link:hover {
             text-decoration: underline;
         }
-        .guan_grid {
+        .gzy_grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 20px;
@@ -49,7 +49,7 @@
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
-        .guan_icon-card {
+        .gzy_icon-card {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -57,113 +57,115 @@
             border-radius: 8px;
             transition: background 0.2s;
         }
-        .guan_icon-card:hover {
+        .gzy_icon-card:hover {
             background: #edf2f7;
         }
-        .guan_icon-card svg {
+        .gzy_icon-card svg {
             width: 32px;
             height: 32px;
             margin-bottom: 12px;
-            color: #3182ce;
+            fill: currentColor;
         }
-        .guan_icon-card span {
+        .gzy_icon-card span {
             font-size: 0.85em;
             color: #4a5568;
         }
+        .gzy_c1 { color: #3182ce; }
+        .gzy_c2 { color: #38a169; }
+        .gzy_c3 { color: #805ad5; }
     </style>
 </head>
-<body class="guan_body">
-    <div class="guan_container">
-        <a href="index.html" class="guan_back-link">← 返回首页</a>
-        <div class="guan_header">
-            <h1>Lucide SVG 图标</h1>
-            <p>通过内联 SVG 渲染的图标（Lucide）</p>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <div class="gzy_header">
+            <h1>iconfont SVG 图标</h1>
+            <p>通过内联 SVG 渲染的图标（iconfont 项目 5244824，Symbol 方式，font 目录）</p>
         </div>
-        <div class="guan_grid">
-            <div class="guan_icon-card">
-                <i data-lucide="home"></i>
-                <span>home</span>
+        <div class="gzy_grid">
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-shouye"></use></svg>
+                <span>shouye 首页</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="user"></i>
-                <span>user</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-wode"></use></svg>
+                <span>wode 我的</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="heart"></i>
-                <span>heart</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-shangcheng"></use></svg>
+                <span>shangcheng 商城</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="star"></i>
-                <span>star</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-faxian"></use></svg>
+                <span>faxian 发现</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="settings"></i>
-                <span>settings</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-sousuo"></use></svg>
+                <span>sousuo 搜索</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="search"></i>
-                <span>search</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-kefu"></use></svg>
+                <span>kefu 客服</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="mail"></i>
-                <span>mail</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-paizhao"></use></svg>
+                <span>paizhao 拍照</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="bell"></i>
-                <span>bell</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-jinggao"></use></svg>
+                <span>jinggao 警告</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="camera"></i>
-                <span>camera</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-jifen"></use></svg>
+                <span>jifen 积分</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="cloud"></i>
-                <span>cloud</span>
+            <div class="gzy_icon-card gzy_c1">
+                <svg><use href="#icon-zhibo"></use></svg>
+                <span>zhibo 直播</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="github"></i>
-                <span>github</span>
+            <div class="gzy_icon-card gzy_c2">
+                <svg><use href="#icon-yuyin"></use></svg>
+                <span>yuyin 语音</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="message-circle"></i>
-                <span>message-circle</span>
+            <div class="gzy_icon-card gzy_c2">
+                <svg><use href="#icon-doubao"></use></svg>
+                <span>doubao 豆包</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="music"></i>
-                <span>music</span>
+            <div class="gzy_icon-card gzy_c2">
+                <svg><use href="#icon-langdu"></use></svg>
+                <span>langdu 朗读</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="image"></i>
-                <span>image</span>
+            <div class="gzy_icon-card gzy_c2">
+                <svg><use href="#icon-gengduo"></use></svg>
+                <span>gengduo 更多</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="map-pin"></i>
-                <span>map-pin</span>
+            <div class="gzy_icon-card gzy_c2">
+                <svg><use href="#icon-shanchu"></use></svg>
+                <span>shanchu 删除</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="shopping-cart"></i>
-                <span>shopping-cart</span>
+            <div class="gzy_icon-card gzy_c3">
+                <svg><use href="#icon-shenglvehao"></use></svg>
+                <span>shenglvehao 省略号</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="thumbs-up"></i>
-                <span>thumbs-up</span>
+            <div class="gzy_icon-card gzy_c3">
+                <svg><use href="#icon-denglu"></use></svg>
+                <span>denglu 登录</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="zap"></i>
-                <span>zap</span>
+            <div class="gzy_icon-card gzy_c3">
+                <svg><use href="#icon-pingguo"></use></svg>
+                <span>pingguo 苹果</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="sun"></i>
-                <span>sun</span>
+            <div class="gzy_icon-card gzy_c3">
+                <svg><use href="#icon-shejiaotubiao-44"></use></svg>
+                <span>shejiaotubiao-44 社交图标</span>
             </div>
-            <div class="guan_icon-card">
-                <i data-lucide="moon"></i>
-                <span>moon</span>
+            <div class="gzy_icon-card gzy_c3">
+                <svg><use href="#icon-a-ziyuan1"></use></svg>
+                <span>a-ziyuan1 资源图标</span>
             </div>
         </div>
     </div>
-    <script>
-        lucide.createIcons();
-    </script>
+    <!-- 引入 iconfont Symbol 脚本，自动注入 SVG symbol 雪碧图 -->
+    <script src="font/download/font_5244824_fawm81oz3fa/iconfont.js"></script>
 </body>
 </html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Awesome 字体图标</title>
+    <link rel="stylesheet" href="cdn/all.min.css">
+    <style>
+        .guan_body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        .guan_container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .guan_header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .guan_header h1 {
+            color: #2d3748;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        .guan_header p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+        .guan_back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .guan_back-link:hover {
+            text-decoration: underline;
+        }
+        .guan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .guan_icon-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .guan_icon-card:hover {
+            background: #edf2f7;
+        }
+        .guan_icon-card i {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+        }
+        .guan_icon-card span {
+            font-size: 0.85em;
+            color: #4a5568;
+        }
+        .guan_solid i { color: #3182ce; }
+        .guan_regular i { color: #38a169; }
+        .guan_brands i { color: #805ad5; }
+    </style>
+</head>
+<body class="guan_body">
+    <div class="guan_container">
+        <a href="index.html" class="guan_back-link">← 返回首页</a>
+        <div class="guan_header">
+            <h1>Font Awesome 字体图标</h1>
+            <p>通过字体文件渲染的图标（Font Awesome 6.5.2）</p>
+        </div>
+        <div class="guan_grid">
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-home"></i>
+                <span>fa-home</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-user"></i>
+                <span>fa-user</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-heart"></i>
+                <span>fa-heart</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-star"></i>
+                <span>fa-star</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-cog"></i>
+                <span>fa-cog</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-search"></i>
+                <span>fa-search</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-envelope"></i>
+                <span>fa-envelope</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-bell"></i>
+                <span>fa-bell</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-camera"></i>
+                <span>fa-camera</span>
+            </div>
+            <div class="guan_icon-card guan_solid">
+                <i class="fas fa-cloud"></i>
+                <span>fa-cloud</span>
+            </div>
+            <div class="guan_icon-card guan_regular">
+                <i class="far fa-heart"></i>
+                <span>fa-heart (regular)</span>
+            </div>
+            <div class="guan_icon-card guan_regular">
+                <i class="far fa-star"></i>
+                <span>fa-star (regular)</span>
+            </div>
+            <div class="guan_icon-card guan_regular">
+                <i class="far fa-bell"></i>
+                <span>fa-bell (regular)</span>
+            </div>
+            <div class="guan_icon-card guan_regular">
+                <i class="far fa-envelope"></i>
+                <span>fa-envelope (regular)</span>
+            </div>
+            <div class="guan_icon-card guan_regular">
+                <i class="far fa-user"></i>
+                <span>fa-user (regular)</span>
+            </div>
+            <div class="guan_icon-card guan_brands">
+                <i class="fab fa-github"></i>
+                <span>fa-github</span>
+            </div>
+            <div class="guan_icon-card guan_brands">
+                <i class="fab fa-weixin"></i>
+                <span>fa-weixin</span>
+            </div>
+            <div class="guan_icon-card guan_brands">
+                <i class="fab fa-weibo"></i>
+                <span>fa-weibo</span>
+            </div>
+            <div class="guan_icon-card guan_brands">
+                <i class="fab fa-qq"></i>
+                <span>fa-qq</span>
+            </div>
+            <div class="guan_icon-card guan_brands">
+                <i class="fab fa-chrome"></i>
+                <span>fa-chrome</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

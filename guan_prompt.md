@@ -49,3 +49,30 @@
 ## 2026-10-15-03-52
 模型: opencode/longcat-2.5-preview-free
 提示词: 提交项目
+
+
+## 2026-10-15-03-53
+模型: opencode/longcat-2.5-preview-free
+提示词: 创建12-1。html,展示css变量，然后提交项目
+
+
+## 2026-10-19-03-56
+模型: opencode/longcat-2.5-preview-free
+提示词: 编写两个网页13-1.html和13-2.html 分别显示font awesome图标和lucide图标，前者采用字体图标形式，后者使用svg的形式。下载相关cdn文件到当前目录下的cdn目录。
+
+
+## 2026-10-19-04-15
+模型: opencode/longcat-2.5-preview-free
+提示词: 根据font目录下的iconfont的图标，分别完成13-3.html和13-4.html.使用字体图标和svg的方法完成移动端的自适应宽度的固定的下导航，下导航有4项内容，导航项包括数字徽章和右上角的红点，全屏宽度。
+
+## 2026-10-22-14-26
+模型: WorkBuddy (GLM)
+提示词: 根据我给你的截图仿照13-3和13-4给我完成淘宝移动端的下导航，要求和照片里的下导航一模一样，并且创建文件夹"淘宝移动端下导航"并完成项目指导书要求（字体图标或SVG、代码含学号姓名/类名含姓名缩写、全局css、多视口测试截图）。
+
+## 2026-10-22-15-54
+模型: GLM-5.3-Flash
+提示词: `c:\Users\ASUS\高级网页设计/.opencode\skills\git-push-project\SKILL.md`根据给定文件创建trae和skill
+
+## 2026-10-22-15-56
+模型: GLM-5.3-Flash
+提示词: 好的，执行吧（执行 git-push-project skill：提交并推送项目到 Gitee）

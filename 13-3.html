@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>iconfont 字体图标导航</title>
+    <link rel="stylesheet" href="cdn/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .guan_body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+        .guan_header {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .guan_header h1 {
+            font-size: 20px;
+            color: #333;
+        }
+        .guan_content {
+            padding: 20px;
+        }
+        .guan_back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .guan_nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            width: 100%;
+            height: 60px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+        }
+        .guan_nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-decoration: none;
+            color: #999;
+            transition: color 0.2s;
+        }
+        .guan_nav-item.guan_active {
+            color: #ff6600;
+        }
+        .guan_nav-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+            font-family: "iconfont" !important;
+            -webkit-font-smoothing: antialiased;
+        }
+        .guan_nav-label {
+            font-size: 11px;
+        }
+        .guan_badge {
+            position: absolute;
+            top: 4px;
+            right: calc(50% - 24px);
+            min-width: 16px;
+            height: 16px;
+            background: #ff3b30;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            font-style: normal;
+        }
+        .guan_dot {
+            position: absolute;
+            top: 6px;
+            right: calc(50% - 20px);
+            width: 8px;
+            height: 8px;
+            background: #ff3b30;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="guan_body">
+    <div class="guan_header">
+        <h1>iconfont 字体图标底部导航</h1>
+    </div>
+    <div class="guan_content">
+        <a href="index.html" class="guan_back-link">← 返回首页</a>
+        <p>使用字体图标实现的固定底部导航栏，包含数字徽章和红点提示。</p>
+    </div>
+    <nav class="guan_nav">
+        <a href="#" class="guan_nav-item guan_active">
+            <i class="guan_nav-icon iconfont icon-shouye"></i>
+            <span class="guan_nav-label">首页</span>
+            <i class="guan_dot"></i>
+        </a>
+        <a href="#" class="guan_nav-item">
+            <i class="guan_nav-icon iconfont icon-faxian"></i>
+            <span class="guan_nav-label">发现</span>
+        </a>
+        <a href="#" class="guan_nav-item">
+            <i class="guan_nav-icon iconfont icon-shangcheng"></i>
+            <span class="guan_nav-label">商城</span>
+            <i class="guan_badge">3</i>
+        </a>
+        <a href="#" class="guan_nav-item">
+            <i class="guan_nav-icon iconfont icon-wode"></i>
+            <span class="guan_nav-label">我的</span>
+        </a>
+    </nav>
+</body>
+</html>

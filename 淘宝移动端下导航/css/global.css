@@ -1,0 +1,206 @@
+/* ============================================================
+   《高级网页设计I》图像解决方案 - 淘宝移动端下导航 全局CSS
+   学号：24002060402
+   姓名：管忠煜（姓名缩写：gzy，所有类名以 guan_ 开头）
+   布局技术：Flex（下导航 flex 均分全屏宽度，fixed 固定底部）
+   ============================================================ */
+
+/* ---------- 全局重置与公共样式 ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  font-size: 14px;
+  color: #1a1a1a;
+  background-color: #f5f5f5;
+  padding-bottom: 110px; /* 给固定优惠券条(54px)+下导航(56px)留出空间 */
+}
+
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+/* 返回首页链接 */
+.guan_back {
+  display: inline-block;
+  margin: 12px 16px;
+  color: #ff5000;
+  font-size: 13px;
+}
+
+/* ============================================================
+   固定下导航（iconfont 字体图标版）
+   对照截图：淘宝(选中,橙色) / 视频 / 消息(徽章3) / 购物车 / 我的淘宝
+   ============================================================ */
+.guan_nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;               /* flex 一行五项，等分全屏宽度 */
+  width: 100%;
+  height: 56px;
+  background-color: #fff;
+  border-top: 1px solid #f0f0f0;
+  z-index: 1000;
+}
+
+.guan_nav-item {
+  flex: 1;                     /* 每项等宽，自适应宽度 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #1a1a1a;
+}
+
+/* 选中项：图标淘宝橙（对照截图中"淘宝"为橙色选中态） */
+.guan_nav-item.guan_active .guan_nav-icon {
+  color: #ff5000;
+}
+
+.guan_nav-icon {
+  font-size: 25px;
+  line-height: 1;
+  margin-bottom: 3px;
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* SVG 图标（主页使用，与原图 1:1） */
+svg.guan_nav-icon {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+  margin-bottom: 3px;
+  font-family: initial;
+}
+
+.guan_nav-label {
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* 数字徽章（"消息"右上角的 3） */
+.guan_badge {
+  position: absolute;
+  top: 3px;
+  left: calc(50% + 4px);
+  min-width: 16px;
+  height: 16px;
+  background-color: #ff3b30;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  font-style: normal;
+  border: 1px solid #fff;
+}
+
+/* ============================================================
+   优惠券浮动条（下导航上方，对照截图）
+   ============================================================ */
+.guan_coupon {
+  position: fixed;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: linear-gradient(90deg, #ffe9e9, #ffdddd);
+  z-index: 999;
+}
+
+.guan_coupon-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #ff0033;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.guan_coupon-text { font-size: 14px; color: #1a1a1a; }
+
+.guan_coupon-text b { color: #ff0033; }
+
+.guan_coupon-btn {
+  margin-left: auto;
+  height: 30px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(90deg, #ff4d4d, #ff0033);
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.guan_coupon-close {
+  border: none;
+  background: none;
+  color: #999;
+  font-size: 16px;
+  padding: 4px;
+}
+
+/* ============================================================
+   页面内容区（模拟淘宝移动端商品流，便于对照截图）
+   ============================================================ */
+.guan_goods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+}
+
+.guan_card {
+  width: calc(50% - 4px);
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.guan_card-img { width: 100%; }
+
+.guan_card-info { padding: 8px 10px 10px; }
+
+.guan_card-title { font-size: 14px; font-weight: bold; }
+
+.guan_card-title em {
+  font-style: normal;
+  color: #ff0033;
+  font-size: 12px;
+  margin-right: 4px;
+}
+
+.guan_card-tip { font-size: 12px; color: #ff5000; margin-top: 4px; }
+
+.guan_card-price { font-size: 16px; color: #ff0033; font-weight: bold; margin-top: 4px; }
+
+.guan_card-price span { font-size: 12px; color: #999; font-weight: normal; margin-left: 6px; }
+
+.guan_banner { width: 100%; border-radius: 10px; overflow: hidden; background-color: #fff; }
+
+.guan_banner img { width: 100%; }
+
+.guan_banner-title { padding: 8px 12px; font-size: 14px; font-weight: bold; }
+
+.guan_banner-sub { padding: 0 12px 10px; font-size: 11px; color: #999; }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+  《高级网页设计I》图像解决方案 - 淘宝移动端下导航（iconfont 字体图标版）
+  学号：24002060402
+  姓名：管忠煜（类名以姓名缩写 guan_ 开头）
+  技术：iconfont 字体图标（cdn/iconfont.css），满足指导书"使用字体图标或SVG的方式使用iconfont图标"的要求；
+        index.html 为按原图 1:1 手绘 SVG 的版本
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>淘宝移动端下导航 - iconfont 字体图标版</title>
+  <link rel="stylesheet" href="cdn/iconfont.css">
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <a class="guan_back" href="../index.html">← 返回课程首页</a>
+  <p class="guan_back" style="display:block;margin-top:0;color:#999;">
+    本页为 iconfont 字体图标方案（项目 5244824），与 <a href="index.html">index.html（原图1:1 SVG版）</a>、
+    <a href="nav-svg.html">nav-svg.html（iconfont SVG版）</a> 互为对照
+  </p>
+
+  <!-- ===================== 模拟淘宝移动端商品流 ===================== -->
+  <div class="guan_goods">
+    <div class="guan_card">
+      <img class="guan_card-img" src="images/kb.jpg" alt="小蜜蜂Made68ultra">
+      <div class="guan_card-info">
+        <p class="guan_card-title"><em>天猫</em>小蜜蜂Made68ultra</p>
+        <p class="guan_card-tip">双11官方立减15% 先用后付</p>
+        <p class="guan_card-price">¥369优惠后<span>全网热销400+</span></p>
+      </div>
+    </div>
+    <div class="guan_card">
+      <img class="guan_card-img" src="images/coat.jpg" alt="Jeep spirit美式复古针织开">
+      <div class="guan_card-info">
+        <p class="guan_card-title">Jeep spirit美式复古针织开</p>
+        <p class="guan_card-tip">双11官方立减15% 先用后付</p>
+        <p class="guan_card-price">¥168优惠后<span>已售100+</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== 固定下导航（iconfont 字体图标） ===================== -->
+  <nav class="guan_nav">
+    <a href="#" class="guan_nav-item guan_active">
+      <i class="guan_nav-icon iconfont icon-shejiaotubiao-44"></i>
+      <span class="guan_nav-label">淘宝</span>
+    </a>
+    <a href="#" class="guan_nav-item">
+      <i class="guan_nav-icon iconfont icon-zhibo"></i>
+      <span class="guan_nav-label">视频</span>
+    </a>
+    <a href="#" class="guan_nav-item">
+      <i class="guan_nav-icon iconfont icon-kefu"></i>
+      <span class="guan_nav-label">消息</span>
+      <i class="guan_badge">3</i>
+    </a>
+    <a href="#" class="guan_nav-item">
+      <i class="guan_nav-icon iconfont icon-shangcheng"></i>
+      <span class="guan_nav-label">购物车</span>
+    </a>
+    <a href="#" class="guan_nav-item">
+      <i class="guan_nav-icon iconfont icon-wode"></i>
+      <span class="guan_nav-label">我的淘宝</span>
+    </a>
+  </nav>
+
+</body>
+</html>

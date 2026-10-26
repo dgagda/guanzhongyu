@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-26，功能名称：JavaScript程序结构演示（条件与循环） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 程序结构：条件与循环</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .gzy_container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .gzy_back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .gzy_back-link:hover {
+            text-decoration: underline;
+        }
+        .gzy_container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .gzy_subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .gzy_subtitle b {
+            color: #3498db;
+        }
+        .gzy_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+            gap: 20px;
+        }
+        .gzy_card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+        .gzy_card_loop {
+            border-top-color: #2ecc71;
+        }
+        .gzy_card h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+        .gzy_card h3 {
+            font-size: 15px;
+            color: #34495e;
+            margin: 16px 0 8px;
+        }
+        .gzy_code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        .gzy_row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .gzy_input {
+            width: 90px;
+            padding: 8px 10px;
+            border: 2px solid #dfe6e9;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        .gzy_input:focus {
+            border-color: #3498db;
+        }
+        .gzy_select {
+            padding: 8px 10px;
+            border: 2px solid #dfe6e9;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        .gzy_btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #3498db;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .gzy_card_loop .gzy_btn {
+            background: #2ecc71;
+        }
+        .gzy_btn:hover {
+            opacity: 0.85;
+        }
+        .gzy_result {
+            background: #f8f9fa;
+            border: 1px dashed #b2bec3;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 14px;
+            min-height: 42px;
+            line-height: 1.8;
+            word-break: break-all;
+        }
+        .gzy_result b {
+            color: #e74c3c;
+        }
+        .gzy_note {
+            margin-top: 25px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 14px;
+            color: #7d6608;
+            line-height: 1.9;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>JavaScript 程序结构：条件与循环</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 演示 if...else / switch 条件结构与 for / while / do...while 循环结构</p>
+
+        <div class="gzy_grid">
+            <!-- 条件结构 -->
+            <div class="gzy_card">
+                <h2>一、条件结构</h2>
+
+                <h3>1. if...else（判断分数等级）</h3>
+                <div class="gzy_code">if (gzy_score >= 90) { ... } 
+else if (gzy_score >= 60) { ... } 
+else { ... }</div>
+                <div class="gzy_row">
+                    <input type="number" class="gzy_input" id="gzy_scoreInput" value="85" min="0" max="100">
+                    <button class="gzy_btn" onclick="gzy_checkGrade()">判断等级</button>
+                </div>
+                <div class="gzy_result" id="gzy_gradeResult"></div>
+
+                <h3>2. switch（数字转星期）</h3>
+                <div class="gzy_code">switch (gzy_day) {
+    case 1: gzy_name = "星期一"; break;
+    ...
+    default: gzy_name = "输入有误";
+}</div>
+                <div class="gzy_row">
+                    <select class="gzy_select" id="gzy_daySelect">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8（测试default）</option>
+                    </select>
+                    <button class="gzy_btn" onclick="gzy_checkDay()">switch转换</button>
+                </div>
+                <div class="gzy_result" id="gzy_dayResult"></div>
+            </div>
+
+            <!-- 循环结构 -->
+            <div class="gzy_card gzy_card_loop">
+                <h2>二、循环结构</h2>
+
+                <h3>1. for 循环（1 ~ n 累加求和）</h3>
+                <div class="gzy_code">var gzy_sum = 0;
+for (var gzy_i = 1; gzy_i <= gzy_n; gzy_i++) {
+    gzy_sum += gzy_i;
+}</div>
+                <div class="gzy_row">
+                    <input type="number" class="gzy_input" id="gzy_forInput" value="100" min="1" max="10000">
+                    <button class="gzy_btn" onclick="gzy_runFor()">for循环求和</button>
+                </div>
+                <div class="gzy_result" id="gzy_forResult"></div>
+
+                <h3>2. while 循环（1 ~ n 阶乘）</h3>
+                <div class="gzy_code">var gzy_fact = 1, gzy_j = 1;
+while (gzy_j <= gzy_n) {
+    gzy_fact *= gzy_j;
+    gzy_j++;
+}</div>
+                <div class="gzy_row">
+                    <input type="number" class="gzy_input" id="gzy_whileInput" value="5" min="1" max="170">
+                    <button class="gzy_btn" onclick="gzy_runWhile()">while循环求阶乘</button>
+                </div>
+                <div class="gzy_result" id="gzy_whileResult"></div>
+
+                <h3>3. do...while 循环（先执行后判断，输出偶数）</h3>
+                <div class="gzy_code">var gzy_k = 2;
+do {
+    gzy_out += gzy_k + " ";
+    gzy_k += 2;
+} while (gzy_k <= 20);</div>
+                <div class="gzy_row">
+                    <button class="gzy_btn" onclick="gzy_runDoWhile()">do...while输出2~20偶数</button>
+                </div>
+                <div class="gzy_result" id="gzy_doWhileResult"></div>
+            </div>
+        </div>
+
+        <div class="gzy_note">
+            <b>知识点小结：</b>程序结构分为<b>顺序结构</b>、<b>条件结构（分支）</b>和<b>循环结构</b>三种。
+            条件结构按条件选择执行路径（if...else、switch）；循环结构重复执行代码块（for、while、do...while），
+            可用 <b>break</b> 跳出循环、<b>continue</b> 跳过本次循环。注意 do...while 至少执行一次循环体。
+        </div>
+    </div>
+
+    <script>
+        // ========== 条件结构：if...else 判断分数等级 ==========
+        function gzy_checkGrade() {
+            var gzy_score = Number(document.getElementById("gzy_scoreInput").value);
+            var gzy_grade;
+            if (gzy_score >= 90) {
+                gzy_grade = "优秀";
+            } else if (gzy_score >= 80) {
+                gzy_grade = "良好";
+            } else if (gzy_score >= 60) {
+                gzy_grade = "及格";
+            } else {
+                gzy_grade = "不及格";
+            }
+            console.log("if...else 判断：" + gzy_score + "分 → " + gzy_grade);
+            document.getElementById("gzy_gradeResult").innerHTML =
+                "if...else 判断结果：<b>" + gzy_score + " 分属于【" + gzy_grade + "】</b>";
+        }
+
+        // ========== 条件结构：switch 数字转星期 ==========
+        function gzy_checkDay() {
+            var gzy_day = Number(document.getElementById("gzy_daySelect").value);
+            var gzy_dayName;
+            switch (gzy_day) {
+                case 1: gzy_dayName = "星期一"; break;
+                case 2: gzy_dayName = "星期二"; break;
+                case 3: gzy_dayName = "星期三"; break;
+                case 4: gzy_dayName = "星期四"; break;
+                case 5: gzy_dayName = "星期五"; break;
+                case 6: gzy_dayName = "星期六"; break;
+                case 7: gzy_dayName = "星期日"; break;
+                default: gzy_dayName = "输入有误（1~7之外）";
+            }
+            console.log("switch 判断：" + gzy_day + " → " + gzy_dayName);
+            document.getElementById("gzy_dayResult").innerHTML =
+                "switch 判断结果：<b>" + gzy_day + " → " + gzy_dayName + "</b>";
+        }
+
+        // ========== 循环结构：for 累加求和 ==========
+        function gzy_runFor() {
+            var gzy_n = Number(document.getElementById("gzy_forInput").value);
+            var gzy_sum = 0;
+            for (var gzy_i = 1; gzy_i <= gzy_n; gzy_i++) {
+                gzy_sum += gzy_i;
+            }
+            console.log("for 循环：1+2+...+" + gzy_n + " = " + gzy_sum);
+            document.getElementById("gzy_forResult").innerHTML =
+                "for 循环结果：<b>1+2+...+" + gzy_n + " = " + gzy_sum + "</b>（高斯算法验算：" + (gzy_n * (gzy_n + 1) / 2) + "）";
+        }
+
+        // ========== 循环结构：while 阶乘 ==========
+        function gzy_runWhile() {
+            var gzy_n = Number(document.getElementById("gzy_whileInput").value);
+            var gzy_fact = 1;
+            var gzy_j = 1;
+            while (gzy_j <= gzy_n) {
+                gzy_fact *= gzy_j;
+                gzy_j++;
+            }
+            console.log("while 循环：" + gzy_n + "! = " + gzy_fact);
+            document.getElementById("gzy_whileResult").innerHTML =
+                "while 循环结果：<b>" + gzy_n + "! = " + gzy_fact + "</b>";
+        }
+
+        // ========== 循环结构：do...while 输出偶数 ==========
+        function gzy_runDoWhile() {
+            var gzy_k = 2;
+            var gzy_out = "";
+            do {
+                gzy_out += gzy_k + " ";
+                gzy_k += 2;
+            } while (gzy_k <= 20);
+            console.log("do...while 循环输出：" + gzy_out);
+            document.getElementById("gzy_doWhileResult").innerHTML =
+                "do...while 循环结果：<b>" + gzy_out.trim().split(" ").join("、") + "</b>";
+        }
+
+        // 页面加载后先执行一遍默认演示
+        gzy_checkGrade();
+        gzy_checkDay();
+        gzy_runFor();
+        gzy_runWhile();
+        gzy_runDoWhile();
+    </script>
+</body>
+</html>

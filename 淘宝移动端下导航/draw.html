@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-22，功能名称：淘宝移动端下导航（字体图标版） -->
+<!--
+  《高级网页设计I》图像解决方案 - 淘宝移动端下导航（与真实淘宝App截图 1:1 一致）
+  学号：24002060402
+  姓名：管忠煜（类名以姓名缩写 gzy_ 开头）
+  技术：主页面下导航图标使用手绘 SVG（按原图逐个绘制，与照片一模一样）；
+        另提供 iconfont 字体图标版 iconfont.html 与 iconfont SVG 版 nav-svg.html 作为图像解决方案对照
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>淘宝移动端下导航 - 手绘SVG版（过程记录）</title>
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <!-- ============ SVG 图标库（按真实淘宝App下导航图标 1:1 手绘） ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <!-- 淘宝：橙色圆形淘Logo（选中态） -->
+    <symbol id="guan-ico-taobao" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="21" fill="#ff5000"/>
+      <text x="24" y="32.5" text-anchor="middle" font-size="24" font-weight="bold"
+            fill="#ffffff" font-family="'Microsoft YaHei','PingFang SC',sans-serif">淘</text>
+    </symbol>
+    <!-- 视频：圆角矩形 + 播放三角 -->
+    <symbol id="guan-ico-video" viewBox="0 0 48 48">
+      <rect x="5" y="10" width="38" height="28" rx="7" fill="none"
+            stroke="currentColor" stroke-width="3.5"/>
+      <path d="M20 17.5 L31.5 24 L20 30.5 Z" fill="currentColor"
+            stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 消息：圆气泡 + 笑脸 -->
+    <symbol id="guan-ico-msg" viewBox="0 0 48 48">
+      <path d="M24 6 C34 6 42 13 42 22 C42 31 34 38 24 38 C21.5 38 19 37.5 16.8 36.6 L8 40 L10.8 32.2 C7.8 29.3 6 25.9 6 22 C6 13 14 6 24 6 Z"
+            fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="18" cy="21" r="2.4" fill="currentColor"/>
+      <circle cx="30" cy="21" r="2.4" fill="currentColor"/>
+      <path d="M17.5 27 Q24 32.5 30.5 27" fill="none" stroke="currentColor"
+            stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <!-- 购物车：推车 + 两轮 -->
+    <symbol id="guan-ico-cart" viewBox="0 0 48 48">
+      <path d="M5 8 H11 L15.5 30 H36.5 L42 14 H14"
+            fill="none" stroke="currentColor" stroke-width="3.5"
+            stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="18.5" cy="38.5" r="3.5" fill="currentColor"/>
+      <circle cx="33.5" cy="38.5" r="3.5" fill="currentColor"/>
+    </symbol>
+    <!-- 我的淘宝：圆脸笑脸 -->
+    <symbol id="guan-ico-smile" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="3.5"/>
+      <circle cx="17.5" cy="20" r="2.5" fill="currentColor"/>
+      <circle cx="30.5" cy="20" r="2.5" fill="currentColor"/>
+      <path d="M15 28.5 Q24 36.5 33 28.5" fill="none" stroke="currentColor"
+            stroke-width="3.2" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <a class="gzy_back" href="../index.html">← 返回课程首页</a>
+
+  <!-- ===================== 模拟淘宝移动端商品流（对照截图） ===================== -->
+  <div class="gzy_goods">
+    <div class="gzy_card">
+      <img class="gzy_card-img" src="images/kb.jpg" alt="小蜜蜂Made68ultra">
+      <div class="gzy_card-info">
+        <p class="gzy_card-title"><em>天猫</em>小蜜蜂Made68ultra</p>
+        <p class="gzy_card-tip">双11官方立减15% 先用后付</p>
+        <p class="gzy_card-price">¥369优惠后<span>全网热销400+</span></p>
+      </div>
+    </div>
+    <div class="gzy_card">
+      <img class="gzy_card-img" src="images/coat.jpg" alt="Jeep spirit美式复古针织开">
+      <div class="gzy_card-info">
+        <p class="gzy_card-title">Jeep spirit美式复古针织开</p>
+        <p class="gzy_card-tip">双11官方立减15% 先用后付</p>
+        <p class="gzy_card-price">¥168优惠后<span>已售100+</span></p>
+      </div>
+    </div>
+    <div class="gzy_card">
+      <img class="gzy_card-img" src="images/sp.jpg" alt="蓝牙音箱">
+      <div class="gzy_card-info">
+        <p class="gzy_card-title">无线蓝牙音箱 重低音</p>
+        <p class="gzy_card-tip">双11狂欢价 到手省一半</p>
+        <p class="gzy_card-price">¥22.9优惠后<span>已售2000+</span></p>
+      </div>
+    </div>
+    <div class="gzy_banner">
+      <img src="images/hw.jpg" alt="HUAWEI FreeBuds 7i">
+      <p class="gzy_banner-title">HUAWEI FreeBuds 7i</p>
+      <p class="gzy_banner-sub">智慧动态降噪40dB | 海阔天空配色 | 消噪智能耳机</p>
+    </div>
+  </div>
+
+  <!-- ===================== 优惠券浮动条（对照截图，位于下导航上方） ===================== -->
+  <div class="gzy_coupon">
+    <span class="gzy_coupon-icon">¥</span>
+    <span class="gzy_coupon-text">您有<b>4张共240元</b>消费券待领取</span>
+    <button class="gzy_coupon-btn" type="button">领240元</button>
+    <button class="gzy_coupon-close" type="button">✕</button>
+  </div>
+
+  <!-- ===================== 固定下导航（5项，图标与截图一模一样） ===================== -->
+  <nav class="gzy_nav">
+    <a href="#" class="gzy_nav-item gzy_active">
+      <svg class="gzy_nav-icon"><use href="#guan-ico-taobao"/></svg>
+      <span class="gzy_nav-label">淘宝</span>
+    </a>
+    <a href="#" class="gzy_nav-item">
+      <svg class="gzy_nav-icon"><use href="#guan-ico-video"/></svg>
+      <span class="gzy_nav-label">视频</span>
+    </a>
+    <a href="#" class="gzy_nav-item">
+      <svg class="gzy_nav-icon"><use href="#guan-ico-msg"/></svg>
+      <span class="gzy_nav-label">消息</span>
+      <i class="gzy_badge">3</i>
+    </a>
+    <a href="#" class="gzy_nav-item">
+      <svg class="gzy_nav-icon"><use href="#guan-ico-cart"/></svg>
+      <span class="gzy_nav-label">购物车</span>
+    </a>
+    <a href="#" class="gzy_nav-item">
+      <svg class="gzy_nav-icon"><use href="#guan-ico-smile"/></svg>
+      <span class="gzy_nav-label">我的淘宝</span>
+    </a>
+  </nav>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-26，功能名称：数7游戏100盒子演示 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数7游戏 — 100个盒子</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .gzy_container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .gzy_back-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .gzy_back-link:hover {
+            text-decoration: underline;
+        }
+        .gzy_container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .gzy_subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        .gzy_subtitle b {
+            color: #e67e22;
+        }
+        .gzy_rules {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+        .gzy_rules ul {
+            margin-left: 20px;
+        }
+        .gzy_legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .gzy_legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .gzy_dot {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+        .gzy_dot_num {
+            background: #fff;
+            border: 2px solid #3498db;
+        }
+        .gzy_dot_pass {
+            background: #f39c12;
+        }
+        .gzy_grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .gzy_box {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            border: 2px solid #3498db;
+            background: #fff;
+            color: #2c3e50;
+        }
+        .gzy_box_pass {
+            background: #f39c12;
+            border-color: #e67e22;
+            color: #fff;
+            font-size: 18px;
+        }
+        .gzy_summary {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+            color: #2c3e50;
+        }
+        .gzy_summary b {
+            color: #e67e22;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>数7游戏（100个盒子）</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 满足规则的盒子输出"过"，不满足的输出数字</p>
+
+        <div class="gzy_rules">
+            <b>数7规则</b>（1 ~ 100）：
+            <ul>
+                <li>7 的倍数：7、14、21……98</li>
+                <li>末尾是 7 的数：7、17、27……97</li>
+                <li>十位是 7 的数：70 ~ 79</li>
+            </ul>
+        </div>
+
+        <div class="gzy_legend">
+            <span><i class="gzy_dot gzy_dot_num"></i>普通数字（可数）</span>
+            <span><i class="gzy_dot gzy_dot_pass"></i>过（跳过）</span>
+        </div>
+
+        <div class="gzy_grid" id="gzy_grid"></div>
+
+        <p class="gzy_summary" id="gzy_summary"></p>
+    </div>
+
+    <script>
+        // 判断数字 n 是否满足数7规则：7的倍数 或 数字中含有7（末尾是7、十位是7）
+        function gzy_isPass(gzy_n) {
+            return gzy_n % 7 === 0 || String(gzy_n).indexOf("7") !== -1;
+        }
+
+        // 生成100个盒子
+        var gzy_grid = document.getElementById("gzy_grid");
+        var gzy_html = "";
+        var gzy_passCount = 0;
+        for (var gzy_i = 1; gzy_i <= 100; gzy_i++) {
+            if (gzy_isPass(gzy_i)) {
+                // 满足规则：输出"过"盒子
+                gzy_passCount++;
+                gzy_html += '<div class="gzy_box gzy_box_pass">过</div>';
+            } else {
+                // 不满足规则：输出盒子内部是数字
+                gzy_html += '<div class="gzy_box">' + gzy_i + '</div>';
+            }
+        }
+        gzy_grid.innerHTML = gzy_html;
+
+        // 统计结果
+        document.getElementById("gzy_summary").innerHTML =
+            "管忠煜的数7统计：1~100 中共需要喊 <b>过</b> 的盒子有 <b>" + gzy_passCount + "</b> 个（绿色/橙色盒子），正常报数的有 " + (100 - gzy_passCount) + " 个。";
+    </script>
+</body>
+</html>

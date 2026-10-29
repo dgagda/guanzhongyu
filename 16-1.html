@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-29，功能名称：JavaScript主要数组方法可视化演示 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 主要数组方法可视化演示</title>
+    <link rel="stylesheet" href="font/download/font_5244824_6g11xscq6b9/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 30px 20px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .gzy_container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .gzy_back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+            color: #4299e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .gzy_back-link:hover {
+            text-decoration: underline;
+        }
+        .gzy_container h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .gzy_subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        .gzy_subtitle b {
+            color: #3498db;
+        }
+
+        /* ===== 数组舞台 ===== */
+        .gzy_stage {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #9b59b6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .gzy_stage_title {
+            font-size: 18px;
+            color: #6c3483;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .gzy_array-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            min-height: 90px;
+            padding: 12px;
+            background: #f8f4fd;
+            border: 2px dashed #d2b4de;
+            border-radius: 10px;
+        }
+        .gzy_bracket {
+            font-size: 42px;
+            font-weight: bold;
+            color: #9b59b6;
+            font-family: Consolas, monospace;
+        }
+        .gzy_empty-tip {
+            color: #b2abb3;
+            font-size: 14px;
+        }
+        .gzy_box-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: gzy_boxIn 0.4s ease;
+        }
+        @keyframes gzy_boxIn {
+            from { transform: scale(0.2); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .gzy_box {
+            width: 58px;
+            height: 58px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.18);
+            transition: transform 0.3s;
+        }
+        .gzy_box:hover {
+            transform: translateY(-6px) scale(1.08);
+        }
+        .gzy_box_c0 { background: #e74c3c; }
+        .gzy_box_c1 { background: #e67e22; }
+        .gzy_box_c2 { background: #f1c40f; color: #7d6608; }
+        .gzy_box_c3 { background: #2ecc71; }
+        .gzy_box_c4 { background: #1abc9c; }
+        .gzy_box_c5 { background: #3498db; }
+        .gzy_box_c6 { background: #9b59b6; }
+        .gzy_index {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #8e44ad;
+            font-family: Consolas, monospace;
+        }
+        .gzy_box_flash .gzy_box {
+            animation: gzy_flash 0.8s ease;
+        }
+        @keyframes gzy_flash {
+            0%, 100% { box-shadow: 0 3px 6px rgba(0,0,0,0.18); }
+            50%      { box-shadow: 0 0 0 6px rgba(231,76,60,0.45); }
+        }
+
+        /* ===== 代码与结果 ===== */
+        .gzy_stage_code {
+            margin-top: 18px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            min-height: 42px;
+            text-align: left;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .gzy_stage_code b {
+            color: #f1c40f;
+        }
+        .gzy_stage_result {
+            margin-top: 10px;
+            background: #eafaf1;
+            border: 1px dashed #2ecc71;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 14px;
+            min-height: 40px;
+            text-align: left;
+            line-height: 1.8;
+            word-break: break-all;
+        }
+        .gzy_stage_result b {
+            color: #e74c3c;
+        }
+
+        /* ===== 输入行 ===== */
+        .gzy_ctrl-row {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .gzy_input {
+            width: 90px;
+            padding: 8px 10px;
+            border: 2px solid #dfe6e9;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        .gzy_input:focus {
+            border-color: #9b59b6;
+        }
+
+        /* ===== 方法卡片 ===== */
+        .gzy_grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .gzy_card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+        .gzy_card_remove { border-top-color: #e74c3c; }
+        .gzy_card_find   { border-top-color: #27ae60; }
+        .gzy_card_high   { border-top-color: #f39c12; }
+        .gzy_card h2 {
+            font-size: 17px;
+            color: #2c3e50;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .gzy_btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 8px;
+            padding: 9px 12px;
+            border: none;
+            border-radius: 6px;
+            background: #3498db;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: Consolas, "Microsoft YaHei", monospace;
+            transition: opacity 0.2s, transform 0.15s;
+            text-align: left;
+        }
+        .gzy_card_remove .gzy_btn { background: #e74c3c; }
+        .gzy_card_find .gzy_btn   { background: #27ae60; }
+        .gzy_card_high .gzy_btn   { background: #f39c12; }
+        .gzy_btn:hover {
+            opacity: 0.85;
+            transform: translateX(3px);
+        }
+        .gzy_btn span.gzy_desc {
+            margin-left: auto;
+            font-size: 11px;
+            opacity: 0.85;
+            font-family: "Microsoft YaHei";
+        }
+
+        /* ===== 知识点小结 ===== */
+        .gzy_note {
+            margin-top: 25px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 14px;
+            color: #7d6608;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link"><i class="iconfont icon-shouye"></i> 返回首页</a>
+        <h1>JavaScript 主要数组方法可视化演示</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 点击下方按钮，形象地观察每个数组方法对数组"盒子"的影响</p>
+
+        <!-- 数组舞台 -->
+        <div class="gzy_stage">
+            <div class="gzy_stage_title"><i class="iconfont icon-a-ziyuan1"></i> 数组舞台（当前数组）</div>
+            <div class="gzy_array-wrap" id="gzy_arrayWrap">
+                <span class="gzy_bracket">[</span>
+                <span id="gzy_arrayBoxes"></span>
+                <span class="gzy_bracket">]</span>
+            </div>
+            <div class="gzy_stage_code" id="gzy_stageCode">点击任意方法按钮开始演示……</div>
+            <div class="gzy_stage_result" id="gzy_stageResult"></div>
+            <div class="gzy_ctrl-row">
+                <label>数值：<input type="number" class="gzy_input" id="gzy_valueInput" value="60"></label>
+                <label>起始：<input type="number" class="gzy_input" id="gzy_startInput" value="1"></label>
+                <label>个数：<input type="number" class="gzy_input" id="gzy_countInput" value="2"></label>
+            </div>
+        </div>
+
+        <!-- 方法卡片 -->
+        <div class="gzy_grid">
+            <!-- 增加类 -->
+            <div class="gzy_card">
+                <h2><i class="iconfont icon-addNode"></i> 一、增加元素</h2>
+                <button class="gzy_btn" onclick="gzy_push()"><i class="iconfont icon-addNode"></i> push()<span class="gzy_desc">末尾添加，返回新长度</span></button>
+                <button class="gzy_btn" onclick="gzy_unshift()"><i class="iconfont icon-addNode"></i> unshift()<span class="gzy_desc">开头添加，返回新长度</span></button>
+                <button class="gzy_btn" onclick="gzy_concat()"><i class="iconfont icon-addNode"></i> concat()<span class="gzy_desc">合并数组，不改变原数组</span></button>
+            </div>
+
+            <!-- 删除类 -->
+            <div class="gzy_card gzy_card_remove">
+                <h2><i class="iconfont icon-shanchu"></i> 二、删除元素</h2>
+                <button class="gzy_btn" onclick="gzy_pop()"><i class="iconfont icon-shanchu"></i> pop()<span class="gzy_desc">删除末尾，返回该元素</span></button>
+                <button class="gzy_btn" onclick="gzy_shift()"><i class="iconfont icon-shanchu"></i> shift()<span class="gzy_desc">删除开头，返回该元素</span></button>
+                <button class="gzy_btn" onclick="gzy_splice()"><i class="iconfont icon-shanchu"></i> splice()<span class="gzy_desc">任意位置删除</span></button>
+            </div>
+
+            <!-- 查找判断类 -->
+            <div class="gzy_card gzy_card_find">
+                <h2><i class="iconfont icon-sousuo"></i> 三、查找与判断</h2>
+                <button class="gzy_btn" onclick="gzy_indexOf()"><i class="iconfont icon-sousuo"></i> indexOf()<span class="gzy_desc">查找索引，找不到返回 -1</span></button>
+                <button class="gzy_btn" onclick="gzy_includes()"><i class="iconfont icon-sousuo"></i> includes()<span class="gzy_desc">是否包含，返回 true/false</span></button>
+                <button class="gzy_btn" onclick="gzy_find()"><i class="iconfont icon-sousuo"></i> find()<span class="gzy_desc">找第一个大于 25 的元素</span></button>
+                <button class="gzy_btn" onclick="gzy_someEvery()"><i class="iconfont icon-sousuo"></i> some() / every()<span class="gzy_desc">部分满足 / 全部满足</span></button>
+            </div>
+
+            <!-- 转换类 -->
+            <div class="gzy_card">
+                <h2><i class="iconfont icon-icon_zhongxinshengcheng"></i> 四、转换与排序</h2>
+                <button class="gzy_btn" onclick="gzy_slice()"><i class="iconfont icon-icon_zhongxinshengcheng"></i> slice()<span class="gzy_desc">截取片段，不改变原数组</span></button>
+                <button class="gzy_btn" onclick="gzy_join()"><i class="iconfont icon-icon_zhongxinshengcheng"></i> join()<span class="gzy_desc">数组转字符串</span></button>
+                <button class="gzy_btn" onclick="gzy_reverse()"><i class="iconfont icon-icon_zhongxinshengcheng"></i> reverse()<span class="gzy_desc">反转数组</span></button>
+                <button class="gzy_btn" onclick="gzy_sort()"><i class="iconfont icon-icon_zhongxinshengcheng"></i> sort()<span class="gzy_desc">排序（升序）</span></button>
+            </div>
+
+            <!-- 高阶方法 -->
+            <div class="gzy_card gzy_card_high">
+                <h2><i class="iconfont icon-doubao"></i> 五、高阶（遍历）方法</h2>
+                <button class="gzy_btn" onclick="gzy_forEach()"><i class="iconfont icon-doubao"></i> forEach()<span class="gzy_desc">逐个访问每个元素</span></button>
+                <button class="gzy_btn" onclick="gzy_map()"><i class="iconfont icon-doubao"></i> map()<span class="gzy_desc">每个元素 ×2，返回新数组</span></button>
+                <button class="gzy_btn" onclick="gzy_filter()"><i class="iconfont icon-doubao"></i> filter()<span class="gzy_desc">筛出偶数，返回新数组</span></button>
+                <button class="gzy_btn" onclick="gzy_reduce()"><i class="iconfont icon-doubao"></i> reduce()<span class="gzy_desc">累加求和，返回单个值</span></button>
+            </div>
+        </div>
+
+        <div class="gzy_note">
+            <b>知识点小结：</b>
+            <b>push/pop</b> 操作数组末尾，<b>shift/unshift</b> 操作数组开头（均改变原数组）；
+            <b>slice / concat / map / filter</b> 不改变原数组，返回新数组；
+            <b>splice / reverse / sort</b> 直接改变原数组；
+            <b>indexOf / includes / find / some / every</b> 用于查找和判断；
+            <b>forEach / reduce</b> 用于遍历与汇总。
+        </div>
+    </div>
+
+    <script>
+        // ========== 数组状态 ==========
+        var gzy_arr = [10, 20, 30, 40, 50];
+
+        // 渲染数组盒子
+        function gzy_render(gzy_flashIndex) {
+            var gzy_html = "";
+            for (var gzy_i = 0; gzy_i < gzy_arr.length; gzy_i++) {
+                var gzy_cls = "gzy_box-item";
+                if (gzy_flashIndex !== undefined && gzy_flashIndex === gzy_i) {
+                    gzy_cls += " gzy_box_flash";
+                }
+                gzy_html += '<div class="' + gzy_cls + '">' +
+                    '<div class="gzy_box gzy_box_c' + (gzy_i % 7) + '">' + gzy_arr[gzy_i] + '</div>' +
+                    '<div class="gzy_index">[' + gzy_i + ']</div></div>';
+            }
+            if (gzy_arr.length === 0) {
+                gzy_html = '<span class="gzy_empty-tip">（空数组）</span>';
+            }
+            document.getElementById("gzy_arrayBoxes").innerHTML = gzy_html;
+            document.getElementById("gzy_stageResult").innerHTML =
+                "当前数组：<b>[" + gzy_arr.join(", ") + "]</b>，长度 length = <b>" + gzy_arr.length + "</b>";
+        }
+
+        // 读取输入值
+        function gzy_getValue() {
+            return Number(document.getElementById("gzy_valueInput").value);
+        }
+        function gzy_getStart() {
+            return Number(document.getElementById("gzy_startInput").value);
+        }
+        function gzy_getCount() {
+            return Number(document.getElementById("gzy_countInput").value);
+        }
+
+        // 显示执行代码与结果
+        function gzy_show(gzy_code, gzy_result) {
+            document.getElementById("gzy_stageCode").innerHTML = gzy_code;
+            document.getElementById("gzy_stageResult").innerHTML =
+                "运行结果：<b>" + gzy_result + "</b><br>当前数组：[" + gzy_arr.join(", ") + "]";
+            console.log(gzy_code.replace(/<[^>]+>/g, "") + " → " + gzy_result);
+        }
+
+        // ========== 一、增加元素 ==========
+        function gzy_push() {
+            var gzy_v = gzy_getValue();
+            var gzy_len = gzy_arr.push(gzy_v);
+            gzy_show("gzy_arr.push(<b>" + gzy_v + "</b>)  // 末尾添加",
+                "返回新长度 " + gzy_len + "，元素 " + gzy_v + " 已加入末尾");
+            gzy_render(gzy_arr.length - 1);
+        }
+        function gzy_unshift() {
+            var gzy_v = gzy_getValue();
+            var gzy_len = gzy_arr.unshift(gzy_v);
+            gzy_show("gzy_arr.unshift(<b>" + gzy_v + "</b>)  // 开头添加",
+                "返回新长度 " + gzy_len + "，元素 " + gzy_v + " 已加入开头，其余元素索引全部后移");
+            gzy_render(0);
+        }
+        function gzy_concat() {
+            var gzy_v = gzy_getValue();
+            var gzy_newArr = gzy_arr.concat([gzy_v, gzy_v + 10]);
+            gzy_show("var gzy_new = gzy_arr.concat([" + gzy_v + ", " + (gzy_v + 10) + "])",
+                "合并得到新数组 [" + gzy_newArr.join(", ") + "]，<b>原数组不变</b>");
+            gzy_render();
+        }
+
+        // ========== 二、删除元素 ==========
+        function gzy_pop() {
+            if (gzy_arr.length === 0) { gzy_show("gzy_arr.pop()", "数组已为空，返回 undefined"); gzy_render(); return; }
+            var gzy_last = gzy_arr.pop();
+            gzy_show("gzy_arr.pop()  // 删除末尾",
+                "返回被删除的元素 <b>" + gzy_last + "</b>，数组末尾变空");
+            gzy_render();
+        }
+        function gzy_shift() {
+            if (gzy_arr.length === 0) { gzy_show("gzy_arr.shift()", "数组已为空，返回 undefined"); gzy_render(); return; }
+            var gzy_first = gzy_arr.shift();
+            gzy_show("gzy_arr.shift()  // 删除开头",
+                "返回被删除的元素 <b>" + gzy_first + "</b>，其余元素索引全部前移");
+            gzy_render(0);
+        }
+        function gzy_splice() {
+            var gzy_s = gzy_getStart(), gzy_c = gzy_getCount();
+            var gzy_removed = gzy_arr.splice(gzy_s, gzy_c);
+            gzy_show("gzy_arr.splice(<b>" + gzy_s + "</b>, <b>" + gzy_c + "</b>)  // 从索引 " + gzy_s + " 删除 " + gzy_c + " 个",
+                "返回被删除的元素 [" + gzy_removed.join(", ") + "]，原数组被直接修改");
+            gzy_render();
+        }
+
+        // ========== 三、查找与判断 ==========
+        function gzy_indexOf() {
+            var gzy_v = gzy_getValue();
+            var gzy_idx = gzy_arr.indexOf(gzy_v);
+            gzy_show("gzy_arr.indexOf(<b>" + gzy_v + "</b>)",
+                gzy_idx === -1 ? "未找到，返回 <b>-1</b>" : "找到，索引为 <b>" + gzy_idx + "</b>");
+            gzy_render(gzy_idx === -1 ? undefined : gzy_idx);
+        }
+        function gzy_includes() {
+            var gzy_v = gzy_getValue();
+            var gzy_has = gzy_arr.includes(gzy_v);
+            gzy_show("gzy_arr.includes(<b>" + gzy_v + "</b>)",
+                "返回 <b>" + gzy_has + "</b>（" + (gzy_has ? "数组包含该元素" : "数组不包含该元素") + "）");
+            gzy_render();
+        }
+        function gzy_find() {
+            var gzy_found = gzy_arr.find(function (gzy_x) { return gzy_x > 25; });
+            var gzy_idx = gzy_arr.findIndex(function (gzy_x) { return gzy_x > 25; });
+            gzy_show("gzy_arr.find(gzy_x =&gt; gzy_x &gt; 25)",
+                gzy_found === undefined ? "没有大于 25 的元素，返回 <b>undefined</b>" :
+                "找到第一个大于 25 的元素 <b>" + gzy_found + "</b>（索引 " + gzy_idx + "），findIndex 返回 " + gzy_idx);
+            gzy_render(gzy_idx === -1 ? undefined : gzy_idx);
+        }
+        function gzy_someEvery() {
+            var gzy_some = gzy_arr.some(function (gzy_x) { return gzy_x > 25; });
+            var gzy_every = gzy_arr.every(function (gzy_x) { return gzy_x > 25; });
+            gzy_show("gzy_arr.some(gzy_x =&gt; gzy_x &gt; 25) / gzy_arr.every(gzy_x =&gt; gzy_x &gt; 25)",
+                "some 返回 <b>" + gzy_some + "</b>（存在大于 25 的元素）；every 返回 <b>" + gzy_every + "</b>（是否全部大于 25）");
+            gzy_render();
+        }
+
+        // ========== 四、转换与排序 ==========
+        function gzy_slice() {
+            var gzy_s = gzy_getStart(), gzy_c = gzy_getCount();
+            var gzy_part = gzy_arr.slice(gzy_s, gzy_s + gzy_c);
+            gzy_show("gzy_arr.slice(<b>" + gzy_s + "</b>, <b>" + (gzy_s + gzy_c) + "</b>)  // 含头不含尾",
+                "截取得到新数组 [" + gzy_part.join(", ") + "]，<b>原数组不变</b>");
+            gzy_render();
+        }
+        function gzy_join() {
+            var gzy_str = gzy_arr.join("-");
+            gzy_show('gzy_arr.join(<b>"-"</b>)', '得到字符串 <b>"' + gzy_str + '"</b>（数组 → 字符串）');
+            gzy_render();
+        }
+        function gzy_reverse() {
+            gzy_arr.reverse();
+            gzy_show("gzy_arr.reverse()", "数组已反转，原数组被直接修改");
+            gzy_render();
+        }
+        function gzy_sort() {
+            gzy_arr.sort(function (gzy_a, gzy_b) { return gzy_a - gzy_b; });
+            gzy_show("gzy_arr.sort((gzy_a, gzy_b) =&gt; gzy_a - gzy_b)", "数组已按数值升序排序（注意：不带比较函数时按字符串排序）");
+            gzy_render();
+        }
+
+        // ========== 五、高阶（遍历）方法 ==========
+        function gzy_forEach() {
+            var gzy_out = [];
+            gzy_arr.forEach(function (gzy_x, gzy_i) { gzy_out.push("[" + gzy_i + "]=" + gzy_x); });
+            gzy_show("gzy_arr.forEach((gzy_x, gzy_i) =&gt; ...)", "逐个访问：" + gzy_out.join("，") + "（forEach 本身无返回值）");
+            gzy_render();
+        }
+        function gzy_map() {
+            var gzy_newArr = gzy_arr.map(function (gzy_x) { return gzy_x * 2; });
+            gzy_show("gzy_arr.map(gzy_x =&gt; gzy_x * 2)",
+                "每个元素 ×2 得到新数组 [" + gzy_newArr.join(", ") + "]，<b>原数组不变</b>");
+            gzy_render();
+        }
+        function gzy_filter() {
+            var gzy_newArr = gzy_arr.filter(function (gzy_x) { return gzy_x % 2 === 0; });
+            gzy_show("gzy_arr.filter(gzy_x =&gt; gzy_x % 2 === 0)",
+                "筛出偶数得到新数组 [" + gzy_newArr.join(", ") + "]，<b>原数组不变</b>");
+            gzy_render();
+        }
+        function gzy_reduce() {
+            var gzy_sum = gzy_arr.reduce(function (gzy_acc, gzy_x) { return gzy_acc + gzy_x; }, 0);
+            gzy_show("gzy_arr.reduce((gzy_acc, gzy_x) =&gt; gzy_acc + gzy_x, 0)",
+                "从 0 开始累加，得到总和 <b>" + gzy_sum + "</b>（多个值 → 一个值）");
+            gzy_render();
+        }
+
+        // 页面加载后先渲染初始数组
+        gzy_render();
+    </script>
+</body>
+</html>

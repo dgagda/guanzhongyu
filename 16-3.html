@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-29，功能名称：仿淘宝双11开门红首页 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>淘宝 - 双11开门红</title>
+    <link rel="stylesheet" href="font/download/font_5244824_6g11xscq6b9/iconfont.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            min-width: 1200px;
+        }
+        a { text-decoration: none; color: inherit; }
+        .gzy_page { max-width: 1200px; margin: 0 auto; background: #fff; }
+        .gzy_back-link {
+            position: absolute; top: 8px; left: 10px; z-index: 99;
+            display: inline-flex; align-items: center; gap: 4px;
+            color: #fff; font-size: 13px; opacity: 0.9;
+        }
+        .gzy_back-link:hover { opacity: 1; text-decoration: underline; }
+
+        /* ===== 顶部红色活动条 ===== */
+        .gzy_topbar {
+            background: linear-gradient(90deg, #ff2d00, #ff5000 55%, #ff2d00);
+            height: 70px;
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            position: relative; overflow: hidden;
+        }
+        .gzy_topbar_mascot {
+            font-size: 44px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+        }
+        .gzy_topbar_text {
+            color: #fff; font-size: 26px; font-weight: 900; letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .gzy_topbar_text small { font-size: 16px; font-weight: 700; margin-left: 14px; letter-spacing: 1px; }
+        .gzy_topbar_btn {
+            background: #fff; color: #ff2d00; font-weight: 900; font-size: 16px;
+            padding: 9px 26px; border-radius: 6px; border: none; cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        /* ===== 头部：logo + 搜索 + 右侧 ===== */
+        .gzy_header {
+            display: flex; align-items: flex-start; padding: 18px 20px 0; gap: 20px;
+        }
+        .gzy_logo {
+            width: 130px; flex-shrink: 0; padding-top: 4px;
+        }
+        .gzy_logo_txt {
+            font-size: 40px; font-weight: 900; color: #ff5000;
+            font-family: "Microsoft YaHei"; letter-spacing: -2px; line-height: 1;
+        }
+        .gzy_logo_txt i { font-style: normal; color: #333; font-size: 22px; font-weight: 700; }
+        .gzy_logo_sub { color: #ff5000; font-size: 14px; font-weight: 700; margin-top: 2px; }
+
+        .gzy_search_area { flex: 1; }
+        .gzy_search_box {
+            display: flex; align-items: center;
+            border: 2px solid #ff5000; border-radius: 8px; height: 42px; overflow: hidden;
+        }
+        .gzy_search_tab {
+            display: flex; align-items: center; gap: 4px;
+            padding: 0 14px; font-size: 14px; color: #333; cursor: pointer;
+            border-right: 1px solid #eee; height: 100%;
+        }
+        .gzy_search_tab .iconfont { font-size: 12px; color: #999; }
+        .gzy_search_input {
+            flex: 1; height: 100%; border: none; outline: none;
+            padding: 0 14px; font-size: 14px; color: #333;
+        }
+        .gzy_search_input::placeholder { color: #333; }
+        .gzy_search_btn {
+            background: linear-gradient(90deg, #ff7000, #ff4e00);
+            color: #fff; font-size: 16px; font-weight: 700;
+            border: none; padding: 0 30px; height: 100%; cursor: pointer;
+        }
+        .gzy_search_same {
+            display: flex; align-items: center; gap: 5px;
+            margin-left: 12px; color: #333; font-size: 14px; cursor: pointer; white-space: nowrap;
+        }
+        .gzy_search_same .iconfont { color: #ff5000; font-size: 18px; }
+        .gzy_hotwords {
+            margin-top: 8px; display: flex; align-items: center; gap: 14px;
+            font-size: 12px; color: #666; flex-wrap: nowrap; overflow: hidden; white-space: nowrap;
+        }
+        .gzy_hotwords .gzy_hot_tmall { color: #ff5000; font-weight: 700; }
+        .gzy_hotwords .gzy_hot_zhe { color: #fff; background: #ff5000; border-radius: 3px; padding: 1px 4px; }
+        .gzy_hotwords span:hover { color: #ff5000; cursor: pointer; }
+
+        .gzy_header_promo {
+            width: 210px; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding-top: 2px;
+        }
+        .gzy_header_promo_icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffd08a, #ff9500);
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+        }
+        .gzy_header_promo_txt { font-size: 14px; font-weight: 700; color: #333; line-height: 1.5; }
+        .gzy_header_promo_txt a { color: #ff5000; font-size: 12px; font-weight: 400; }
+        .gzy_header_promo_mascot { font-size: 40px; margin-left: auto; }
+
+        /* ===== 频道导航 ===== */
+        .gzy_channels {
+            display: flex; justify-content: flex-end; gap: 30px;
+            padding: 10px 30px 12px 170px; font-size: 15px; font-weight: 700; color: #333;
+        }
+        .gzy_channels a { display: flex; align-items: center; gap: 6px; }
+        .gzy_channels a:hover { color: #ff5000; }
+        .gzy_channels .iconfont { font-size: 18px; }
+        .gzy_channels .gzy_ch_red { color: #ff2d00; }
+
+        /* ===== 主体布局 ===== */
+        .gzy_main { display: flex; padding: 0 20px 20px; gap: 14px; }
+
+        /* 左侧分类栏 */
+        .gzy_sidebar { width: 120px; flex-shrink: 0; }
+        .gzy_sidebar_top { display: flex; gap: 22px; padding: 4px 0 10px; font-size: 15px; font-weight: 700; }
+        .gzy_sidebar_top a:hover { color: #ff5000; }
+        .gzy_sidebar_list { list-style: none; }
+        .gzy_sidebar_list li {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 0; font-size: 13px; color: #333; cursor: pointer;
+        }
+        .gzy_sidebar_list li:hover { color: #ff5000; }
+        .gzy_sidebar_list .gzy_dot {
+            width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 10px;
+        }
+        .gzy_dot_1 { background: #ff2d00; } .gzy_dot_2 { background: #ff7a00; }
+        .gzy_dot_3 { background: #f5a623; } .gzy_dot_4 { background: #e60012; }
+        .gzy_dot_5 { background: #ff5000; } .gzy_dot_6 { background: #ff85c0; }
+        .gzy_dot_7 { background: #7b68ee; } .gzy_dot_8 { background: #00b578; }
+        .gzy_dot_9 { background: #00a2ff; }
+
+        /* 右侧内容区 */
+        .gzy_content { flex: 1; display: flex; gap: 14px; }
+        .gzy_content_left { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+        .gzy_row1 { display: flex; gap: 14px; }
+
+        /* 大banner */
+        .gzy_banner {
+            width: 46%; border-radius: 12px; padding: 22px 20px; position: relative;
+            background: linear-gradient(120deg, #ff3a2d, #ff6a00 70%, #ff8a00);
+            color: #fff; overflow: hidden; min-height: 210px;
+        }
+        .gzy_banner_tag { font-size: 14px; font-weight: 700; opacity: 0.95; }
+        .gzy_banner h2 { font-size: 26px; font-weight: 900; line-height: 1.4; margin: 6px 0 10px; }
+        .gzy_banner p { font-size: 14px; font-weight: 700; }
+        .gzy_banner_coupon {
+            position: absolute; right: 14px; top: 30px; font-size: 84px;
+            transform: rotate(-12deg);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+        }
+        .gzy_banner_dots {
+            position: absolute; left: 22px; bottom: 14px; display: flex; gap: 7px;
+        }
+        .gzy_banner_dots i {
+            width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5);
+        }
+        .gzy_banner_dots i.gzy_active { background: #fff; }
+
+        /* 百亿补贴 */
+        .gzy_subsidy {
+            flex: 1; border-radius: 12px; padding: 12px;
+            background: linear-gradient(180deg, #ff2d55, #ff6a6a);
+            min-width: 0;
+        }
+        .gzy_subsidy_title { color: #fff; font-size: 16px; font-weight: 900; margin-bottom: 10px; padding-left: 4px; }
+        .gzy_subsidy_goods { display: flex; gap: 10px; }
+        .gzy_subsidy_item {
+            flex: 1; background: #fff; border-radius: 8px; padding: 8px 6px; text-align: center;
+        }
+        .gzy_subsidy_item .gzy_goods_img {
+            height: 74px; display: flex; align-items: center; justify-content: center; font-size: 44px;
+        }
+        .gzy_subsidy_item .gzy_price { color: #ff2d00; font-weight: 900; font-size: 15px; }
+
+        /* 用户卡片列 */
+        .gzy_user_col { width: 235px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+        .gzy_user_card { background: #fff7f0; border-radius: 12px; padding: 16px; flex: 1; }
+        .gzy_user_head { display: flex; align-items: center; gap: 10px; }
+        .gzy_user_avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #ffd08a, #ff9500);
+            display: flex; align-items: center; justify-content: center; font-size: 24px;
+        }
+        .gzy_user_head b { font-size: 16px; display: block; }
+        .gzy_user_head span { font-size: 12px; color: #999; }
+        .gzy_user_head span a { color: #ff5000; }
+        .gzy_user_tip { font-size: 14px; font-weight: 700; margin: 12px 0 4px; }
+        .gzy_user_tip2 { font-size: 12px; color: #999; margin-bottom: 12px; }
+        .gzy_login_btn {
+            display: block; width: 100%; text-align: center;
+            background: linear-gradient(90deg, #ff7000, #ff4e00);
+            color: #fff; font-size: 16px; font-weight: 700;
+            border: none; border-radius: 20px; padding: 10px 0; cursor: pointer;
+        }
+        .gzy_user_icons { display: flex; justify-content: space-between; margin-top: 14px; }
+        .gzy_user_icons a { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; color: #666; }
+        .gzy_user_icons .iconfont { font-size: 20px; color: #555; }
+
+        /* 淘金币卡片 */
+        .gzy_coin_card {
+            background: #fff; border-radius: 12px; padding: 14px 16px;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .gzy_coin_txt b { font-size: 14px; display: block; }
+        .gzy_coin_txt span { font-size: 12px; color: #999; }
+        .gzy_coin_txt span i { font-style: normal; color: #ff5000; font-weight: 700; }
+        .gzy_coin_btn {
+            margin-left: auto; background: #ff5000; color: #fff; border: none;
+            font-size: 12px; padding: 6px 10px; border-radius: 12px; cursor: pointer;
+        }
+        .gzy_coin_ico {
+            font-size: 34px; color: #ffaa00;
+        }
+
+        /* 第二行商品卡 */
+        .gzy_row2 { display: flex; gap: 14px; }
+        .gzy_goods_card {
+            flex: 1; background: #fff; border-radius: 12px; padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); min-width: 0;
+        }
+        .gzy_goods_card_head { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 900; }
+        .gzy_goods_card_head .gzy_shuang11 { color: #ff2d00; }
+        .gzy_badge {
+            font-size: 10px; color: #fff; background: #ff2d00; border-radius: 4px; padding: 1px 5px; font-weight: 400;
+        }
+        .gzy_badge_green { background: #00b578; }
+        .gzy_goods_body { margin-top: 10px; display: flex; gap: 8px; }
+        .gzy_goods_single { flex: 1; text-align: center; }
+        .gzy_goods_single .gzy_goods_img {
+            height: 110px; background: #f7f7f7; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; font-size: 52px;
+        }
+        .gzy_goods_single .gzy_price { color: #ff5000; font-weight: 900; font-size: 16px; margin-top: 8px; display: block; }
+        .gzy_live_item { flex: 1; position: relative; }
+        .gzy_live_img {
+            height: 110px; border-radius: 8px;
+            display: flex; align-items: flex-end; justify-content: center;
+            font-size: 44px; color: #fff; position: relative; overflow: hidden;
+        }
+        .gzy_live_1 { background: linear-gradient(160deg, #8a6d5c, #5c4634); }
+        .gzy_live_2 { background: linear-gradient(160deg, #e8b3c8, #b97a9a); }
+        .gzy_live_ta {
+            position: absolute; top: 6px; left: 6px;
+            background: rgba(0,0,0,0.55); color: #ffcc00; font-size: 11px; font-weight: 700;
+            border-radius: 4px; padding: 1px 5px;
+        }
+        .gzy_live_name {
+            position: absolute; bottom: 4px; left: 0; right: 0;
+            color: #fff; font-size: 11px; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+<div class="gzy_page">
+    <a href="index.html" class="gzy_back-link"><i class="iconfont icon-shouye"></i> 返回首页</a>
+
+    <!-- 顶部活动条 -->
+    <div class="gzy_topbar">
+        <span class="gzy_topbar_mascot">🐱</span>
+        <div class="gzy_topbar_text">双11开门红 <small>叠券低至7.2折起 多买多省</small></div>
+        <button class="gzy_topbar_btn">立即抢购</button>
+    </div>
+
+    <!-- 头部搜索区 -->
+    <div class="gzy_header">
+        <div class="gzy_logo">
+            <div class="gzy_logo_txt">淘宝<i>.com</i></div>
+            <div class="gzy_logo_sub">taobao.com</div>
+        </div>
+        <div class="gzy_search_area">
+            <div class="gzy_search_box">
+                <div class="gzy_search_tab">宝贝 <i class="iconfont icon-shenglvehao"></i></div>
+                <input class="gzy_search_input" value="石灰窑老字号水晶饼 双11开门红">
+                <button class="gzy_search_btn">搜索</button>
+            </div>
+            <div class="gzy_hotwords">
+                <span class="gzy_hot_tmall">天猫</span>
+                <span><i class="gzy_hot_zhe">折</i> 企业采购8.5折起</span>
+                <span>下单拿Airpods5</span>
+                <span>影之万券发等</span>
+                <span>猫咪营养补充剂</span>
+                <span>狗狗营养环球钙片</span>
+                <span>宠物营养补充剂</span>
+                <span>老年犬狗粮钙片</span>
+            </div>
+        </div>
+        <a class="gzy_search_same"><i class="iconfont icon-paizhao"></i> 搜索同款</a>
+        <div class="gzy_header_promo">
+            <div class="gzy_header_promo_icon">🧧</div>
+            <div class="gzy_header_promo_txt">
+                天天领元宝换红包<br>
+                <a>开启淘江湖 ›</a>
+            </div>
+            <div class="gzy_header_promo_mascot">👲</div>
+        </div>
+    </div>
+
+    <!-- 频道导航 -->
+    <div class="gzy_channels">
+        <a><i class="iconfont icon-zhibo"></i> 宝贝直播</a>
+        <a><i class="iconfont icon-shangcheng"></i> 阿里企业购</a>
+        <a><i class="iconfont icon-paizhao"></i> 司法拍卖</a>
+        <a><i class="iconfont icon-gengduo"></i> 天猫超市</a>
+        <a><i class="iconfont icon-jifen"></i> 国家补贴</a>
+        <a><i class="iconfont icon-doubao"></i> 领券中心</a>
+        <a class="gzy_ch_red"><i class="iconfont icon-icon_zhongxinshengcheng"></i> 双11开门红</a>
+        <a><i class="iconfont icon-a-ziyuan1"></i> 全部频道</a>
+    </div>
+
+    <!-- 主体 -->
+    <div class="gzy_main">
+        <!-- 左侧分类 -->
+        <div class="gzy_sidebar">
+            <div class="gzy_sidebar_top">
+                <a>天猫</a><a>店铺</a>
+            </div>
+            <ul class="gzy_sidebar_list">
+                <li><i class="gzy_dot gzy_dot_1">电</i> 电器 / 办公 / 文具</li>
+                <li><i class="gzy_dot gzy_dot_2">手</i> 手机 / 通讯 / 数码</li>
+                <li><i class="gzy_dot gzy_dot_3">商</i> 商业 / 文化 / 定制</li>
+                <li><i class="gzy_dot gzy_dot_4">家</i> 家装 / 家居 / 家具</li>
+                <li><i class="gzy_dot gzy_dot_5">女</i> 女装 / 内衣 / 配饰</li>
+                <li><i class="gzy_dot gzy_dot_6">鞋</i> 男鞋 / 运动 / 户外</li>
+                <li><i class="gzy_dot gzy_dot_7">珠</i> 珠宝 / 文玩 / 箱包</li>
+                <li><i class="gzy_dot gzy_dot_8">花</i> 鲜花 / 酒水 / 健康</li>
+                <li><i class="gzy_dot gzy_dot_9">童</i> 童装 / 玩具 / 宠物</li>
+            </ul>
+        </div>
+
+        <!-- 右侧内容 -->
+        <div class="gzy_content">
+            <div class="gzy_content_left">
+                <!-- 第一行：大banner + 百亿补贴 -->
+                <div class="gzy_row1">
+                    <div class="gzy_banner">
+                        <div class="gzy_banner_tag">双11开门红</div>
+                        <h2>抢官方补贴<br>来领券中心</h2>
+                        <p>88VIP领1555元消费券</p>
+                        <div class="gzy_banner_coupon">🎟️</div>
+                        <div class="gzy_banner_dots">
+                            <i class="gzy_active"></i><i></i><i></i><i></i><i></i>
+                        </div>
+                    </div>
+                    <div class="gzy_subsidy">
+                        <div class="gzy_subsidy_title">双11 百亿补贴 · 买贵必赔</div>
+                        <div class="gzy_subsidy_goods">
+                            <div class="gzy_subsidy_item">
+                                <div class="gzy_goods_img">🧴</div>
+                                <div class="gzy_price">¥8925</div>
+                            </div>
+                            <div class="gzy_subsidy_item">
+                                <div class="gzy_goods_img">🛏️</div>
+                                <div class="gzy_price">¥20000</div>
+                            </div>
+                            <div class="gzy_subsidy_item">
+                                <div class="gzy_goods_img">🛋️</div>
+                                <div class="gzy_price">¥14999</div>
+                            </div>
+                            <div class="gzy_subsidy_item">
+                                <div class="gzy_goods_img">🍽️</div>
+                                <div class="gzy_price">¥10999</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二行：四个商品卡 -->
+                <div class="gzy_row2">
+                    <div class="gzy_goods_card">
+                        <div class="gzy_goods_card_head"><span class="gzy_shuang11">双11</span> 领券中心</div>
+                        <div class="gzy_goods_body">
+                            <div class="gzy_goods_single">
+                                <div class="gzy_goods_img">💉</div>
+                                <span class="gzy_price">¥8212</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gzy_goods_card">
+                        <div class="gzy_goods_card_head"><span class="gzy_shuang11">双11</span> 淘宝直播 <span class="gzy_badge">直播中</span></div>
+                        <div class="gzy_goods_body">
+                            <div class="gzy_live_item">
+                                <div class="gzy_live_img gzy_live_1"><span class="gzy_live_ta">Ta</span>👩<span class="gzy_live_name">CAML·瓷妆来</span></div>
+                            </div>
+                            <div class="gzy_live_item">
+                                <div class="gzy_live_img gzy_live_2"><span class="gzy_live_ta">Ta</span>👩‍🦱<span class="gzy_live_name">鸭鸭羽绒服</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gzy_goods_card">
+                        <div class="gzy_goods_card_head"><span class="gzy_shuang11">双11</span> 国家补贴 <span class="gzy_badge_green gzy_badge">补贴</span></div>
+                        <div class="gzy_goods_body">
+                            <div class="gzy_goods_single">
+                                <div class="gzy_goods_img">📷</div>
+                                <span class="gzy_price">¥21790</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gzy_goods_card">
+                        <div class="gzy_goods_card_head"><span class="gzy_shuang11">双11</span> 淘宝秒杀 <span class="gzy_badge">限量秒杀</span></div>
+                        <div class="gzy_goods_body">
+                            <div class="gzy_goods_single">
+                                <div class="gzy_goods_img">🍲</div>
+                                <span class="gzy_price">¥498.52</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户列 -->
+            <div class="gzy_user_col">
+                <div class="gzy_user_card">
+                    <div class="gzy_user_head">
+                        <div class="gzy_user_avatar">🧑</div>
+                        <div><b>下午好</b><span>这里有<i style="font-style:normal"> 你</i> 逛店</span></div>
+                    </div>
+                    <div class="gzy_user_tip">登录淘宝后更多精彩</div>
+                    <div class="gzy_user_tip2">嗯！爱淘宝的你，有更爽赚的搜索</div>
+                    <button class="gzy_login_btn">立即登录</button>
+                    <div class="gzy_user_icons">
+                        <a><i class="iconfont icon-icon_zhongxinshengcheng"></i>已签到</a>
+                        <a><i class="iconfont icon-wode"></i>收藏夹</a>
+                        <a><i class="iconfont icon-shangcheng"></i>买过的店</a>
+                        <a><i class="iconfont icon-gengduo"></i>足迹</a>
+                    </div>
+                </div>
+                <div class="gzy_coin_card">
+                    <i class="iconfont icon-jifen gzy_coin_ico"></i>
+                    <div class="gzy_coin_txt">
+                        <b>淘金币购物抵钱用</b>
+                        <span>100金币抵<i>1元</i></span>
+                    </div>
+                    <button class="gzy_coin_btn">立即领取</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

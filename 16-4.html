@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-10-29，功能名称：点击排行Tab选项卡切换 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击排行 - Tab选项卡</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: #3b3b3b;
+            padding: 40px 20px;
+        }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .gzy_back-link {
+            display: inline-flex; align-items: center; gap: 4px;
+            color: #ccc; font-size: 13px; margin-bottom: 14px;
+        }
+        .gzy_back-link:hover { color: #fff; }
+
+        /* ===== 组件容器 ===== */
+        .gzy_widget {
+            width: 640px; max-width: 100%;
+            background: #fff; margin: 0 auto; padding: 24px 0 10px;
+        }
+
+        /* ===== 标题栏：灰色小手图标 + 标题 ===== */
+        .gzy_head {
+            display: flex; align-items: center; gap: 12px;
+            padding: 0 30px 18px;
+        }
+        .gzy_title_icon {
+            width: 34px; height: 34px; background: #a9a9a9; border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 20px; line-height: 1;
+        }
+        .gzy_head h1 { font-size: 28px; color: #111; letter-spacing: 1px; }
+
+        /* ===== 选项卡 ===== */
+        .gzy_tabs { display: flex; }
+        .gzy_tab {
+            flex: 1; text-align: center; height: 48px; line-height: 48px;
+            font-size: 17px; color: #333; background: #e3e4e5;
+            position: relative; transition: background 0.2s, color 0.2s;
+        }
+        .gzy_tab:hover { color: #ff6600; }
+        /* 激活选项卡：白底 + 橙色文字 + 底部橙色边框 + 向下小三角指示器 */
+        .gzy_tab.gzy_active {
+            background: #fff; color: #ff6600; font-weight: 700;
+            border-bottom: 2px solid #ff6600;
+        }
+        .gzy_tab.gzy_active::after {
+            content: ""; position: absolute; bottom: -7px; left: 50%;
+            width: 12px; height: 12px; margin-left: -6px;
+            background: #fff;
+            border-right: 2px solid #ff6600;
+            border-bottom: 2px solid #ff6600;
+            transform: rotate(45deg);
+        }
+
+        /* ===== 排行列表 ===== */
+        .gzy_list { list-style: none; padding: 14px 30px 6px; }
+        .gzy_list li {
+            display: flex; align-items: center; gap: 16px;
+            padding: 13px 0; font-size: 17px; color: #333;
+        }
+        .gzy_list li:hover .gzy_txt { color: #ff6600; cursor: pointer; }
+        /* 前三名：橙色方框序号 */
+        .gzy_num_box {
+            color: #ff6600; border: 1px solid #ff6600;
+            font-size: 15px; line-height: 1; padding: 2px 5px; flex-shrink: 0;
+        }
+        /* 4名以后：橙色数字 */
+        .gzy_num_plain {
+            color: #ff6600; font-weight: 700; font-size: 17px;
+            width: 22px; text-align: center; flex-shrink: 0;
+        }
+        .gzy_txt {
+            flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .gzy_count { color: #999; font-size: 16px; flex-shrink: 0; }
+
+        /* 面板隐藏 */
+        .gzy_hide { display: none; }
+    </style>
+</head>
+<body>
+    <div style="max-width:640px;margin:0 auto;">
+        <a href="index.html" class="gzy_back-link"><i>‹</i> 返回首页</a>
+    </div>
+
+    <div class="gzy_widget">
+        <!-- 标题栏 -->
+        <div class="gzy_head">
+            <span class="gzy_title_icon">☝</span>
+            <h1>点击排行</h1>
+        </div>
+
+        <!-- 选项卡 -->
+        <div class="gzy_tabs">
+            <a class="gzy_tab" id="gzy_tab0" onclick="gzy_switchTab(0)">实时点击</a>
+            <a class="gzy_tab gzy_active" id="gzy_tab1" onclick="gzy_switchTab(1)">24小时排行</a>
+        </div>
+
+        <!-- 面板1：实时点击 -->
+        <ul class="gzy_list gzy_hide" id="gzy_panel0">
+            <li><span class="gzy_num_box">1</span><span class="gzy_txt">灯塔水母：地球上唯一不死生物</span><span class="gzy_count">356322</span></li>
+            <li><span class="gzy_num_box">2</span><span class="gzy_txt">阿里巴巴全资收购UC 俞永福称U</span><span class="gzy_count">311246</span></li>
+            <li><span class="gzy_num_box">3</span><span class="gzy_txt">亚马逊惊现三米长巨滑舌鱼用肺</span><span class="gzy_count">295883</span></li>
+            <li><span class="gzy_num_plain">4</span><span class="gzy_txt">奉化男子上山抓野味 遭遇极濒</span><span class="gzy_count">266061</span></li>
+            <li><span class="gzy_num_plain">5</span><span class="gzy_txt">大白鲨深海失踪 或被大型生物</span><span class="gzy_count">243936</span></li>
+            <li><span class="gzy_num_plain">6</span><span class="gzy_txt">南非小犀牛目睹母亲被猎杀不肯</span><span class="gzy_count">224346</span></li>
+            <li><span class="gzy_num_plain">7</span><span class="gzy_txt">余额宝周岁：收益率“过山车”</span><span class="gzy_count">172694</span></li>
+            <li><span class="gzy_num_plain">8</span><span class="gzy_txt">“尸油入餐桌”纯属无稽之谈</span><span class="gzy_count">128789</span></li>
+        </ul>
+
+        <!-- 面板2：24小时排行 -->
+        <ul class="gzy_list" id="gzy_panel1">
+            <li><span class="gzy_num_box">1</span><span class="gzy_txt">余额宝周岁：收益率“过山车”</span><span class="gzy_count">388105</span></li>
+            <li><span class="gzy_num_box">2</span><span class="gzy_txt">阿里巴巴全资收购UC 俞永福称U</span><span class="gzy_count">352470</span></li>
+            <li><span class="gzy_num_box">3</span><span class="gzy_txt">灯塔水母：地球上唯一不死生物</span><span class="gzy_count">330128</span></li>
+            <li><span class="gzy_num_plain">4</span><span class="gzy_txt">“尸油入餐桌”纯属无稽之谈</span><span class="gzy_count">287453</span></li>
+            <li><span class="gzy_num_plain">5</span><span class="gzy_txt">亚马逊惊现三米长巨滑舌鱼用肺</span><span class="gzy_count">251032</span></li>
+            <li><span class="gzy_num_plain">6</span><span class="gzy_txt">大白鲨深海失踪 或被大型生物</span><span class="gzy_count">219884</span></li>
+            <li><span class="gzy_num_plain">7</span><span class="gzy_txt">南非小犀牛目睹母亲被猎杀不肯</span><span class="gzy_count">186752</span></li>
+            <li><span class="gzy_num_plain">8</span><span class="gzy_txt">奉化男子上山抓野味 遭遇极濒</span><span class="gzy_count">152310</span></li>
+        </ul>
+    </div>
+
+    <script>
+        // ===== Tab选项卡切换 =====
+        function gzy_switchTab(gzy_index) {
+            // 切换选项卡激活样式
+            for (var gzy_i = 0; gzy_i < 2; gzy_i++) {
+                var gzy_tab = document.getElementById("gzy_tab" + gzy_i);
+                var gzy_panel = document.getElementById("gzy_panel" + gzy_i);
+                if (gzy_i === gzy_index) {
+                    gzy_tab.className = "gzy_tab gzy_active";
+                    gzy_panel.className = "gzy_list";
+                } else {
+                    gzy_tab.className = "gzy_tab";
+                    gzy_panel.className = "gzy_list gzy_hide";
+                }
+            }
+            console.log("切换到选项卡：" + (gzy_index === 0 ? "实时点击" : "24小时排行"));
+        }
+    </script>
+</body>
+</html>

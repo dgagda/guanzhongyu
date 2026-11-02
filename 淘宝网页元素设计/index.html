@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!--
+  《高级网页设计I》网页元素设计 四级项目
+  选题：淘宝购物网页（仿淘宝首页）
+  学号：24002060402
+  姓名：管忠煜（姓名缩写：gzy）
+  布局技术：Flex + Grid（未使用 float）
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>淘宝网 - 淘！我喜欢</title>
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+
+  <!-- ===================== 顶部工具条 ===================== -->
+  <div class="tb-topbar">
+    <div class="tb-container tb-topbar-inner">
+      <ul class="tb-topbar-list">
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">中国大陆</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link tb-c-orange" href="#">亲，请登录</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">免费注册</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">消息收藏</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">网页无障碍</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">淘宝全网搜</a></li>
+      </ul>
+      <ul class="tb-topbar-list">
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">我的淘宝</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">购物车</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">收藏夹</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">商品分类</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">商家中心</a></li>
+        <li class="tb-topbar-item"><a class="tb-topbar-link" href="#">网站导航</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== 网页元素1：页头（logo + 搜索 + 图标导航，flex布局） ===================== -->
+  <header class="tb-header">
+    <div class="tb-container tb-header-inner">
+      <a class="tb-logo" href="#">
+        <span class="tb-logo-badge">淘</span>
+        <span class="tb-logo-text">淘宝网<em>Taobao.com</em></span>
+      </a>
+      <div class="tb-search">
+        <ul class="tb-search-tabs">
+          <li class="tb-search-tab tb-search-tab--active">宝贝</li>
+          <li class="tb-search-tab">天猫店铺</li>
+          <li class="tb-search-tab">商城</li>
+        </ul>
+        <div class="tb-search-bar">
+          <input class="tb-search-input" type="text" placeholder="“新产品中心”上新泰兰尼斯 320g 6种颜色可选 · 大牌亲肤羊毛衫 · 空气波箱">
+          <button class="tb-search-btn">搜索</button>
+        </div>
+        <ul class="tb-search-hot">
+          <li class="tb-search-hot-item"><a class="tb-hot-link" href="#">新的淘宝</a></li>
+          <li class="tb-search-hot-item"><a class="tb-hot-link" href="#">高价回收</a></li>
+          <li class="tb-search-hot-item"><a class="tb-hot-link" href="#">高清购</a></li>
+          <li class="tb-search-hot-item"><a class="tb-hot-link" href="#">IP互动</a></li>
+          <li class="tb-search-hot-item"><a class="tb-hot-link" href="#">淘宝大学</a></li>
+        </ul>
+      </div>
+      <div class="tb-header-promo">
+        <p class="tb-promo-title">关爱商家无限红包</p>
+        <p class="tb-promo-sub">开春马上装 · 优质 商品</p>
+      </div>
+    </div>
+
+    <!-- 图标导航行 -->
+    <nav class="tb-iconnav-wrap">
+      <ul class="tb-container tb-iconnav-list">
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--red">猫</span>天猫</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--orange">聚</span>聚划算</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--blue">超</span>天猫超市</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--green">头</span>淘宝头条</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--purple">充</span>充值中心</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--gold">币</span>淘金币</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--cyan">阿里</span>阿里巴巴</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--red">秒</span>大牌秒杀</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--blue">采</span>企业采购</a></li>
+        <li class="tb-iconnav-item"><a class="tb-iconnav-link" href="#"><span class="tb-ico tb-ico--orange">播</span>淘宝直播</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===================== 主体三栏（grid布局） ===================== -->
+  <main class="tb-container tb-main">
+
+    <!-- 左侧分类侧栏 -->
+    <aside class="tb-side">
+      <div class="tb-side-user">
+        <span class="tb-side-avatar">亲</span>
+        <div class="tb-side-userinfo">
+          <p class="tb-side-hi">你好！</p>
+          <p class="tb-side-login"><a class="tb-c-orange" href="#">登录</a> <a class="tb-c-orange" href="#">注册</a></p>
+        </div>
+        <a class="tb-side-btn" href="#">会员俱乐部</a>
+      </div>
+      <ul class="tb-cate-list">
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--orange">女</span><a class="tb-cate-link" href="#">女装</a> / <a class="tb-cate-link" href="#">内衣</a> / <a class="tb-cate-link" href="#">家居</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--red">鞋</span><a class="tb-cate-link" href="#">女鞋</a> / <a class="tb-cate-link" href="#">男鞋</a> / <a class="tb-cate-link" href="#">箱包</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--blue">数</span><a class="tb-cate-link" href="#">手机</a> / <a class="tb-cate-link" href="#">数码</a> / <a class="tb-cate-link" href="#">企业</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--green">家</span><a class="tb-cate-link" href="#">家电</a> / <a class="tb-cate-link" href="#">家居</a> / <a class="tb-cate-link" href="#">家装</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--purple">美</span><a class="tb-cate-link" href="#">美妆</a> / <a class="tb-cate-link" href="#">个人护理</a> / <a class="tb-cate-link" href="#">保健</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--gold">母</span><a class="tb-cate-link" href="#">童装母婴</a> / <a class="tb-cate-link" href="#">玩具</a> / <a class="tb-cate-link" href="#">孕产</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--cyan">食</span><a class="tb-cate-link" href="#">零食</a> / <a class="tb-cate-link" href="#">生鲜</a> / <a class="tb-cate-link" href="#">茶酒</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--red">运</span><a class="tb-cate-link" href="#">运动</a> / <a class="tb-cate-link" href="#">户外</a> / <a class="tb-cate-link" href="#">骑行</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--orange">汽</span><a class="tb-cate-link" href="#">汽车</a> / <a class="tb-cate-link" href="#">用品</a> / <a class="tb-cate-link" href="#">配件</a></li>
+        <li class="tb-cate-item"><span class="tb-cate-ico tb-ico--blue">图</span><a class="tb-cate-link" href="#">图书</a> / <a class="tb-cate-link" href="#">文具</a> / <a class="tb-cate-link" href="#">乐器</a></li>
+      </ul>
+    </aside>
+
+    <!-- 中间轮播 + 促销块 -->
+    <section class="tb-center">
+      <div class="tb-carousel">
+        <img class="tb-carousel-img" src="images/carousel.jpg" alt="淘宝秒杀 天天好价">
+      </div>
+      <ul class="tb-tiles">
+        <li class="tb-tile"><img class="tb-tile-img" src="images/tile1.jpg" alt="淘宝直播"></li>
+        <li class="tb-tile"><img class="tb-tile-img" src="images/tile2.jpg" alt="品牌直营"></li>
+        <li class="tb-tile"><img class="tb-tile-img" src="images/tile3.jpg" alt="超市特卖"></li>
+        <li class="tb-tile"><img class="tb-tile-img" src="images/tile4.jpg" alt="淘宝热卖"></li>
+      </ul>
+    </section>
+
+    <!-- 右侧用户面板 -->
+    <aside class="tb-panel">
+      <div class="tb-panel-user">
+        <p class="tb-panel-hi">上午好！</p>
+        <p class="tb-panel-tip">登录淘宝，逛出更多精彩</p>
+        <a class="tb-panel-btn" href="#">登录</a>
+        <a class="tb-panel-btn tb-panel-btn--reg" href="#">注册</a>
+      </div>
+      <ul class="tb-panel-links">
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--orange">充</span>充值</a></li>
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--red">话</span>话费</a></li>
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--blue">游</span>游戏</a></li>
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--green">旅</span>旅行</a></li>
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--purple">票</span>车票</a></li>
+        <li class="tb-panel-link-item"><a class="tb-panel-link" href="#"><span class="tb-ico tb-ico--gold">财</span>理财</a></li>
+      </ul>
+      <div class="tb-panel-card">
+        <p class="tb-panel-card-title">淘宝热卖榜单</p>
+        <ul class="tb-rank">
+          <li class="tb-rank-item"><span class="tb-rank-no tb-rank-no--1">1</span><a class="tb-rank-link" href="#">无线蓝牙耳机 降噪长续航</a></li>
+          <li class="tb-rank-item"><span class="tb-rank-no tb-rank-no--2">2</span><a class="tb-rank-link" href="#">机械键盘 87键青轴背光</a></li>
+          <li class="tb-rank-item"><span class="tb-rank-no tb-rank-no--3">3</span><a class="tb-rank-link" href="#">经典百搭帆布鞋 男女同款</a></li>
+          <li class="tb-rank-item"><span class="tb-rank-no">4</span><a class="tb-rank-link" href="#">316不锈钢保温杯大容量</a></li>
+          <li class="tb-rank-item"><span class="tb-rank-no">5</span><a class="tb-rank-link" href="#">大容量双肩背包旅行电脑包</a></li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ===================== 网页元素3：猜你喜欢 tab选项卡（flex布局，静态选中效果） ===================== -->
+  <section class="tb-like">
+    <div class="tb-container">
+      <ul class="tb-tab-bar">
+        <li class="tb-tab-item"><a class="tb-tab-link tb-tab-link--active" href="#"><span class="tb-ico tb-ico--orange">猜</span>猜你喜欢</a></li>
+        <li class="tb-tab-item"><a class="tb-tab-link" href="#"><span class="tb-ico tb-ico--red">直</span>淘宝直播</a></li>
+        <li class="tb-tab-item"><a class="tb-tab-link" href="#"><span class="tb-ico tb-ico--blue">精</span>精选好货</a></li>
+        <li class="tb-tab-item"><a class="tb-tab-link" href="#"><span class="tb-ico tb-ico--green">物</span>物美价廉</a></li>
+        <li class="tb-tab-item"><a class="tb-tab-link" href="#"><span class="tb-ico tb-ico--purple">折</span>全年最低价</a></li>
+      </ul>
+
+      <!-- ===================== 网页元素2：上图下文商品卡片（grid布局） ===================== -->
+      <ul class="tb-goods-list">
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p1.jpg" alt="无线蓝牙耳机">
+            <span class="tb-goods-strip tb-goods-strip--red">大牌小盒 立即抢购 免费领</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>无线蓝牙耳机 降噪长续航 入耳式运动耳机</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>10.1</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p2.jpg" alt="机械键盘">
+            <span class="tb-goods-strip tb-goods-strip--blue">赖着勿允原味 加量不加价</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>机械键盘 87键青轴 游戏办公两用背光键盘</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>3.69</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p3.jpg" alt="帆布鞋">
+            <span class="tb-goods-strip tb-goods-strip--orange">官方直营 品质保障</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name">经典百搭帆布鞋 男女同款低帮休闲板鞋</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>99.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p4.jpg" alt="保温水杯">
+            <span class="tb-goods-strip tb-goods-strip--red">珍膳红植 天生原生</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>316不锈钢保温杯 大容量便携学生水杯</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>9.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p5.jpg" alt="双肩背包">
+            <span class="tb-goods-strip tb-goods-strip--green">500款 原生木浆 6包更加量</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name">大容量双肩背包 商务出差旅行电脑包</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>7.01</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p6.jpg" alt="口红礼盒">
+            <span class="tb-goods-strip tb-goods-strip--red">金装正版 全网畅销</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>丝绒哑光口红礼盒 保湿不脱色彩妆套装</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>29.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p7.jpg" alt="智能手表">
+            <span class="tb-goods-strip tb-goods-strip--blue">2提购 淘宝指导4360抽 包邮</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name">智能运动手表 心率血氧监测超长待机</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>30.1</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p8.jpg" alt="护眼台灯">
+            <span class="tb-goods-strip tb-goods-strip--red">嗨翻装 立即抢购 免配送费</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>LED护眼台灯 卧室书桌学习阅读灯</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>0.77</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p9.jpg" alt="休闲卫衣">
+            <span class="tb-goods-strip tb-goods-strip--orange">老师推荐 学生课外必读</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name">休闲卫衣 秋冬加绒加厚连帽外套</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>9.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p10.jpg" alt="蓝牙音箱">
+            <span class="tb-goods-strip tb-goods-strip--green">11.11狂欢价 到手省一半</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>蓝牙音箱 无线重低音便携小钢炮</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>22.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p11.jpg" alt="坚果大礼包">
+            <span class="tb-goods-strip tb-goods-strip--red">领券再享 立减20</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name">坚果大礼包 每日干果混合装送礼盒</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>99.9</p>
+          </div>
+        </li>
+        <li class="tb-goods-card">
+          <div class="tb-goods-pic">
+            <img class="tb-goods-img" src="images/p12.jpg" alt="面部护理套装">
+            <span class="tb-goods-strip tb-goods-strip--blue">今年必买 648g超值加量</span>
+          </div>
+          <div class="tb-goods-info">
+            <h3 class="tb-goods-name"><span class="tb-tag-tm">天猫</span>面部护理套装 保湿补水护肤品礼盒</h3>
+            <p class="tb-goods-price"><span class="tb-rmb">¥</span>48.6</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 页脚 ===================== -->
+  <footer class="tb-footer">
+    <p class="tb-footer-text">关于淘宝 营销中心 廉正举报 联系客服 开放平台 诚征英才 联系我们 · 网站地图<br>
+    © 2026 Taobao.com 版权所有 · 仿淘宝首页练习项目 · 网页元素设计四级项目 · 仅供课程学习使用</p>
+  </footer>
+
+  <!-- 右侧悬浮工具条 -->
+  <ul class="tb-toolbar">
+    <li class="tb-toolbar-item"><a class="tb-toolbar-link" href="#">反馈</a></li>
+    <li class="tb-toolbar-item"><a class="tb-toolbar-link" href="#">到货</a></li>
+    <li class="tb-toolbar-item"><a class="tb-toolbar-link" href="#">购物车</a></li>
+    <li class="tb-toolbar-item"><a class="tb-toolbar-link" href="#">我的</a></li>
+    <li class="tb-toolbar-item"><a class="tb-toolbar-link" href="#">顶部</a></li>
+  </ul>
+
+</body>
+</html>

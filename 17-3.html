@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：fetch获取商品列表并展示（多接口自动降级） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表 - fetch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f5f5f5; padding: 30px 20px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 1100px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 15px; color: #4299e1;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { text-decoration: underline; }
+        .gzy_container h1 { text-align: center; color: #2c3e50; margin-bottom: 8px; }
+        .gzy_subtitle { text-align: center; color: #7f8c8d; margin-bottom: 6px; font-size: 14px; }
+        .gzy_subtitle b { color: #3498db; }
+        .gzy_api {
+            text-align: center; color: #999; font-size: 12px; margin-bottom: 6px;
+            font-family: Consolas, monospace;
+        }
+        .gzy_toolbar { text-align: center; margin-bottom: 22px; }
+        .gzy_source {
+            display: inline-block; font-size: 12px; color: #2ecc71; background: #eafaf1;
+            border: 1px solid #a9e5c3; border-radius: 12px; padding: 3px 12px;
+            margin-right: 10px;
+        }
+        .gzy_btn {
+            padding: 6px 16px; border: 1px solid #3498db; border-radius: 14px;
+            background: #fff; color: #3498db; font-size: 13px; cursor: pointer;
+        }
+        .gzy_btn:hover { background: #3498db; color: #fff; }
+
+        .gzy_grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px;
+        }
+        .gzy_card {
+            background: #fff; border-radius: 10px; overflow: hidden; cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gzy_card:hover { transform: translateY(-6px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .gzy_card_img {
+            height: 180px; display: flex; align-items: center; justify-content: center;
+            background: #fafafa; padding: 14px; font-size: 64px;
+        }
+        .gzy_card_img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .gzy_card_info { padding: 12px 14px 16px; }
+        .gzy_card_title {
+            font-size: 14px; color: #333; line-height: 1.5; height: 42px;
+            overflow: hidden; text-overflow: ellipsis;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        }
+        .gzy_card_row { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+        .gzy_price { color: #ff5000; font-size: 18px; font-weight: 900; }
+        .gzy_price small { font-size: 12px; }
+        .gzy_rating { color: #f5a623; font-size: 13px; }
+        .gzy_brand {
+            display: inline-block; margin-top: 8px; font-size: 12px; color: #3498db;
+            background: #eaf4fd; border-radius: 4px; padding: 2px 8px;
+        }
+        .gzy_tip { text-align: center; color: #3498db; font-size: 13px; margin-top: 20px; }
+        .gzy_loading {
+            grid-column: 1 / -1; text-align: center; color: #999; padding: 60px 0; font-size: 15px;
+        }
+        .gzy_error { color: #e74c3c; }
+
+        /* 骨架屏 */
+        .gzy_skeleton { cursor: default; }
+        .gzy_skeleton:hover { transform: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .gzy_sk_img,
+        .gzy_sk_line {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 37%, #f0f0f0 63%);
+            background-size: 400% 100%;
+            animation: gzy_shimmer 1.2s ease infinite;
+        }
+        .gzy_sk_img { height: 180px; }
+        .gzy_sk_line { height: 14px; border-radius: 4px; margin-bottom: 10px; }
+        .gzy_sk_short { width: 60%; }
+        @keyframes gzy_shimmer {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>商品列表</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 使用 fetch 获取接口数据（自动尝试多个接口，点击卡片查看详情）</p>
+        <p class="gzy_api">首选 FakeStoreAPI 接口，失败时自动使用本地 data/products.json</p>
+
+        <div class="gzy_toolbar">
+            <span class="gzy_source" id="gzy_source">数据来源：加载中…</span>
+            <button class="gzy_btn" onclick="gzy_loadList()">重新加载</button>
+        </div>
+
+        <div class="gzy_grid" id="gzy_grid">
+            <div class="gzy_loading">正在通过 fetch 加载商品列表……</div>
+        </div>
+        <p class="gzy_tip">提示：点击任意商品卡片，跳转到 17-3-detail.html?id=商品ID 查看详情</p>
+    </div>
+
+    <script>
+        // ===== 首选接口：FakeStoreAPI（实测最快），失败时直接用本地数据兜底 =====
+        var gzy_api = { name: "FakeStoreAPI 接口（在线）", url: "https://fakestoreapi.com/products?limit=8" };
+        var gzy_local = { name: "本地 data/products.json（离线兜底）", url: "data/products.json" };
+
+        // 带超时的 fetch：避免接口无响应时页面一直等
+        function gzy_fetchJson(gzy_url, gzy_ms) {
+            var gzy_controller = new AbortController();
+            var gzy_timer = setTimeout(function () { gzy_controller.abort(); }, gzy_ms);
+            return fetch(gzy_url, { signal: gzy_controller.signal })
+                .then(function (gzy_res) {
+                    if (!gzy_res.ok) { throw new Error("HTTP " + gzy_res.status); }
+                    return gzy_res.json();
+                })
+                .finally(function () { clearTimeout(gzy_timer); });
+        }
+
+        // 把不同接口的返回统一成同一种结构
+        function gzy_normalizeList(gzy_data) {
+            var gzy_raw = gzy_data.products || gzy_data;   // dummyjson 有 products 包裹，其余是数组
+            if (!gzy_raw || !gzy_raw.length) { throw new Error("返回数据结构异常"); }
+            var gzy_list = [];
+            for (var gzy_i = 0; gzy_i < gzy_raw.length; gzy_i++) {
+                var gzy_p = gzy_raw[gzy_i];
+                gzy_list.push({
+                    id: gzy_p.id,
+                    title: gzy_p.title,
+                    price: gzy_p.price,
+                    brand: gzy_p.brand || gzy_p.category || "未分类",
+                    // dummyjson 的 rating 是数字，fakestore 是 { rate, count }
+                    rating: typeof gzy_p.rating === "object" && gzy_p.rating !== null ? gzy_p.rating.rate : gzy_p.rating,
+                    img: gzy_p.thumbnail || gzy_p.image || gzy_p.image || "",
+                    emoji: gzy_p.emoji || ""
+                });
+            }
+            return gzy_list;
+        }
+
+        // 渲染商品卡片
+        function gzy_renderList(gzy_list) {
+            var gzy_html = "";
+            for (var gzy_i = 0; gzy_i < gzy_list.length; gzy_i++) {
+                var gzy_p = gzy_list[gzy_i];
+                var gzy_media = gzy_p.img
+                    ? '<img src="' + gzy_p.img + '" alt="' + gzy_p.title + '" loading="lazy" decoding="async">'
+                    : (gzy_p.emoji || "📦");
+                gzy_html += '<div class="gzy_card" onclick="gzy_goDetail(' + gzy_p.id + ')">' +
+                    '<div class="gzy_card_img">' + gzy_media + '</div>' +
+                    '<div class="gzy_card_info">' +
+                        '<div class="gzy_card_title">' + gzy_p.title + '</div>' +
+                        '<div class="gzy_card_row">' +
+                            '<span class="gzy_price"><small>¥</small>' + gzy_p.price + '</span>' +
+                            '<span class="gzy_rating">★ ' + gzy_p.rating + '</span>' +
+                        '</div>' +
+                        '<span class="gzy_brand">' + gzy_p.brand + '</span>' +
+                    '</div>' +
+                '</div>';
+            }
+            document.getElementById("gzy_grid").innerHTML = gzy_html;
+        }
+
+        // 骨架屏占位，缩短“感知等待时间”
+        function gzy_skeleton() {
+            var gzy_html = "";
+            for (var gzy_i = 0; gzy_i < 8; gzy_i++) {
+                gzy_html += '<div class="gzy_card gzy_skeleton">' +
+                    '<div class="gzy_sk_img"></div>' +
+                    '<div class="gzy_card_info">' +
+                        '<div class="gzy_sk_line"></div>' +
+                        '<div class="gzy_sk_line gzy_sk_short"></div>' +
+                    '</div></div>';
+            }
+            document.getElementById("gzy_grid").innerHTML = gzy_html;
+        }
+
+        // ===== 只发一个请求：FakeStoreAPI，3 秒超时，失败直接读本地数据 =====
+        function gzy_loadList() {
+            gzy_skeleton();
+            document.getElementById("gzy_source").innerHTML = "数据来源：加载中…";
+
+            gzy_fetchJson(gzy_api.url, 3000)
+                .then(function (gzy_data) {
+                    console.log("接口请求成功：" + gzy_api.url, gzy_data);
+                    gzy_renderList(gzy_normalizeList(gzy_data));
+                    document.getElementById("gzy_source").innerHTML = "数据来源：" + gzy_api.name;
+                })
+                .catch(function (gzy_err) {
+                    // 在线接口失败：立即使用本地数据兜底
+                    console.log("在线接口失败：" + gzy_err.message + "，改用本地数据");
+                    gzy_fetchJson(gzy_local.url, 3000)
+                        .then(function (gzy_data) {
+                            gzy_renderList(gzy_normalizeList(gzy_data));
+                            document.getElementById("gzy_source").innerHTML =
+                                '<span style="color:#e67e22">数据来源：本地 data/products.json（在线接口不可用）</span>';
+                        })
+                        .catch(function () {
+                            document.getElementById("gzy_grid").innerHTML =
+                                '<div class="gzy_loading gzy_error">数据加载失败，请检查网络后点击“重新加载”</div>';
+                        });
+                });
+        }
+
+        // 跳转详情页，通过 URL 参数传递商品 id
+        function gzy_goDetail(gzy_id) {
+            location.href = "17-3-detail.html?id=" + gzy_id;
+        }
+
+        // 页面加载后开始请求
+        gzy_loadList();
+    </script>
+</body>
+</html>

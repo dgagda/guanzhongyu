@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：fetch根据ID获取商品详情并展示（多接口自动降级） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情 - fetch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f5f5f5; padding: 30px 20px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 900px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 15px; color: #4299e1;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { text-decoration: underline; }
+        .gzy_source {
+            display: inline-block; font-size: 12px; color: #2ecc71; background: #eafaf1;
+            border: 1px solid #a9e5c3; border-radius: 12px; padding: 3px 12px; margin-bottom: 14px;
+        }
+        .gzy_detail {
+            background: #fff; border-radius: 12px; padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 30px;
+        }
+        .gzy_detail_img { width: 340px; flex-shrink: 0; text-align: center; }
+        .gzy_detail_img .gzy_main_pic {
+            height: 300px; display: flex; align-items: center; justify-content: center;
+            font-size: 120px; background: #fafafa; border-radius: 10px; border: 1px solid #eee;
+        }
+        .gzy_detail_img .gzy_main_pic img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .gzy_detail_imgs { display: flex; gap: 8px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
+        .gzy_detail_imgs img {
+            width: 56px; height: 56px; object-fit: cover; border: 2px solid transparent;
+            border-radius: 6px; cursor: pointer; padding: 2px; background: #fff;
+        }
+        .gzy_detail_imgs img:hover { border-color: #3498db; }
+        .gzy_detail_info { flex: 1; min-width: 0; }
+        .gzy_detail_info h1 { font-size: 24px; color: #2c3e50; line-height: 1.5; margin-bottom: 10px; }
+        .gzy_detail_price { font-size: 28px; color: #ff5000; font-weight: 900; margin: 14px 0; }
+        .gzy_detail_price small { font-size: 13px; color: #999; font-weight: 400; margin-left: 10px; }
+        .gzy_detail_desc { font-size: 14px; color: #666; line-height: 1.9; margin-bottom: 16px; }
+        .gzy_meta { font-size: 14px; line-height: 2.2; }
+        .gzy_meta b { color: #2c3e50; }
+        .gzy_tag {
+            display: inline-block; font-size: 12px; color: #3498db; background: #eaf4fd;
+            border-radius: 4px; padding: 2px 8px; margin-right: 6px;
+        }
+        .gzy_rating { color: #f5a623; }
+        .gzy_stock { color: #2ecc71; font-weight: 700; }
+        .gzy_loading { text-align: center; color: #999; padding: 80px 0; font-size: 15px; }
+        .gzy_error { color: #e74c3c; }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="17-3.html" class="gzy_back-link">← 返回商品列表</a>
+        <a href="index.html" class="gzy_back-link" style="margin-left:14px;">← 返回首页</a><br>
+        <span class="gzy_source" id="gzy_source">数据来源：加载中…</span>
+
+        <div class="gzy_detail" id="gzy_detail">
+            <div class="gzy_loading">正在通过 fetch 加载商品详情……</div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 从 URL 中取出商品 id：17-3-detail.html?id=1 =====
+        var gzy_params = new URLSearchParams(location.search);
+        var gzy_id = gzy_params.get("id");
+        if (!gzy_id) { gzy_id = "1"; }   // 没有传 id 时默认显示 1 号商品
+
+        // ===== 首选详情接口：FakeStoreAPI，失败时使用本地数据兜底 =====
+        var gzy_api = { name: "FakeStoreAPI 接口（在线）", url: "https://fakestoreapi.com/products/" + gzy_id, type: "fake" };
+        var gzy_local = { name: "本地 data/products.json（离线兜底）", url: "data/products.json", type: "local" };
+
+        // 带超时的 fetch
+        function gzy_fetchJson(gzy_url, gzy_ms) {
+            var gzy_controller = new AbortController();
+            var gzy_timer = setTimeout(function () { gzy_controller.abort(); }, gzy_ms);
+            return fetch(gzy_url, { signal: gzy_controller.signal })
+                .then(function (gzy_res) {
+                    if (!gzy_res.ok) { throw new Error("HTTP " + gzy_res.status); }
+                    return gzy_res.json();
+                })
+                .finally(function () { clearTimeout(gzy_timer); });
+        }
+
+        // 统一不同接口返回的字段结构
+        function gzy_normalizeDetail(gzy_data, gzy_type) {
+            if (gzy_type === "local") {
+                // 本地文件是 { products: [...] }，按 id 查找
+                var gzy_found = null;
+                for (var gzy_i = 0; gzy_i < gzy_data.products.length; gzy_i++) {
+                    if (String(gzy_data.products[gzy_i].id) === String(gzy_id)) {
+                        gzy_found = gzy_data.products[gzy_i];
+                        break;
+                    }
+                }
+                if (!gzy_found) { gzy_found = gzy_data.products[0]; }
+                gzy_data = gzy_found;
+            }
+            if (!gzy_data || !gzy_data.title) { throw new Error("返回数据无商品信息"); }
+            return {
+                title: gzy_data.title,
+                price: gzy_data.price,
+                description: gzy_data.description,
+                brand: gzy_data.brand || gzy_data.category || "未分类",
+                category: gzy_data.category || "未分类",
+                rating: typeof gzy_data.rating === "object" && gzy_data.rating !== null ? gzy_data.rating.rate : gzy_data.rating,
+                stock: gzy_data.stock || "—",
+                discount: gzy_data.discountPercentage || 0,
+                tags: gzy_data.tags || [],
+                images: gzy_data.images || [],
+                thumbnail: gzy_data.thumbnail || gzy_data.image || "",
+                emoji: gzy_data.emoji || "📦"
+            };
+        }
+
+        // 渲染详情
+        function gzy_renderDetail(gzy_p, gzy_sourceName) {
+            // 缩略图（部分接口只有一张主图，此时不显示缩略图列表）
+            var gzy_thumbs = "";
+            for (var gzy_i = 0; gzy_i < gzy_p.images.length; gzy_i++) {
+                gzy_thumbs += '<img src="' + gzy_p.images[gzy_i] + '" alt="缩略图" onclick="gzy_changeImg(this.src)">';
+            }
+            // 标签
+            var gzy_tags = "";
+            for (var gzy_j = 0; gzy_j < gzy_p.tags.length; gzy_j++) {
+                gzy_tags += '<span class="gzy_tag">' + gzy_p.tags[gzy_j] + '</span>';
+            }
+            if (!gzy_tags) { gzy_tags = '<span class="gzy_tag">暂无标签</span>'; }
+
+            // 主图：有网络图片用图片，本地兜底数据用 emoji
+            var gzy_mainPic = gzy_p.thumbnail
+                ? '<img id="gzy_mainImg" src="' + gzy_p.thumbnail + '" alt="' + gzy_p.title + '">'
+                : '<span id="gzy_mainImgEmoji">' + gzy_p.emoji + '</span>';
+
+            // 原价 = 现价 / (1 - 折扣)
+            var gzy_oldPrice = gzy_p.discount > 0
+                ? (gzy_p.price / (1 - gzy_p.discount / 100)).toFixed(2)
+                : "";
+
+            document.getElementById("gzy_detail").innerHTML =
+                '<div class="gzy_detail_img">' +
+                    '<div class="gzy_main_pic">' + gzy_mainPic + '</div>' +
+                    '<div class="gzy_detail_imgs">' + gzy_thumbs + '</div>' +
+                '</div>' +
+                '<div class="gzy_detail_info">' +
+                    '<h1>' + gzy_p.title + '</h1>' +
+                    '<div class="gzy_detail_price">¥' + gzy_p.price +
+                        (gzy_oldPrice ? '<small>原价 ¥' + gzy_oldPrice + '（优惠 ' + gzy_p.discount + '%）</small>' : '') +
+                    '</div>' +
+                    '<div class="gzy_detail_desc">' + gzy_p.description + '</div>' +
+                    '<div class="gzy_meta">' +
+                        '品牌：<b>' + gzy_p.brand + '</b>　类别：<b>' + gzy_p.category + '</b><br>' +
+                        '评分：<span class="gzy_rating">★ ' + gzy_p.rating + '</span>　' +
+                        '库存：<span class="gzy_stock">剩余 ' + gzy_p.stock + ' 件</span><br>' +
+                        '标签：' + gzy_tags +
+                    '</div>' +
+                '</div>';
+            document.getElementById("gzy_source").innerHTML = "数据来源：" + gzy_sourceName;
+            document.title = gzy_p.title + " - 商品详情";
+            console.log("成功渲染商品详情，来源：" + gzy_sourceName);
+        }
+
+        // ===== 只发一个请求：FakeStoreAPI，3 秒超时，失败直接读本地数据 =====
+        function gzy_loadDetail() {
+            gzy_fetchJson(gzy_api.url, 3000)
+                .then(function (gzy_data) {
+                    gzy_renderDetail(gzy_normalizeDetail(gzy_data, gzy_api.type), gzy_api.name);
+                })
+                .catch(function (gzy_err) {
+                    // 在线接口失败：立即使用本地数据兜底
+                    console.log("在线详情接口失败：" + gzy_err.message + "，改用本地数据");
+                    gzy_fetchJson(gzy_local.url, 3000)
+                        .then(function (gzy_data) {
+                            gzy_renderDetail(gzy_normalizeDetail(gzy_data, "local"), gzy_local.name);
+                        })
+                        .catch(function () {
+                            document.getElementById("gzy_detail").innerHTML =
+                                '<div class="gzy_loading gzy_error">数据加载失败，请检查网络后刷新重试</div>';
+                            document.getElementById("gzy_source").innerHTML = "数据来源：请求失败";
+                        });
+                });
+        }
+
+        // 点击缩略图切换主图
+        function gzy_changeImg(gzy_src) {
+            document.getElementById("gzy_mainImg").src = gzy_src;
+        }
+
+        // 开始请求
+        gzy_loadDetail();
+    </script>
+</body>
+</html>

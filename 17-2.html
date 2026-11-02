@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：fetch获取一言接口数据并展示 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch 获取接口数据</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px 20px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 860px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 15px; color: #fff; opacity: 0.9;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { opacity: 1; text-decoration: underline; }
+        .gzy_container h1 { text-align: center; color: #fff; margin-bottom: 8px; }
+        .gzy_subtitle { text-align: center; color: rgba(255,255,255,0.85); margin-bottom: 25px; font-size: 14px; }
+        .gzy_subtitle b { color: #ffe08a; }
+        .gzy_card {
+            background: #fff; border-radius: 14px; padding: 26px 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18); margin-bottom: 18px;
+        }
+        .gzy_card h2 { font-size: 17px; color: #2c3e50; margin-bottom: 12px; }
+        .gzy_quote {
+            font-size: 22px; line-height: 1.9; color: #2c3e50; text-align: center;
+            padding: 26px 16px; min-height: 120px;
+            background: linear-gradient(135deg, #f6f9ff, #eef3ff);
+            border-radius: 10px; border-left: 5px solid #667eea;
+            display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px;
+        }
+        .gzy_quote_from { font-size: 14px; color: #8e9bb3; }
+        .gzy_quote_from b { color: #667eea; }
+        .gzy_loading { color: #999; font-size: 15px; }
+        .gzy_error { color: #e74c3c; }
+        .gzy_code {
+            background: #2c3e50; color: #ecf0f1; padding: 12px 14px; border-radius: 8px;
+            font-family: Consolas, monospace; font-size: 13px; line-height: 1.8;
+            margin: 10px 0; overflow-x: auto; white-space: pre;
+        }
+        .gzy_btn-row { text-align: center; margin-top: 16px; }
+        .gzy_btn {
+            padding: 10px 26px; border: none; border-radius: 22px; cursor: pointer;
+            background: linear-gradient(90deg, #7b61ff, #5b8def); color: #fff;
+            font-size: 15px; box-shadow: 0 4px 12px rgba(91,141,239,0.35);
+        }
+        .gzy_btn:hover { opacity: 0.9; }
+        .gzy_btn:disabled { background: #c7cfe0; box-shadow: none; cursor: not-allowed; }
+        .gzy_result {
+            background: #f8f9fa; border: 1px dashed #c7cfe0; border-radius: 8px;
+            padding: 12px 14px; font-size: 13px; line-height: 1.9; word-break: break-all;
+            font-family: Consolas, monospace; color: #555;
+        }
+        .gzy_badge {
+            display: inline-block; font-size: 12px; color: #667eea; background: #eef3ff;
+            border-radius: 10px; padding: 2px 10px; margin-left: 8px; font-family: "Microsoft YaHei";
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>fetch 获取接口数据并展示</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 使用原生 fetch 请求「一言」接口（支持跨域），点击按钮获取随机句子</p>
+
+        <div class="gzy_card">
+            <h2>接口说明</h2>
+            <div class="gzy_code">接口地址：https://v1.hitokoto.cn/?encode=json
+请求方式：GET（服务端已配置 CORS，允许跨域访问）
+返回 JSON：{ "hitokoto": "句子内容", "from": "出处", "from_who": "作者", ... }</div>
+            <div class="gzy_code">fetch("https://v1.hitokoto.cn/?encode=json")
+  .then(function (gzy_res) { return gzy_res.json(); })
+  .then(function (gzy_data) { /* 渲染数据 */ })
+  .catch(function (gzy_err) { /* 错误处理 */ });</div>
+        </div>
+
+        <div class="gzy_card">
+            <h2>接口返回的数据展示<span class="gzy_badge" id="gzy_sourceBadge">数据来源：请求中…</span></h2>
+            <div class="gzy_quote" id="gzy_quoteBox">
+                <span class="gzy_loading">正在请求接口……</span>
+            </div>
+            <div class="gzy_btn-row">
+                <button class="gzy_btn" id="gzy_btn" onclick="gzy_loadQuote()">换一句</button>
+            </div>
+            <p style="margin-top:16px;font-size:13px;color:#8e9bb3;">接口原始 JSON 返回：</p>
+            <div class="gzy_result" id="gzy_resultArea">等待请求……</div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 使用原生 fetch 获取接口数据（带超时与本地兜底） =====
+        // 主接口：一言（国内可访问，支持跨域）
+        var gzy_api = "https://v1.hitokoto.cn/?encode=json&charset=utf-8";
+
+        // 兜底数据：网络不可用时使用，保证页面正常演示
+        var gzy_fallback = [
+            { hitokoto: "生活不是等待风暴过去，而是学会在雨中跳舞。", from: "名言", from_who: "佚名" },
+            { hitokoto: "代码写得好，不如先想清楚。", from: "课堂笔记", from_who: "管忠煜" },
+            { hitokoto: "学而不思则罔，思而不学则殆。", from: "论语", from_who: "孔子" }
+        ];
+
+        // 带超时控制的 fetch，避免接口无响应时页面一直等待
+        function gzy_fetchWithTimeout(gzy_url, gzy_ms) {
+            var gzy_controller = new AbortController();
+            var gzy_timer = setTimeout(function () { gzy_controller.abort(); }, gzy_ms);
+            return fetch(gzy_url, { signal: gzy_controller.signal })
+                .then(function (gzy_res) { return gzy_res.json(); })
+                .finally(function () { clearTimeout(gzy_timer); });
+        }
+
+        // 渲染一句话
+        function gzy_renderQuote(gzy_data, gzy_source) {
+            document.getElementById("gzy_quoteBox").innerHTML =
+                '<div>“' + gzy_data.hitokoto + '”</div>' +
+                '<div class="gzy_quote_from">—— <b>' + (gzy_data.from_who || "佚名") + '</b> · ' +
+                (gzy_data.from || "未知出处") + '</div>';
+            document.getElementById("gzy_sourceBadge").innerHTML = "数据来源：" + gzy_source;
+            document.getElementById("gzy_resultArea").innerHTML = JSON.stringify(gzy_data, null, 2);
+            console.log("接口返回数据：", gzy_data);
+        }
+
+        function gzy_loadQuote() {
+            var gzy_btn = document.getElementById("gzy_btn");
+            var gzy_box = document.getElementById("gzy_quoteBox");
+            gzy_btn.disabled = true;
+            gzy_btn.innerHTML = "请求中…";
+            gzy_box.innerHTML = '<span class="gzy_loading">正在请求接口……</span>';
+            document.getElementById("gzy_sourceBadge").innerHTML = "数据来源：请求中…";
+
+            gzy_fetchWithTimeout(gzy_api, 4000)
+                .then(function (gzy_data) {
+                    // 校验数据是否有效
+                    if (!gzy_data || !gzy_data.hitokoto) { throw new Error("接口返回数据异常"); }
+                    gzy_renderQuote(gzy_data, "一言接口（在线）");
+                })
+                .catch(function (gzy_err) {
+                    console.log("在线接口请求失败，使用本地兜底数据：", gzy_err);
+                    var gzy_idx = Math.floor(Math.random() * gzy_fallback.length);
+                    gzy_renderQuote(gzy_fallback[gzy_idx], "本地兜底数据（接口请求失败：" + gzy_err.message + "）");
+                })
+                .finally(function () {
+                    gzy_btn.disabled = false;
+                    gzy_btn.innerHTML = "换一句";
+                });
+        }
+
+        // 页面加载后自动请求一次
+        gzy_loadQuote();
+    </script>
+</body>
+</html>

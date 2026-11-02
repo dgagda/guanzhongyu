@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：JSON展示与JSON互转演示 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON 展示</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5; padding: 30px 20px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 1000px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 15px; color: #4299e1;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { text-decoration: underline; }
+        .gzy_container h1 { text-align: center; color: #2c3e50; margin-bottom: 10px; }
+        .gzy_subtitle { text-align: center; color: #7f8c8d; margin-bottom: 30px; }
+        .gzy_subtitle b { color: #3498db; }
+        .gzy_grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 20px;
+        }
+        .gzy_card {
+            background: #fff; border-radius: 10px; padding: 20px 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 4px solid #3498db;
+        }
+        .gzy_card_green { border-top-color: #2ecc71; }
+        .gzy_card_orange { border-top-color: #f39c12; }
+        .gzy_card_purple { border-top-color: #9b59b6; }
+        .gzy_card h2 { font-size: 18px; color: #2c3e50; margin-bottom: 12px; }
+        .gzy_card p, .gzy_card li { font-size: 14px; line-height: 2; }
+        .gzy_card ul { padding-left: 22px; }
+        .gzy_code {
+            background: #2c3e50; color: #ecf0f1; padding: 12px 14px; border-radius: 6px;
+            font-family: Consolas, monospace; font-size: 13px; line-height: 1.8;
+            margin: 10px 0; overflow-x: auto; white-space: pre;
+        }
+        .gzy_code .gzy_key { color: #74b9ff; }
+        .gzy_code .gzy_str { color: #55efc4; }
+        .gzy_code .gzy_num { color: #ffeaa7; }
+        .gzy_result {
+            background: #f8f9fa; border: 1px dashed #b2bec3; border-radius: 6px;
+            padding: 10px 12px; font-size: 14px; line-height: 1.9; word-break: break-all;
+        }
+        .gzy_result b { color: #e74c3c; }
+        .gzy_btn {
+            padding: 8px 18px; border: none; border-radius: 6px; background: #3498db;
+            color: #fff; font-size: 14px; cursor: pointer; margin-right: 10px; margin-top: 6px;
+        }
+        .gzy_btn_green { background: #2ecc71; }
+        .gzy_btn:hover { opacity: 0.85; }
+        .gzy_note {
+            margin-top: 25px; background: #fff8e1; border: 1px solid #ffe082;
+            border-radius: 8px; padding: 15px 20px; font-size: 14px; color: #7d6608; line-height: 2;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>JSON 展示</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— JSON 概念、语法规则、JSON.parse 与 JSON.stringify 互转演示</p>
+
+        <div class="gzy_grid">
+            <!-- 一、JSON概念与语法 -->
+            <div class="gzy_card">
+                <h2>一、什么是 JSON</h2>
+                <p>JSON（JavaScript Object Notation，JS 对象简谱）是一种<b>轻量级的数据交换格式</b>，
+                   独立于语言和平台，常用于前后端数据传输。</p>
+                <ul>
+                    <li>数据由<b>键值对</b>组成，键必须用<b>双引号</b>包裹</li>
+                    <li>值可以是：字符串、数字、布尔值、null、对象、数组</li>
+                    <li>数据之间用<b>逗号</b>分隔，<b>大括号</b>保存对象，<b>方括号</b>保存数组</li>
+                    <li>不支持注释、不支持函数</li>
+                </ul>
+                <div class="gzy_code">{
+  <span class="gzy_key">"name"</span>: <span class="gzy_str">"管忠煜"</span>,
+  <span class="gzy_key">"age"</span>: <span class="gzy_num">20</span>,
+  <span class="gzy_key">"isStudent"</span>: <span class="gzy_num">true</span>,
+  <span class="gzy_key">"hobbies"</span>: [<span class="gzy_str">"网页设计"</span>, <span class="gzy_str">"篮球"</span>]
+}</div>
+            </div>
+
+            <!-- 二、JSON示例 -->
+            <div class="gzy_card gzy_card_green">
+                <h2>二、一个完整的 JSON 数据示例</h2>
+                <div class="gzy_code">{
+  <span class="gzy_key">"students"</span>: [
+    { <span class="gzy_key">"id"</span>: <span class="gzy_num">1</span>, <span class="gzy_key">"name"</span>: <span class="gzy_str">"张三"</span>, <span class="gzy_key">"score"</span>: <span class="gzy_num">92</span> },
+    { <span class="gzy_key">"id"</span>: <span class="gzy_num">2</span>, <span class="gzy_key">"name"</span>: <span class="gzy_str">"李四"</span>, <span class="gzy_key">"score"</span>: <span class="gzy_num">85</span> },
+    { <span class="gzy_key">"id"</span>: <span class="gzy_num">3</span>, <span class="gzy_key">"name"</span>: <span class="gzy_str">"王五"</span>, <span class="gzy_key">"score"</span>: <span class="gzy_num">78</span> }
+  ],
+  <span class="gzy_key">"class"</span>: <span class="gzy_str">"402班"</span>,
+  <span class="gzy_key">"teacher"</span>: <span class="gzy_str">"管忠煜"</span>
+}</div>
+                <p>对象里嵌套数组，数组里又嵌套对象，这是接口返回数据最常见的结构。</p>
+            </div>
+
+            <!-- 三、stringify -->
+            <div class="gzy_card gzy_card_orange">
+                <h2>三、JS 对象 → JSON 字符串：JSON.stringify()</h2>
+                <div class="gzy_code">var gzy_obj = { name: "管忠煜", age: 20 };
+var gzy_json = JSON.stringify(gzy_obj);</div>
+                <button class="gzy_btn" onclick="gzy_runStringify()">执行 stringify</button>
+                <div class="gzy_result" id="gzy_stringifyResult"></div>
+            </div>
+
+            <!-- 四、parse -->
+            <div class="gzy_card gzy_card_purple">
+                <h2>四、JSON 字符串 → JS 对象：JSON.parse()</h2>
+                <div class="gzy_code">var gzy_jsonStr = '{"brand":"Apple","price":8999}';
+var gzy_obj2 = JSON.parse(gzy_jsonStr);
+// 之后即可 gzy_obj2.brand 取值</div>
+                <button class="gzy_btn gzy_btn_green" onclick="gzy_runParse()">执行 parse</button>
+                <div class="gzy_result" id="gzy_parseResult"></div>
+            </div>
+        </div>
+
+        <div class="gzy_note">
+            <b>知识点小结：</b>JSON 是前后端交换数据的标准格式，接口返回的数据基本都是 JSON 字符串。
+            <b>JSON.stringify()</b> 把 JS 对象变成 JSON 字符串（发送给服务器），<b>JSON.parse()</b> 把 JSON 字符串还原成 JS 对象（接收解析）。
+            使用 fetch 时，<b>response.json()</b> 内部就是帮我们完成了 JSON.parse 的工作。
+        </div>
+    </div>
+
+    <script>
+        // ===== JSON.stringify：JS对象转JSON字符串 =====
+        function gzy_runStringify() {
+            var gzy_obj = { name: "管忠煜", age: 20, hobbies: ["网页设计", "篮球"] };
+            var gzy_json = JSON.stringify(gzy_obj);
+            console.log("stringify结果：" + gzy_json);
+            document.getElementById("gzy_stringifyResult").innerHTML =
+                "JS 对象 → JSON 字符串：<b>" + gzy_json + "</b><br>类型：typeof 结果为 <b>" + typeof gzy_json + "</b>（string）";
+        }
+
+        // ===== JSON.parse：JSON字符串转JS对象 =====
+        function gzy_runParse() {
+            var gzy_jsonStr = '{"brand":"Apple","price":8999,"colors":["黑色","白色"]}';
+            var gzy_obj2 = JSON.parse(gzy_jsonStr);
+            console.log("parse结果：", gzy_obj2);
+            document.getElementById("gzy_parseResult").innerHTML =
+                "JSON 字符串 → JS 对象后即可取值：<b>" + gzy_obj2.brand + " 手机售价 " + gzy_obj2.price +
+                " 元，颜色有 " + gzy_obj2.colors.join("、") + "</b><br>类型：typeof 结果为 <b>" + typeof gzy_obj2 + "</b>（object）";
+        }
+
+        // 页面加载后自动演示一次
+        gzy_runStringify();
+        gzy_runParse();
+    </script>
+</body>
+</html>

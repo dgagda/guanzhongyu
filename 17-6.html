@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：包饺子异步流程演示（Promise与async/await） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>包饺子 · 异步流程</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: #f7f4e9;
+            color: #2b2b2b;
+            padding: 26px 30px 40px;
+        }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 10px; color: #8a8570;
+            text-decoration: none; font-size: 13px;
+        }
+        .gzy_back-link:hover { color: #2b2b2b; }
+        .gzy_container { max-width: 1180px; margin: 0 auto; }
+
+        /* ===== 标题 ===== */
+        .gzy_title {
+            font-family: "SimSun", "Songti SC", serif;
+            font-size: 52px; font-weight: 700; letter-spacing: 2px;
+            color: #1d1d1d; line-height: 1.15; margin-bottom: 10px;
+        }
+        .gzy_subtitle {
+            font-size: 13.5px; color: #6b6a5e; line-height: 1.9; margin-bottom: 24px;
+            max-width: 1000px;
+        }
+        .gzy_subtitle b { color: #c0392b; }
+
+        /* ===== 步骤卡片 ===== */
+        .gzy_steps {
+            display: flex; align-items: stretch; gap: 8px; margin-bottom: 26px;
+        }
+        .gzy_step {
+            flex: 1; background: #eaf3e2; border: 1px solid #cfdcc4; border-radius: 3px;
+            padding: 12px 12px 14px; min-width: 0;
+        }
+        .gzy_step_no {
+            display: inline-block; background: #23231f; color: #fff;
+            font-size: 10.5px; letter-spacing: 0.5px; padding: 2px 6px; margin-bottom: 8px;
+        }
+        .gzy_step h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: #23231f; }
+        .gzy_step_sub { font-size: 11.5px; color: #6f7a63; min-height: 30px; line-height: 1.5; }
+        .gzy_bar {
+            height: 9px; background: #f2dedb; border-radius: 2px; overflow: hidden; margin: 6px 0 8px;
+        }
+        .gzy_bar_fill {
+            height: 100%; width: 0%; background: #dd6f66; border-radius: 2px;
+        }
+        .gzy_done {
+            font-size: 11.5px; color: #2e7d32; font-weight: 700;
+            opacity: 0; transform: translateY(3px); transition: all 0.3s;
+        }
+        .gzy_done.gzy_show { opacity: 1; transform: translateY(0); }
+        .gzy_checks { margin-top: 8px; }
+        .gzy_check {
+            font-size: 11px; color: #7b8570; background: #f3f7ee;
+            border: 1px solid #dbe5d2; border-radius: 2px; padding: 3px 6px; margin-bottom: 4px;
+            transition: all 0.3s;
+        }
+        .gzy_check.gzy_check_ok {
+            color: #2e7d32; background: #e2f2d9; border-color: #b7dd9f;
+        }
+        .gzy_arrow {
+            align-self: center; color: #9aa08f; font-size: 18px; padding: 0 2px; flex-shrink: 0;
+        }
+
+        /* ===== 控制面板 + 日志 ===== */
+        .gzy_bottom { display: flex; gap: 18px; }
+        .gzy_panel {
+            border: 1px solid #b9b9a8; background: #fbfaf3; border-radius: 4px;
+            padding: 16px 18px;
+        }
+        .gzy_panel_control { flex: 0 0 52%; }
+        .gzy_panel_log { flex: 1; }
+        .gzy_panel h2 {
+            font-family: "SimSun", "Songti SC", serif; font-size: 24px;
+            font-weight: 700; color: #1d1d1d; margin-bottom: 14px;
+        }
+        .gzy_ctrl_row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+        .gzy_ctrl_label { font-size: 14px; font-weight: 700; }
+        .gzy_status_badge {
+            font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 2px;
+            background: #e8e6d6; color: #6b6a5e; transition: all 0.3s;
+        }
+        .gzy_status_badge.gzy_status_run { background: #ffe9a8; color: #8a6d00; }
+        .gzy_status_badge.gzy_status_done { background: #4caf50; color: #fff; }
+        .gzy_start_btn {
+            width: 100%; padding: 18px 0; font-size: 19px; font-weight: 700;
+            background: #ffd93b; border: none; border-radius: 3px; cursor: pointer;
+            color: #23231f; letter-spacing: 1px; box-shadow: 0 2px 0 #d9b62a;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .gzy_start_btn:hover { transform: translateY(-1px); box-shadow: 0 3px 0 #d9b62a; }
+        .gzy_start_btn:disabled { background: #e6dfc2; color: #9a957f; box-shadow: none; cursor: not-allowed; }
+        .gzy_speed_btns { display: flex; gap: 0; margin-left: auto; }
+        .gzy_speed_btn {
+            font-size: 12px; padding: 4px 10px; border: 1px solid #c9c6b3;
+            background: #f2f0e2; cursor: pointer; color: #6b6a5e;
+        }
+        .gzy_speed_btn:first-child { border-radius: 3px 0 0 3px; }
+        .gzy_speed_btn:last-child { border-radius: 0 3px 3px 0; }
+        .gzy_speed_btn.gzy_speed_active { background: #23231f; color: #fff; border-color: #23231f; }
+        .gzy_reset_btn {
+            font-size: 12px; padding: 4px 12px; border: 1px solid #c9c6b3;
+            background: #f2f0e2; border-radius: 3px; cursor: pointer; color: #6b6a5e;
+        }
+        .gzy_reset_btn:hover { background: #e8e6d6; }
+
+        .gzy_code {
+            margin-top: 16px; background: #23231f; color: #d8d8cc;
+            border-radius: 3px; padding: 12px 14px; font-family: Consolas, monospace;
+            font-size: 12.5px; line-height: 1.85; white-space: pre; overflow-x: auto;
+        }
+        .gzy_code .gzy_kw { color: #ffd93b; }
+        .gzy_code .gzy_fn { color: #8fd6a0; }
+        .gzy_code .gzy_cm { color: #7d7d70; }
+
+        .gzy_log {
+            background: #23231f; border-radius: 3px; padding: 12px 14px;
+            height: 245px; overflow-y: auto;
+            font-family: Consolas, monospace; font-size: 12.5px; line-height: 1.9;
+        }
+        .gzy_log_line { color: #cfcfc2; }
+        .gzy_log_line .gzy_time { color: #7f8c74; }
+        .gzy_log_ok { color: #8fd6a0; }
+        .gzy_log_race { color: #7fc8f8; }
+        .gzy_log_warn { color: #ffd93b; }
+        .gzy_log_done { color: #ff9d7a; }
+    </style>
+</head>
+<body>
+<a href="index.html" class="gzy_back-link">← 返回首页</a>
+<div class="gzy_container">
+    <h1 class="gzy_title">包饺子 · 异步流程</h1>
+    <p class="gzy_subtitle">
+        使用 <b>Promise</b> 与 <b>async/await</b> 演示：买原料（线上 / 线下同时进行，任一完成即继续 → <b>Promise.race</b>）
+        → 取原料 → 和面与和馅同时进行，都完成才继续 → <b>Promise.all</b> → 包饺子 → 煮饺子 → 吃饺子。
+        每个流程用 setTimeout 模拟耗时。
+    </p>
+
+    <!-- 六个步骤 -->
+    <div class="gzy_steps">
+        <div class="gzy_step" id="gzy_step1">
+            <div class="gzy_step_no">STEP 1</div>
+            <h3>买原料</h3>
+            <div class="gzy_step_sub">线上 6s / 线下 3s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar1"></div></div>
+            <div class="gzy_done" id="gzy_done1">✓ 完成</div>
+            <div class="gzy_checks">
+                <div class="gzy_check" id="gzy_chk1a">线上购买（6s）</div>
+                <div class="gzy_check" id="gzy_chk1b">线下购买（3s）</div>
+            </div>
+        </div>
+        <span class="gzy_arrow">→</span>
+
+        <div class="gzy_step" id="gzy_step2">
+            <div class="gzy_step_no">STEP 2</div>
+            <h3>取原料</h3>
+            <div class="gzy_step_sub">2s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar2"></div></div>
+            <div class="gzy_done" id="gzy_done2">✓ 完成</div>
+        </div>
+        <span class="gzy_arrow">→</span>
+
+        <div class="gzy_step" id="gzy_step3">
+            <div class="gzy_step_no">STEP 3</div>
+            <h3>和面和馅</h3>
+            <div class="gzy_step_sub">和面 4s / 和馅 3s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar3"></div></div>
+            <div class="gzy_done" id="gzy_done3">✓ 完成</div>
+            <div class="gzy_checks">
+                <div class="gzy_check" id="gzy_chk3a">和面（4s）</div>
+                <div class="gzy_check" id="gzy_chk3b">和馅（3s）</div>
+            </div>
+        </div>
+        <span class="gzy_arrow">→</span>
+
+        <div class="gzy_step" id="gzy_step4">
+            <div class="gzy_step_no">STEP 4</div>
+            <h3>包饺子</h3>
+            <div class="gzy_step_sub">5s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar4"></div></div>
+            <div class="gzy_done" id="gzy_done4">✓ 完成</div>
+        </div>
+        <span class="gzy_arrow">→</span>
+
+        <div class="gzy_step" id="gzy_step5">
+            <div class="gzy_step_no">STEP 5</div>
+            <h3>煮饺子</h3>
+            <div class="gzy_step_sub">4s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar5"></div></div>
+            <div class="gzy_done" id="gzy_done5">✓ 完成</div>
+        </div>
+        <span class="gzy_arrow">→</span>
+
+        <div class="gzy_step" id="gzy_step6">
+            <div class="gzy_step_no">STEP 6</div>
+            <h3>吃饺子</h3>
+            <div class="gzy_step_sub">3s</div>
+            <div class="gzy_bar"><div class="gzy_bar_fill" id="gzy_bar6"></div></div>
+            <div class="gzy_done" id="gzy_done6">✓ 完成</div>
+        </div>
+    </div>
+
+    <!-- 控制面板 + 日志 -->
+    <div class="gzy_bottom">
+        <div class="gzy_panel gzy_panel_control">
+            <h2>演示控制</h2>
+            <div class="gzy_ctrl_row">
+                <span class="gzy_ctrl_label">状态：</span>
+                <span class="gzy_status_badge" id="gzy_status">准备中</span>
+                <div class="gzy_speed_btns">
+                    <button class="gzy_speed_btn gzy_speed_active" onclick="gzy_setSpeed(1, this)">×1</button>
+                    <button class="gzy_speed_btn" onclick="gzy_setSpeed(2, this)">×2</button>
+                    <button class="gzy_speed_btn" onclick="gzy_setSpeed(4, this)">×4</button>
+                </div>
+                <button class="gzy_reset_btn" onclick="gzy_reset()">重置</button>
+            </div>
+
+            <button class="gzy_start_btn" id="gzy_startBtn" onclick="gzy_start()">▶ 开始包饺子</button>
+
+            <div class="gzy_code"><span class="gzy_cm">// 核心逻辑（节选）</span>
+<span class="gzy_kw">async function</span> <span class="gzy_fn">gzy_main</span>() {
+    <span class="gzy_cm">// 1. 线上 / 线下同时买，任一完成即可</span>
+    <span class="gzy_kw">await</span> Promise.race([gzy_buyOnline(), gzy_buyOffline()]);
+    <span class="gzy_kw">await</span> gzy_fetchMaterial();          <span class="gzy_cm">// 2. 取原料 2s</span>
+    <span class="gzy_cm">// 3. 和面与和馅都要完成</span>
+    <span class="gzy_kw">await</span> Promise.all([gzy_knead(), gzy_filling()]);
+    <span class="gzy_kw">await</span> gzy_wrap();                    <span class="gzy_cm">// 4. 包饺子 5s</span>
+    <span class="gzy_kw">await</span> gzy_boil();                    <span class="gzy_cm">// 5. 煮饺子 4s</span>
+    <span class="gzy_kw">await</span> gzy_eat();                     <span class="gzy_cm">// 6. 吃饺子 3s</span>
+}</div>
+        </div>
+
+        <div class="gzy_panel gzy_panel_log">
+            <h2>运行日志</h2>
+            <div class="gzy_log" id="gzy_log"><div class="gzy_log_line">等待开始……</div></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===================== 状态变量 =====================
+    var gzy_speed = 1;        // 倍速
+    var gzy_running = false;  // 是否正在运行
+    var gzy_runId = 0;        // 运行标识，用于作废旧的回调
+
+    // 时间戳 HH:MM:SS
+    function gzy_ts() {
+        var gzy_d = new Date();
+        function gzy_pad(gzy_n) { return gzy_n < 10 ? "0" + gzy_n : "" + gzy_n; }
+        return gzy_pad(gzy_d.getHours()) + ":" + gzy_pad(gzy_d.getMinutes()) + ":" + gzy_pad(gzy_d.getSeconds());
+    }
+
+    // 写日志
+    function gzy_log(gzy_msg, gzy_cls) {
+        var gzy_logBox = document.getElementById("gzy_log");
+        var gzy_time = gzy_ts();
+        gzy_logBox.innerHTML += '<div class="gzy_log_line"><span class="gzy_time">[' + gzy_time + ']</span> ' +
+            '<span class="' + (gzy_cls ? "gzy_log_" + gzy_cls : "") + '">' + gzy_msg + '</span></div>';
+        gzy_logBox.scrollTop = gzy_logBox.scrollHeight;
+    }
+
+    // 核心：用 setTimeout 模拟耗时任务，返回 Promise
+    function gzy_wait(gzy_ms) {
+        return new Promise(function (gzy_resolve) {
+            setTimeout(gzy_resolve, gzy_ms / gzy_speed);
+        });
+    }
+
+    // 进度条动画
+    function gzy_fill(gzy_step, gzy_ms) {
+        var gzy_bar = document.getElementById("gzy_bar" + gzy_step);
+        gzy_bar.style.transition = "width " + (gzy_ms / gzy_speed) + "ms linear";
+        gzy_bar.style.width = "0%";
+        // 触发重绘后再设置宽度，保证过渡动画生效
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () { gzy_bar.style.width = "100%"; });
+        });
+    }
+
+    // 标记步骤完成
+    function gzy_markDone(gzy_step) {
+        document.getElementById("gzy_done" + gzy_step).classList.add("gzy_show");
+    }
+
+    // 标记子任务完成
+    function gzy_check(gzy_id, gzy_text) {
+        var gzy_el = document.getElementById(gzy_id);
+        gzy_el.innerHTML = "✓ " + gzy_text;
+        gzy_el.classList.add("gzy_check_ok");
+    }
+
+    // 修改状态徽标
+    function gzy_setStatus(gzy_text, gzy_cls) {
+        var gzy_badge = document.getElementById("gzy_status");
+        gzy_badge.innerHTML = gzy_text;
+        gzy_badge.className = "gzy_status_badge" + (gzy_cls ? " gzy_status_" + gzy_cls : "");
+    }
+
+    // ===================== 各个异步任务（都返回 Promise） =====================
+    function gzy_buyOnline(gzy_myRun) {
+        return gzy_wait(6000).then(function () {
+            if (gzy_myRun !== gzy_runId) { return; }
+            gzy_check("gzy_chk1a", "线上购买（6s）");
+            gzy_log("线上购买送达 ✓（6s）", "ok");
+        });
+    }
+
+    function gzy_buyOffline(gzy_myRun) {
+        return gzy_wait(3000).then(function () {
+            if (gzy_myRun !== gzy_runId) { return; }
+            gzy_check("gzy_chk1b", "线下购买（3s）");
+            gzy_log("线下购买完成 ✓（3s）", "ok");
+        });
+    }
+
+    function gzy_knead(gzy_myRun) {
+        gzy_log("开始和面…（4s）");
+        return gzy_wait(4000).then(function () {
+            if (gzy_myRun !== gzy_runId) { return; }
+            gzy_check("gzy_chk3a", "和面（4s）");
+            gzy_log("和面完成 ✓（4s）", "ok");
+        });
+    }
+
+    function gzy_filling(gzy_myRun) {
+        gzy_log("开始和馅…（3s）");
+        return gzy_wait(3000).then(function () {
+            if (gzy_myRun !== gzy_runId) { return; }
+            gzy_check("gzy_chk3b", "和馅（3s）");
+            gzy_log("和馅完成 ✓（3s）", "ok");
+        });
+    }
+
+    // ===================== 主流程：async / await =====================
+    async function gzy_main() {
+        var gzy_myRun = gzy_runId;
+
+        // 1. 买原料：线上 6s 与线下 3s 同时进行，任一完成即继续（Promise.race）
+        gzy_fill(1, 3000);
+        gzy_log("买原料开始：线上（6s）与线下（3s）同时进行", "warn");
+        await Promise.race([gzy_buyOnline(gzy_myRun), gzy_buyOffline(gzy_myRun)]);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(1);
+        gzy_log("买原料结束：[线下]先完成，可进行下一步（Promise.race 生效）", "race");
+
+        // 2. 取原料 2s
+        gzy_fill(2, 2000);
+        await gzy_wait(2000);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(2);
+        gzy_log("取原料 ✓ 完成（2s）", "ok");
+
+        // 3. 和面与和馅同时进行，都完成才继续（Promise.all）
+        gzy_fill(3, 4000);
+        gzy_log("和面与和馅同时进行（Promise.all）…", "warn");
+        await Promise.all([gzy_knead(gzy_myRun), gzy_filling(gzy_myRun)]);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(3);
+        gzy_log("和面与和馅都完成，继续下一步（Promise.all 生效）", "race");
+
+        // 4. 包饺子 5s
+        gzy_fill(4, 5000);
+        await gzy_wait(5000);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(4);
+        gzy_log("包饺子 ✓ 完成（5s）", "ok");
+
+        // 5. 煮饺子 4s
+        gzy_fill(5, 4000);
+        await gzy_wait(4000);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(5);
+        gzy_log("煮饺子 ✓ 完成（4s）", "ok");
+
+        // 6. 吃饺子 3s
+        gzy_fill(6, 3000);
+        await gzy_wait(3000);
+        if (gzy_myRun !== gzy_runId) { return; }
+        gzy_markDone(6);
+        gzy_log("吃饺子 ✓ 完成（3s）", "ok");
+
+        // 全部完成
+        gzy_setStatus("完成 √ 开吃!", "done");
+        gzy_log("流程结束：饺子出锅，开吃！", "done");
+        gzy_running = false;
+        document.getElementById("gzy_startBtn").disabled = false;
+        document.getElementById("gzy_startBtn").innerHTML = "▶ 开始包饺子";
+    }
+
+    // ===================== 控制 =====================
+    function gzy_start() {
+        if (gzy_running) { return; }
+        gzy_running = true;
+        gzy_runId++;              // 新一轮运行标识
+        gzy_clearVisuals();
+        document.getElementById("gzy_startBtn").disabled = true;
+        document.getElementById("gzy_startBtn").innerHTML = "异步流程执行中…";
+        gzy_setStatus("进行中…", "run");
+        gzy_log("=========== 开始包饺子（倍速 ×" + gzy_speed + "）===========", "warn");
+        gzy_main();
+    }
+
+    function gzy_setSpeed(gzy_val, gzy_btn) {
+        if (gzy_running) { return; }   // 运行中不切换，避免计时混乱
+        gzy_speed = gzy_val;
+        var gzy_btns = document.querySelectorAll(".gzy_speed_btn");
+        for (var gzy_i = 0; gzy_i < gzy_btns.length; gzy_i++) {
+            gzy_btns[gzy_i].className = "gzy_speed_btn";
+        }
+        gzy_btn.className = "gzy_speed_btn gzy_speed_active";
+    }
+
+    // 清空进度条、完成标记
+    function gzy_clearVisuals() {
+        for (var gzy_i = 1; gzy_i <= 6; gzy_i++) {
+            var gzy_bar = document.getElementById("gzy_bar" + gzy_i);
+            gzy_bar.style.transition = "none";
+            gzy_bar.style.width = "0%";
+            document.getElementById("gzy_done" + gzy_i).classList.remove("gzy_show");
+        }
+        var gzy_checks = ["gzy_chk1a", "gzy_chk1b", "gzy_chk3a", "gzy_chk3b"];
+        var gzy_texts = ["线上购买（6s）", "线下购买（3s）", "和面（4s）", "和馅（3s）"];
+        for (var gzy_j = 0; gzy_j < gzy_checks.length; gzy_j++) {
+            var gzy_el = document.getElementById(gzy_checks[gzy_j]);
+            gzy_el.className = "gzy_check";
+            gzy_el.innerHTML = gzy_texts[gzy_j];
+        }
+    }
+
+    function gzy_reset() {
+        gzy_runId++;              // 作废正在执行的回调
+        gzy_running = false;
+        gzy_clearVisuals();
+        document.getElementById("gzy_startBtn").disabled = false;
+        document.getElementById("gzy_startBtn").innerHTML = "▶ 开始包饺子";
+        gzy_setStatus("准备中", "");
+        document.getElementById("gzy_log").innerHTML = '<div class="gzy_log_line">已重置，等待开始……</div>';
+    }
+
+    // 支持通过 ?auto=1 自动演示（便于课堂展示）
+    if (location.search.indexOf("auto=1") !== -1) {
+        gzy_start();
+    }
+</script>
+</body>
+</html>

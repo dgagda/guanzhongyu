@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：JavaScript两种定时器演示（setTimeout与setInterval） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 两种定时器</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #eef3f9; padding: 28px 20px 40px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 1040px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 14px; color: #4299e1;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { text-decoration: underline; }
+        .gzy_container h1 { text-align: center; color: #2c3e50; margin-bottom: 8px; }
+        .gzy_subtitle { text-align: center; color: #7f8c8d; margin-bottom: 24px; font-size: 14px; }
+        .gzy_subtitle b { color: #3498db; }
+
+        .gzy_grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 18px; }
+        .gzy_card {
+            background: #fff; border-radius: 12px; padding: 22px 24px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-top: 5px solid #3498db;
+        }
+        .gzy_card_interval { border-top-color: #e67e22; }
+        .gzy_card h2 {
+            font-size: 18px; color: #2c3e50; margin-bottom: 4px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .gzy_card h2 small { font-size: 13px; color: #95a5a6; font-weight: 400; }
+        .gzy_desc { font-size: 13px; color: #7f8c8d; line-height: 1.9; margin: 8px 0 14px; }
+        .gzy_code {
+            background: #2c3e50; color: #ecf0f1; padding: 12px 14px; border-radius: 8px;
+            font-family: Consolas, monospace; font-size: 13px; line-height: 1.8;
+            margin-bottom: 14px; overflow-x: auto; white-space: pre;
+        }
+        .gzy_row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+        .gzy_label { font-size: 13px; color: #666; }
+        .gzy_input {
+            width: 100px; padding: 8px 10px; border: 2px solid #dfe6e9; border-radius: 6px;
+            font-size: 14px; outline: none;
+        }
+        .gzy_input:focus { border-color: #3498db; }
+        .gzy_btn {
+            padding: 8px 18px; border: none; border-radius: 6px; cursor: pointer;
+            background: #3498db; color: #fff; font-size: 14px;
+        }
+        .gzy_btn:hover { opacity: 0.88; }
+        .gzy_btn:disabled { background: #c3ccd6; cursor: not-allowed; }
+        .gzy_btn_orange { background: #e67e22; }
+        .gzy_btn_gray { background: #95a5a6; }
+        .gzy_btn_red { background: #e74c3c; }
+
+        /* 展示区 */
+        .gzy_display {
+            border: 2px dashed #cfdae8; border-radius: 10px; padding: 18px;
+            text-align: center; margin-bottom: 12px; background: #f9fbfe;
+        }
+        .gzy_big_num {
+            font-size: 46px; font-weight: 900; color: #2c3e50;
+            font-family: Consolas, monospace; line-height: 1.2;
+        }
+        .gzy_big_num_orange { color: #e67e22; }
+        .gzy_state { font-size: 14px; color: #7f8c8d; margin-top: 6px; }
+        .gzy_state b { color: #3498db; }
+        .gzy_progress {
+            height: 10px; border-radius: 5px; background: #e4ebf4; overflow: hidden; margin-top: 12px;
+        }
+        .gzy_progress_bar {
+            height: 100%; width: 0%; background: linear-gradient(90deg, #3498db, #6dd5fa);
+            transition: width 0.1s linear;
+        }
+        .gzy_progress_bar_orange { background: linear-gradient(90deg, #e67e22, #f7b733); }
+
+        .gzy_log {
+            background: #f6f8fa; border: 1px solid #e3e9f0; border-radius: 8px;
+            padding: 10px 12px; font-family: Consolas, monospace; font-size: 12.5px;
+            line-height: 1.8; height: 130px; overflow-y: auto; color: #4a5f75;
+        }
+        .gzy_log div { border-bottom: 1px dashed #eef2f7; padding: 1px 0; }
+        .gzy_note {
+            margin-top: 20px; background: #fff8e1; border: 1px solid #ffe082;
+            border-radius: 10px; padding: 16px 20px; font-size: 14px; color: #7d6608; line-height: 2;
+        }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>JavaScript 的两种定时器</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— setTimeout 一次性定时器 与 setInterval 周期性定时器</p>
+
+        <div class="gzy_grid">
+            <!-- setTimeout -->
+            <div class="gzy_card">
+                <h2>1. setTimeout</h2>
+                <p class="gzy_desc">在<b>指定时间后只执行一次</b>，可用 <b>clearTimeout()</b> 清除，避免定时器未执行就取消。</p>
+                <div class="gzy_code">var gzy_timer = setTimeout(function () {
+    // 时间到，执行一次
+}, 3000);
+// 取消：clearTimeout(gzy_timer);</div>
+
+                <div class="gzy_row">
+                    <span class="gzy_label">延时（毫秒）</span>
+                    <input class="gzy_input" type="number" id="gzy_delayInput" value="3000" min="500" step="500">
+                    <button class="gzy_btn" id="gzy_startTimeout" onclick="gzy_startTimeout()">开始</button>
+                    <button class="gzy_btn gzy_btn_gray" id="gzy_cancelTimeout" onclick="gzy_cancelTimeout()" disabled>取消</button>
+                </div>
+
+                <div class="gzy_display">
+                    <div class="gzy_big_num" id="gzy_timeoutNum">3.0</div>
+                    <div class="gzy_state" id="gzy_timeoutState">等待开始…</div>
+                    <div class="gzy_progress"><div class="gzy_progress_bar" id="gzy_timeoutBar"></div></div>
+                </div>
+                <div class="gzy_log" id="gzy_timeoutLog"><div>这里是 setTimeout 的执行日志…</div></div>
+            </div>
+
+            <!-- setInterval -->
+            <div class="gzy_card gzy_card_interval">
+                <h2>2. setInterval <small>（周期性执行）</small></h2>
+                <p class="gzy_desc">每隔<b>指定时间就执行一次</b>，会一直重复，必须用 <b>clearInterval()</b> 停止。</p>
+                <div class="gzy_code">var gzy_timer2 = setInterval(function () {
+    gzy_count++;   // 每 1 秒执行一次
+}, 1000);
+// 停止：clearInterval(gzy_timer2);</div>
+
+                <div class="gzy_row">
+                    <span class="gzy_label">间隔（毫秒）</span>
+                    <input class="gzy_input" type="number" id="gzy_intervalInput" value="1000" min="100" step="100">
+                    <button class="gzy_btn gzy_btn_orange" id="gzy_startInterval" onclick="gzy_startInterval()">开始</button>
+                    <button class="gzy_btn gzy_btn_gray" id="gzy_stopInterval" onclick="gzy_stopInterval()" disabled>停止</button>
+                    <button class="gzy_btn gzy_btn_red" onclick="gzy_resetInterval()">重置</button>
+                </div>
+
+                <div class="gzy_display">
+                    <div class="gzy_big_num gzy_big_num_orange" id="gzy_intervalNum">0</div>
+                    <div class="gzy_state" id="gzy_intervalState">已执行 <b>0</b> 次，运行中：否</div>
+                    <div class="gzy_progress"><div class="gzy_progress_bar gzy_progress_bar_orange" id="gzy_intervalBar"></div></div>
+                </div>
+                <div class="gzy_log" id="gzy_intervalLog"><div>这里是 setInterval 的执行日志…</div></div>
+            </div>
+        </div>
+
+        <div class="gzy_note">
+            <b>两者区别：</b><b>setTimeout</b> 只执行一次（延迟执行），适合延时提示、自动关闭弹窗；
+            <b>setInterval</b> 按固定间隔反复执行，适合时钟、轮播图、计时器。
+            两者都返回一个定时器 id，分别用 <b>clearTimeout(id)</b> 和 <b>clearInterval(id)</b> 清除，
+            否则定时器会一直占用内存（页面卸载前务必清理）。
+        </div>
+    </div>
+
+    <script>
+        // ===================== 一、setTimeout 一次性定时器 =====================
+        var gzy_timeoutId = null;      // 定时器 id（用于 clearTimeout）
+        var gzy_tickId = null;         // 用于更新倒计时显示的辅助定时器
+        var gzy_startTime = 0;
+        var gzy_totalDelay = 0;
+
+        function gzy_logTimeout(gzy_msg) {
+            var gzy_log = document.getElementById("gzy_timeoutLog");
+            var gzy_time = new Date().toLocaleTimeString();
+            gzy_log.innerHTML += "<div>[" + gzy_time + "] " + gzy_msg + "</div>";
+            gzy_log.scrollTop = gzy_log.scrollHeight;
+        }
+
+        function gzy_startTimeout() {
+            gzy_cancelTimeout(true);   // 先清理上一次的定时器
+            gzy_totalDelay = Number(document.getElementById("gzy_delayInput").value) || 3000;
+            gzy_startTime = Date.now();
+
+            document.getElementById("gzy_startTimeout").disabled = true;
+            document.getElementById("gzy_cancelTimeout").disabled = false;
+            document.getElementById("gzy_timeoutState").innerHTML =
+                "计时中……将在 <b>" + gzy_totalDelay + " ms</b> 后执行一次";
+            gzy_logTimeout("setTimeout 已启动，延时 " + gzy_totalDelay + " 毫秒");
+
+            // 倒计时显示（每秒刷新一次，仅为视觉演示）
+            gzy_tickId = setInterval(function () {
+                var gzy_left = gzy_totalDelay - (Date.now() - gzy_startTime);
+                if (gzy_left < 0) { gzy_left = 0; }
+                document.getElementById("gzy_timeoutNum").innerHTML = (gzy_left / 1000).toFixed(1);
+                document.getElementById("gzy_timeoutBar").style.width =
+                    ((gzy_totalDelay - gzy_left) / gzy_totalDelay * 100) + "%";
+            }, 50);
+
+            // 核心：setTimeout 只执行一次
+            gzy_timeoutId = setTimeout(function () {
+                clearInterval(gzy_tickId);
+                document.getElementById("gzy_timeoutNum").innerHTML = "0.0";
+                document.getElementById("gzy_timeoutBar").style.width = "100%";
+                document.getElementById("gzy_timeoutState").innerHTML =
+                    "<b>时间到！回调函数已执行一次</b>（不会再执行第二次）";
+                document.getElementById("gzy_startTimeout").disabled = false;
+                document.getElementById("gzy_cancelTimeout").disabled = true;
+                gzy_logTimeout("setTimeout 回调执行完毕（仅此一次）");
+                console.log("setTimeout 执行：延迟 " + gzy_totalDelay + "ms");
+                gzy_timeoutId = null;
+            }, gzy_totalDelay);
+        }
+
+        function gzy_cancelTimeout(gzy_silent) {
+            if (gzy_timeoutId !== null) {
+                clearTimeout(gzy_timeoutId);      // 清除定时器
+                clearInterval(gzy_tickId);
+                gzy_timeoutId = null;
+                document.getElementById("gzy_timeoutState").innerHTML = "定时器已被 <b>clearTimeout</b> 取消，回调不会执行";
+                document.getElementById("gzy_timeoutBar").style.width = "0%";
+                document.getElementById("gzy_startTimeout").disabled = false;
+                document.getElementById("gzy_cancelTimeout").disabled = true;
+                if (!gzy_silent) { gzy_logTimeout("已调用 clearTimeout 取消定时器"); }
+            }
+        }
+
+        // ===================== 二、setInterval 周期性定时器 =====================
+        var gzy_intervalId = null;
+        var gzy_count = 0;
+        var gzy_intervalMs = 1000;
+
+        function gzy_logInterval(gzy_msg) {
+            var gzy_log = document.getElementById("gzy_intervalLog");
+            var gzy_time = new Date().toLocaleTimeString();
+            gzy_log.innerHTML += "<div>[" + gzy_time + "] " + gzy_msg + "</div>";
+            gzy_log.scrollTop = gzy_log.scrollHeight;
+        }
+
+        function gzy_startInterval() {
+            if (gzy_intervalId !== null) { return; }   // 已在运行
+            gzy_intervalMs = Number(document.getElementById("gzy_intervalInput").value) || 1000;
+
+            document.getElementById("gzy_startInterval").disabled = true;
+            document.getElementById("gzy_stopInterval").disabled = false;
+            gzy_logInterval("setInterval 已启动，间隔 " + gzy_intervalMs + " 毫秒");
+
+            // 核心：setInterval 每隔指定时间重复执行
+            gzy_intervalId = setInterval(function () {
+                gzy_count++;
+                document.getElementById("gzy_intervalNum").innerHTML = gzy_count;
+                document.getElementById("gzy_intervalState").innerHTML =
+                    "已执行 <b>" + gzy_count + "</b> 次，运行中：是";
+                document.getElementById("gzy_intervalBar").style.width =
+                    (gzy_count % 10) * 10 + "%";
+                gzy_logInterval("第 " + gzy_count + " 次执行");
+                console.log("setInterval 第 " + gzy_count + " 次执行");
+            }, gzy_intervalMs);
+        }
+
+        function gzy_stopInterval() {
+            if (gzy_intervalId !== null) {
+                clearInterval(gzy_intervalId);        // 清除周期性定时器
+                gzy_intervalId = null;
+                document.getElementById("gzy_startInterval").disabled = false;
+                document.getElementById("gzy_stopInterval").disabled = true;
+                document.getElementById("gzy_intervalState").innerHTML =
+                    "已执行 <b>" + gzy_count + "</b> 次，运行中：否（已 clearInterval）";
+                gzy_logInterval("已调用 clearInterval 停止定时器");
+            }
+        }
+
+        function gzy_resetInterval() {
+            gzy_stopInterval();
+            gzy_count = 0;
+            document.getElementById("gzy_intervalNum").innerHTML = "0";
+            document.getElementById("gzy_intervalBar").style.width = "0%";
+            document.getElementById("gzy_intervalState").innerHTML = "已执行 <b>0</b> 次，运行中：否";
+            document.getElementById("gzy_intervalLog").innerHTML = "<div>计数器已重置…</div>";
+        }
+
+        // 页面卸载时清理定时器，避免内存泄漏
+        window.addEventListener("beforeunload", function () {
+            clearTimeout(gzy_timeoutId);
+            clearInterval(gzy_tickId);
+            clearInterval(gzy_intervalId);
+        });
+    </script>
+</body>
+</html>

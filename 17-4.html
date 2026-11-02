@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!-- 姓名：管忠煜，日期：2026-11-02，功能名称：远程数据接口测试工具（GET/POST等） -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>远程数据接口测试</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gzy_body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f0f2f5; padding: 26px 20px 40px; color: #333; min-height: 100vh;
+        }
+        .gzy_container { max-width: 1000px; margin: 0 auto; }
+        .gzy_back-link {
+            display: inline-block; margin-bottom: 14px; color: #4299e1;
+            text-decoration: none; font-size: 14px;
+        }
+        .gzy_back-link:hover { text-decoration: underline; }
+        .gzy_container h1 { text-align: center; color: #2c3e50; margin-bottom: 8px; }
+        .gzy_subtitle { text-align: center; color: #7f8c8d; margin-bottom: 22px; font-size: 14px; }
+        .gzy_subtitle b { color: #3498db; }
+
+        .gzy_card {
+            background: #fff; border-radius: 10px; padding: 20px 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px;
+            border-top: 4px solid #3498db;
+        }
+        .gzy_card h2 { font-size: 16px; color: #2c3e50; margin-bottom: 12px; }
+        .gzy_row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+        .gzy_label { font-size: 13px; color: #666; flex-shrink: 0; }
+        .gzy_input, .gzy_select, .gzy_textarea {
+            border: 2px solid #dfe6e9; border-radius: 6px; font-size: 14px;
+            outline: none; font-family: Consolas, "Microsoft YaHei", monospace; padding: 8px 10px;
+        }
+        .gzy_input:focus, .gzy_select:focus, .gzy_textarea:focus { border-color: #3498db; }
+        .gzy_input_url { flex: 1; min-width: 320px; }
+        .gzy_input_small { width: 90px; }
+        .gzy_textarea { width: 100%; min-height: 110px; line-height: 1.7; resize: vertical; }
+        .gzy_btn {
+            padding: 9px 20px; border: none; border-radius: 6px; cursor: pointer;
+            background: #3498db; color: #fff; font-size: 14px;
+        }
+        .gzy_btn:hover { opacity: 0.88; }
+        .gzy_btn:disabled { background: #b2bec3; cursor: not-allowed; }
+        .gzy_btn_gray { background: #95a5a6; }
+        .gzy_btn_green { background: #2ecc71; }
+        .gzy_btn_orange { background: #f39c12; }
+        .gzy_btn_red { background: #e74c3c; }
+        .gzy_presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .gzy_preset {
+            font-size: 12px; padding: 6px 12px; border-radius: 14px; cursor: pointer;
+            border: 1px solid #cfd8e3; background: #f8fafc; color: #4a5f75;
+        }
+        .gzy_preset:hover { border-color: #3498db; color: #3498db; }
+
+        /* 状态条 */
+        .gzy_status {
+            display: flex; gap: 20px; flex-wrap: wrap; align-items: center;
+            font-size: 14px; padding: 12px 16px; border-radius: 8px; margin-bottom: 14px;
+            background: #f4f7fb; border: 1px solid #e1e8f0;
+        }
+        .gzy_status b { color: #2c3e50; }
+        .gzy_status_ok { background: #eafaf1; border-color: #a9e5c3; }
+        .gzy_status_err { background: #fdeaea; border-color: #f5b7b1; }
+        .gzy_code {
+            background: #2c3e50; color: #ecf0f1; padding: 12px 14px; border-radius: 8px;
+            font-family: Consolas, monospace; font-size: 13px; line-height: 1.75;
+            overflow: auto; max-height: 360px; white-space: pre-wrap; word-break: break-all;
+        }
+        .gzy_code_err { background: #4a1f1f; color: #ffd7d7; }
+        .gzy_hint { font-size: 12px; color: #98a5b3; margin-top: 6px; }
+        .gzy_tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+        .gzy_tab_btn {
+            font-size: 13px; padding: 6px 14px; border-radius: 6px 6px 0 0; cursor: pointer;
+            border: 1px solid #dfe6e9; border-bottom: none; background: #f4f7fb; color: #5d6b7a;
+        }
+        .gzy_tab_btn.gzy_active { background: #2c3e50; color: #fff; border-color: #2c3e50; }
+    </style>
+</head>
+<body class="gzy_body">
+    <div class="gzy_container">
+        <a href="index.html" class="gzy_back-link">← 返回首页</a>
+        <h1>远程数据接口测试</h1>
+        <p class="gzy_subtitle">作者：<b>管忠煜</b> —— 支持 GET / POST / PUT / PATCH / DELETE，显示接口返回的数据与错误提示</p>
+
+        <!-- 请求配置 -->
+        <div class="gzy_card">
+            <h2>一、请求配置</h2>
+            <div class="gzy_row">
+                <select class="gzy_select" id="gzy_method">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+                <input class="gzy_input gzy_input_url" id="gzy_url" value="https://jsonplaceholder.typicode.com/posts">
+                <span class="gzy_label">超时</span>
+                <input class="gzy_input gzy_input_small" type="number" id="gzy_timeout" value="8000" min="200" step="500">
+                <span class="gzy_label">毫秒</span>
+                <button class="gzy_btn" id="gzy_sendBtn" onclick="gzy_send()">发送请求</button>
+            </div>
+
+            <div class="gzy_row">
+                <span class="gzy_label">请求体（JSON，POST/PUT/PATCH 时使用）：</span>
+            </div>
+            <textarea class="gzy_textarea" id="gzy_body">{
+  "title": "管忠煜的接口测试",
+  "body": "这是一条通过 fetch POST 提交的数据",
+  "userId": 1
+}</textarea>
+
+            <div class="gzy_row" style="margin-top:12px;">
+                <span class="gzy_label">快速示例：</span>
+                <div class="gzy_presets">
+                    <span class="gzy_preset" onclick="gzy_preset('get')">GET 列表 /posts</span>
+                    <span class="gzy_preset" onclick="gzy_preset('getOne')">GET 单条 /posts/1</span>
+                    <span class="gzy_preset" onclick="gzy_preset('post')">POST 新增 /posts</span>
+                    <span class="gzy_preset" onclick="gzy_preset('put')">PUT 修改 /posts/1</span>
+                    <span class="gzy_preset" onclick="gzy_preset('404')">404 错误演示</span>
+                    <span class="gzy_preset" onclick="gzy_preset('network')">网络错误演示</span>
+                    <span class="gzy_preset" onclick="gzy_preset('timeout')">超时错误演示</span>
+                </div>
+            </div>
+            <p class="gzy_hint">提示：jsonplaceholder 为公开测试接口，GET 可查询、POST 会返回新增的数据（模拟保存，不会真正写入）。</p>
+        </div>
+
+        <!-- 响应结果 -->
+        <div class="gzy_card">
+            <h2>二、返回结果</h2>
+            <div class="gzy_status" id="gzy_status">
+                <span>状态：<span id="gzy_statusText">等待发送请求…</span></span>
+            </div>
+
+            <div class="gzy_tabs">
+                <span class="gzy_tab_btn gzy_active" id="gzy_tabData" onclick="gzy_switchTab(0)">返回数据</span>
+                <span class="gzy_tab_btn" id="gzy_tabErr" onclick="gzy_switchTab(1)">错误信息</span>
+                <span class="gzy_tab_btn" id="gzy_tabReq" onclick="gzy_switchTab(2)">请求详情</span>
+            </div>
+
+            <div class="gzy_code" id="gzy_dataBox">暂无数据，点击“发送请求”开始测试。</div>
+            <div class="gzy_code gzy_code_err" id="gzy_errBox" style="display:none;">暂无错误信息。</div>
+            <div class="gzy_code" id="gzy_reqBox" style="display:none;">暂无请求记录。</div>
+        </div>
+    </div>
+
+    <script>
+        // ===== 切换结果面板 =====
+        function gzy_switchTab(gzy_idx) {
+            var gzy_boxes = ["gzy_dataBox", "gzy_errBox", "gzy_reqBox"];
+            var gzy_tabs = ["gzy_tabData", "gzy_tabErr", "gzy_tabReq"];
+            for (var gzy_i = 0; gzy_i < gzy_boxes.length; gzy_i++) {
+                document.getElementById(gzy_boxes[gzy_i]).style.display = gzy_i === gzy_idx ? "block" : "none";
+                document.getElementById(gzy_tabs[gzy_i]).className =
+                    "gzy_tab_btn" + (gzy_i === gzy_idx ? " gzy_active" : "");
+            }
+        }
+
+        // ===== 快速示例 =====
+        function gzy_preset(gzy_type) {
+            var gzy_url = document.getElementById("gzy_url");
+            var gzy_method = document.getElementById("gzy_method");
+            var gzy_body = document.getElementById("gzy_body");
+            var gzy_timeout = document.getElementById("gzy_timeout");
+            if (gzy_type === "get") {
+                gzy_method.value = "GET";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts";
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "getOne") {
+                gzy_method.value = "GET";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts/1";
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "post") {
+                gzy_method.value = "POST";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts";
+                gzy_body.value = '{\n  "title": "管忠煜的接口测试",\n  "body": "这是一条通过 fetch POST 提交的数据",\n  "userId": 1\n}';
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "put") {
+                gzy_method.value = "PUT";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts/1";
+                gzy_body.value = '{\n  "id": 1,\n  "title": "修改后的标题",\n  "body": "PUT 请求提交的内容",\n  "userId": 1\n}';
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "404") {
+                gzy_method.value = "GET";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts/99999";
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "network") {
+                gzy_method.value = "GET";
+                gzy_url.value = "https://this-api-does-not-exist-12345.com/data";
+                gzy_timeout.value = 8000;
+            } else if (gzy_type === "timeout") {
+                gzy_method.value = "GET";
+                gzy_url.value = "https://jsonplaceholder.typicode.com/posts";
+                gzy_timeout.value = 1;
+            }
+        }
+
+        // ===== 发送请求（核心：fetch + 超时控制 + 错误分类提示） =====
+        function gzy_send() {
+            var gzy_method = document.getElementById("gzy_method").value;
+            var gzy_url = document.getElementById("gzy_url").value.trim();
+            var gzy_timeoutMs = Number(document.getElementById("gzy_timeout").value) || 8000;
+            var gzy_bodyText = document.getElementById("gzy_body").value.trim();
+            var gzy_sendBtn = document.getElementById("gzy_sendBtn");
+
+            if (!gzy_url) {
+                gzy_showError("请求地址不能为空，请填写接口 URL。");
+                return;
+            }
+
+            // 构造请求参数
+            var gzy_options = { method: gzy_method, headers: {} };
+            if (gzy_method === "POST" || gzy_method === "PUT" || gzy_method === "PATCH") {
+                gzy_options.headers["Content-Type"] = "application/json;charset=utf-8";
+                // 校验请求体是否为合法 JSON
+                if (gzy_bodyText) {
+                    try {
+                        JSON.parse(gzy_bodyText);
+                    } catch (gzy_e) {
+                        gzy_showError("请求体不是合法的 JSON：" + gzy_e.message);
+                        return;
+                    }
+                    gzy_options.body = gzy_bodyText;
+                }
+            }
+
+            // 超时控制
+            var gzy_controller = new AbortController();
+            var gzy_timer = setTimeout(function () { gzy_controller.abort(); }, gzy_timeoutMs);
+            gzy_options.signal = gzy_controller.signal;
+
+            gzy_sendBtn.disabled = true;
+            gzy_sendBtn.innerHTML = "请求中…";
+            document.getElementById("gzy_statusText").innerHTML = "请求中…";
+            document.getElementById("gzy_status").className = "gzy_status";
+            document.getElementById("gzy_reqBox").innerHTML =
+                "请求方法：" + gzy_method + "\n请求地址：" + gzy_url +
+                "\n超时设置：" + gzy_timeoutMs + " 毫秒" +
+                (gzy_options.body ? "\n请求体：\n" + gzy_bodyText : "\n请求体：无");
+
+            var gzy_startTime = performance.now();
+
+            fetch(gzy_url, gzy_options)
+                .then(function (gzy_res) {
+                    var gzy_cost = Math.round(performance.now() - gzy_startTime);
+                    console.log("HTTP 状态：" + gzy_res.status, gzy_res);
+                    return gzy_res.text().then(function (gzy_text) {
+                        return { res: gzy_res, text: gzy_text, cost: gzy_cost };
+                    });
+                })
+                .then(function (gzy_result) {
+                    var gzy_res = gzy_result.res;
+                    var gzy_text = gzy_result.text;
+                    var gzy_cost = gzy_result.cost;
+
+                    // 尝试格式化 JSON，失败则原样显示文本
+                    var gzy_pretty = gzy_text;
+                    var gzy_isJson = false;
+                    try {
+                        gzy_pretty = JSON.stringify(JSON.parse(gzy_text), null, 2);
+                        gzy_isJson = true;
+                    } catch (gzy_e) { /* 非 JSON 响应，保持原样 */ }
+
+                    document.getElementById("gzy_dataBox").innerHTML = gzy_pretty || "（响应体为空）";
+
+                    var gzy_statusEl = document.getElementById("gzy_status");
+                    var gzy_statusTxt = document.getElementById("gzy_statusText");
+
+                    if (gzy_res.ok) {
+                        // 2xx 成功
+                        gzy_statusEl.className = "gzy_status gzy_status_ok";
+                        gzy_statusTxt.innerHTML =
+                            "请求成功　状态码 <b>" + gzy_res.status + " " + (gzy_res.statusText || "") +
+                            "</b>　耗时 <b>" + gzy_cost + " ms</b>　数据格式 <b>" + (gzy_isJson ? "JSON" : "文本") + "</b>";
+                        document.getElementById("gzy_errBox").innerHTML = "本次请求没有错误。";
+                        gzy_switchTab(0);
+                    } else {
+                        // 4xx / 5xx 业务错误
+                        gzy_statusEl.className = "gzy_status gzy_status_err";
+                        gzy_statusTxt.innerHTML =
+                            "请求失败　状态码 <b>" + gzy_res.status + " " + (gzy_res.statusText || "") +
+                            "</b>　耗时 <b>" + gzy_cost + " ms</b>";
+                        document.getElementById("gzy_errBox").innerHTML =
+                            "HTTP 错误：服务器返回 " + gzy_res.status + " " + (gzy_res.statusText || "") +
+                            "\n\n返回内容：\n" + (gzy_text || "（无响应体）") +
+                            "\n\n说明：404 表示接口路径不存在；500 表示服务器内部错误。";
+                        gzy_switchTab(1);
+                    }
+
+                    document.getElementById("gzy_reqBox").innerHTML +=
+                        "\n\n响应状态：" + gzy_res.status + " " + (gzy_res.statusText || "") +
+                        "\n响应类型：" + (gzy_res.headers.get("content-type") || "未提供") +
+                        "\n总耗时：" + gzy_cost + " ms";
+                    gzy_finish();
+                })
+                .catch(function (gzy_err) {
+                    var gzy_cost = Math.round(performance.now() - gzy_startTime);
+                    var gzy_msg;
+                    if (gzy_err.name === "AbortError") {
+                        // 超时导致的主动中断
+                        gzy_msg = "请求超时：超过 " + gzy_timeoutMs + " 毫秒没有响应，已取消请求。\n" +
+                                  "可能原因：网络较慢、接口无法访问、或超时时间设置过短。\n" +
+                                  "建议：适当增大超时时间或更换接口地址。";
+                    } else if (gzy_err instanceof TypeError) {
+                        // 网络层错误：域名解析失败、断网、CORS 被拦截
+                        gzy_msg = "网络错误：" + gzy_err.message + "\n" +
+                                  "可能原因：域名无法解析、网络断开、或接口未开启 CORS 跨域允许。";
+                    } else {
+                        gzy_msg = "请求异常：" + gzy_err.message;
+                    }
+                    gzy_showError(gzy_msg, gzy_cost);
+                })
+                .finally(function () {
+                    clearTimeout(gzy_timer);
+                });
+        }
+
+        // 显示错误信息
+        function gzy_showError(gzy_msg, gzy_cost) {
+            document.getElementById("gzy_status").className = "gzy_status gzy_status_err";
+            document.getElementById("gzy_statusText").innerHTML =
+                "请求失败" + (gzy_cost !== undefined ? "　耗时 <b>" + gzy_cost + " ms</b>" : "");
+            document.getElementById("gzy_errBox").innerHTML = gzy_msg;
+            gzy_switchTab(1);
+            gzy_finish();
+            console.error("接口测试错误：", gzy_msg);
+        }
+
+        // 恢复按钮状态
+        function gzy_finish() {
+            var gzy_sendBtn = document.getElementById("gzy_sendBtn");
+            gzy_sendBtn.disabled = false;
+            gzy_sendBtn.innerHTML = "发送请求";
+        }
+
+        // 页面加载后自动演示一次 GET 请求
+        window.addEventListener("load", function () {
+            gzy_send();
+        });
+    </script>
+</body>
+</html>
